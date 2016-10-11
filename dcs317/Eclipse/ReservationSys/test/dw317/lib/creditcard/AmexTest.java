@@ -15,7 +15,7 @@ public class AmexTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		testAmex();//ghfxghfghgf
+		testAmex();//comment changed
 	}
 	
 	private static void testAmex(){
