@@ -29,7 +29,7 @@ public class AddressTest {
 				   "Sherbrooke", "Westmount","","", true);
 		
 		testTheThreeParameterConstructor(
-				"Case 2 - Invalid data – empty civicNumber ( Sherbrooke Westmount)","",
+				"Case 2 - Invalid data ï¿½ empty civicNumber ( Sherbrooke Westmount)","",
 					"Sherbrooke","Westmount","","", false);
 
 		testTheThreeParameterConstructor( 
@@ -54,16 +54,16 @@ public class AddressTest {
 		
 
 		testTheThreeParameterConstructor(
-				"Case 8 - Invalid data – null civicNumber (null Sherbrooke Westmount)",
+				"Case 8 - Invalid data ï¿½ null civicNumber (null Sherbrooke Westmount)",
 				null,"Sherbrooke","Westmount","","", false);
 
 		
 		testTheThreeParameterConstructor(
-				"Case 9 - Invalid data – null streetName (2123 null Westmount)",
+				"Case 9 - Invalid data ï¿½ null streetName (2123 null Westmount)",
 				"2123", null , "Westmount" ,"","", false );
 		
 		testTheThreeParameterConstructor(
-				"Case 10 - Invalid data – null city (2123 Sherbrooke null)",
+				"Case 10 - Invalid data ï¿½ null city (2123 Sherbrooke null)",
 				"2123" ,"Sherbrooke", null,"","", false);	
 		
 	}
@@ -152,7 +152,7 @@ public class AddressTest {
 				System.out.print(" Expected Valid.");
 		}
 
-		System.out.println("\n");
+		System.out.println("\n"); //zahraa was here
 	}
 
 
