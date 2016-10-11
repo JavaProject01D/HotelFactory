@@ -152,7 +152,7 @@ public class AddressTest {
 				System.out.print(" Expected Valid.");
 		}
 
-		System.out.println("\n"); //hi
+		System.out.println("\n"); 
 	}
 
 
