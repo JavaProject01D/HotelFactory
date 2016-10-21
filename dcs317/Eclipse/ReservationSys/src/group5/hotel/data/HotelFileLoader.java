@@ -74,7 +74,7 @@ public class HotelFileLoader {
 		
 		Customer [] arr = new Customer[2];
 		
-		Scanner inputStream = null ;
+		Scanner inputStream = null;
 		String record = null;
 		DawsonHotelFactory dHF = DawsonHotelFactory.DAWSON;
 		
