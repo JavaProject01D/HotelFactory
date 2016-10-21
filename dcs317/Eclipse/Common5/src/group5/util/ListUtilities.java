@@ -1,8 +1,18 @@
 package group5.util;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class ListUtilities{
+	
+	private static final Charset CHARACTER_ENCODING = StandardCharsets.UTF_8;   
 	
 	/*
 	 * to prevent instantiation of the class
@@ -37,38 +47,47 @@ public class ListUtilities{
 				if(list[i].compareTo(list[k]) > 1)
 					index = k;
 			}
+			
 			list[i] = list[index];
 		}
 	}
 	
-	//SEE LAB 7
-	private static void saveListToTextFile(){
-		
+	//Good for now ... ?
+	public static void saveListToTextFile(Object[] objects, String filename)
+			throws FileNotFoundException, UnsupportedEncodingException {
+		saveListToTextFile(objects, filename, false, CHARACTER_ENCODING);
 	}
-	
-	/*
-	 * Sorts a list of objects in ascending natural order using 
-	 * selection sort.
-	 * 
-	 * Precondition: 	Assumes that the list is not null and that the 
-	 *	list's capacity is equal to the list's size.
-	 * 
-	 *
-	 * @param list 	A list of objects. Assumes that the
-	 *             	list's capacity is equal to the list's size. 
-	 * 
-	* @throws  		IllegalArgumentException if the parameter is      *			not full to capacity.
-	*
-	* @throws		NullPointerException if the list is null.
-	 */
-		/* @SuppressWarnings({ "rawtypes", "unchecked" })
-		 public static void sort(Comparable[] list)
-					throws IllegalArgumentException, NullPointerException{
-			 
-			 
-		 }*/
-	
-	
+
+	public static void saveListToTextFile(Object[] objects, String filename,
+			boolean append) throws FileNotFoundException,
+ 				UnsupportedEncodingException {
+		saveListToTextFile(objects, filename, append, CHARACTER_ENCODING);
+	}
+
+
+	public static void saveListToTextFile(Object[] objects, String filename,
+			boolean append, Charset characterEncoding) 
+				throws FileNotFoundException, UnsupportedEncodingException {
+		
+		PrintWriter outputFile = null;
+		
+		try {
+			FileOutputStream f = new FileOutputStream(filename, append);
+			OutputStreamWriter out = 
+					new OutputStreamWriter(f, characterEncoding);
+			outputFile = new PrintWriter(new BufferedWriter(out));
+
+			for (Object obj : objects)
+				if (obj != null)
+					outputFile.println(obj);
+		} catch (FileNotFoundException e) {
+			throw new FileNotFoundException(
+					"Error saving list! Unable to access the device "
+							+ filename);
+		}
+	}
+
+
 	
 	/*
 	 * Efficiently merges two sorted lists of objects in ascending 

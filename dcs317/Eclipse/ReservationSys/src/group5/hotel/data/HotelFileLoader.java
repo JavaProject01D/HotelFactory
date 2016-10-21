@@ -46,7 +46,7 @@ public class HotelFileLoader {
 				try{
 					
 					//CATCH PARSE EXCEPTION!!!
-					arr[i] = dHF.getRoomInstance(Integer.parseInt(fields[i]), fields[i]);
+					arr[i] = dHF.getRoomInstance(Integer.parseInt(fields[0]), fields[1]);
 					
 				}catch(IllegalArgumentException iae){
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
@@ -90,14 +90,14 @@ public class HotelFileLoader {
 			while(inputStream.hasNext()){
 				record = inputStream.nextLine();
 				String [] fields = record.split("\\*");
-				
+
 				try{
 					
 					//first, last, email - instance
 					//email,FN,LN,Card,Card#
-					//IF ** = they are ignored
+					//IF ** = they are ignored = *** and not *****
 					//IF *''*'' = ERROR THROW
-					arr[i] = dHF.getCustomerInstance();
+					arr[i] = dHF.getCustomerInstance(fields[1], fields[2], fields[0]);
 					
 				}catch(IllegalArgumentException iae){
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
