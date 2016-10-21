@@ -122,8 +122,31 @@ public class ListUtilities{
 				Comparable[] list2, String duplicateFileName)
 					throws IOException{
 				
-				return null;
+				Comparable[] list3 = new Comparable[list1.length + list2.length];
+			    int i = 0, j = 0, k = 0;
+
+			    while (i < list1.length && j < list2.length)
+			    {
+			    	//USE Compare TO
+			    	//ADD SPECIAL CASE:
+			    	//duplicates (resize) and if one list is longer then the other one
+			        if (list1[i] < list2[j])       
+			            list3[k++] = list2[i++];
+
+			        else        
+			            list3[k++] = list2[j++];               
+			    }
+			    	
+			    while (i < list1.length)  
+			        list3[k++] = list1[i++];
+
+
+			    while (j < list2.length)    
+			        list3[k++] = list2[j++];
+
+			    return list3;
 			}
+				
 
 	
 }
