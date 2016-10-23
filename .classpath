@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="dcs317/Eclipse/Common5/src"/>
+	<classpathentry kind="src" path="dcs317/Eclipse/Common5/test"/>
+	<classpathentry kind="src" path="dcs317/Eclipse/ReservationSys/src"/>
+	<classpathentry kind="src" path="dcs317/Eclipse/ReservationSys/test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="dcs317/Eclipse/Common5/bin"/>
+</classpath>
