@@ -2,7 +2,7 @@
 package group5.hotel.business;
 
 import java.util.Optional;
-
+import java.lang.String;
 import dw317.hotel.business.interfaces.Customer;
 import dw317.lib.Email;
 import dw317.lib.Name;
@@ -11,6 +11,8 @@ import dw317.lib.creditcard.CreditCard;
 /**
  * @author Sevan Topalian
  * @version 27/09/2016
+ * 
+ * Modifications done my Zahraa Horeibi. 
  * 
  *          This class creates a DawsonCustomer object that has a first name, a
  *          last name, an email, and optionally a credit card. It has a few
@@ -21,10 +23,9 @@ import dw317.lib.creditcard.CreditCard;
 public class DawsonCustomer implements Customer {
 
 	private static final long serialVersionUID = 42031768871L;
-	private String firstName;
-	private String lastName;
-	private String email;
-	private Optional<CreditCard> creditCard;
+	private Name name;
+	private Email email;
+	private CreditCard creditCard;
 
 	/**
 	 * The constructor creates the DawsonCustomer object.
@@ -34,10 +35,12 @@ public class DawsonCustomer implements Customer {
 	 * @param email
 	 */
 	public DawsonCustomer(String firstName, String lastName, String email) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.creditCard = Optional.ofNullable(null);
+	
+		this.name.setFirstName(firstName);
+		this.name.setLastName(lastName);
+	//	this.email = new Email(email);
+				
+		this.creditCard = null;
 	}
 
 	/**
@@ -60,7 +63,7 @@ public class DawsonCustomer implements Customer {
 	 */
 	@Override
 	public Name getName() {
-		return new Name(firstName, lastName);
+		return new Name (this.name.getFirstName(), this.name.getLastName());
 	}
 
 	/**
@@ -70,7 +73,7 @@ public class DawsonCustomer implements Customer {
 	 */
 	@Override
 	public Email getEmail() {
-		return new Email(email);
+		return new Email(this.email.getAddress());
 	}
 
 	/**
@@ -81,7 +84,7 @@ public class DawsonCustomer implements Customer {
 	 */
 	@Override
 	public Optional<CreditCard> getCreditCard() {
-		return creditCard;
+		return Optional.ofNullable(creditCard);
 	}
 
 	/**
@@ -91,7 +94,7 @@ public class DawsonCustomer implements Customer {
 	 */
 	@Override
 	public void setCreditCard(Optional<CreditCard> card) {
-		this.creditCard = card;
+		this.creditCard = card.orElse(null);
 	}
 
 	/**
@@ -117,13 +120,25 @@ public class DawsonCustomer implements Customer {
 	 * @return boolean
 	 */
 	@Override
-	public final boolean equals(Object object) {
-		Customer customer = (Customer) object;
+	public final boolean equals(Object obj) {
+		
+		if (this == obj) 
+			return true;
+		
+		if (obj == null) 
+			return false;
+		
+		if (obj instanceof Customer){
+		Customer cust = (Customer) obj;
+	// ignoreCase?	
+		if (!this.equals(cust.getEmail().getAddress()))
+			return false;
 
-		if (this.getClass().equals(customer.getClass()))
-			if (this.getEmail().getAddress().equals(customer.getEmail().getAddress()))
-				return true;
-		return false;
+		return true;
+		
+		}
+		
+		return true;
 	}
 
 	/**
@@ -137,17 +152,33 @@ public class DawsonCustomer implements Customer {
 	 */
 	@Override
 	public String toString() {
-		String cardType = "";
-		String cardNumber = "";
 
-		if (creditCard.isPresent()) {
-			cardType = creditCard.get().toString();
-			cardNumber = creditCard.get().getNumber();
+		if (this.creditCard != null) {
+		
 		}
 
-		String customerInfo = (this.email + "*" + this.firstName + "*" + this.lastName + "*" + cardType + "*"
-				+ cardNumber);
-
-		return customerInfo;
+		return this.email + "*" + this.name.getFirstName() + "*" + this.name.getLastName() +
+				"*" + this.creditCard.getType() + "*" + this.creditCard.getNumber();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}
 }
