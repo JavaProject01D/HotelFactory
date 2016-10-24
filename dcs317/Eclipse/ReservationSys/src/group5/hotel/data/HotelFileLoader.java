@@ -34,7 +34,7 @@ public class HotelFileLoader {
 
 			BufferedReader outStream = new BufferedReader(
 					new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8));
-
+						
 			inputStream = new Scanner(outStream);
 
 			int i = 0;
@@ -52,8 +52,9 @@ public class HotelFileLoader {
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
 				}
+				i++;
 
-				if (i > arr.length) // resize
+				if (i >= arr.length) // resize
 					arr = Arrays.copyOf(arr, arr.length * 2 + 1);
 
 			} // end of the while loop
@@ -62,6 +63,7 @@ public class HotelFileLoader {
 			arr = Arrays.copyOf(arr, i);
 
 		} catch (IOException io) {
+			System.out.println(io.getMessage());
 		}
 
 		// Close Scanner
@@ -111,8 +113,9 @@ public class HotelFileLoader {
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
 				}
-
-				if (i > arr.length) // resize
+				
+				i++;
+				if (i >= arr.length) // resize
 					arr = Arrays.copyOf(arr, arr.length * 2 + 1);
 
 			} // end of the while loop
@@ -121,6 +124,7 @@ public class HotelFileLoader {
 			arr = Arrays.copyOf(arr, i);
 
 		} catch (IOException io) {
+			System.out.println(io.getMessage());
 		}
 
 		// Close Scanner
