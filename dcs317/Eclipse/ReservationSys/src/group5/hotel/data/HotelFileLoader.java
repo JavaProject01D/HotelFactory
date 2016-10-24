@@ -47,7 +47,9 @@ public class HotelFileLoader {
 
 					// CATCH PARSE EXCEPTION!!!
 					arr[i] = dHF.getRoomInstance(Integer.parseInt(fields[0]), fields[1]);
-
+				
+				}catch(NumberFormatException nfe){
+					System.out.println(nfe.getMessage() + "\nThe given room is invalid: Parse Exception!!" + "\nFileName: " + filename + "\nRecord: " + record);
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
 				}
@@ -91,7 +93,9 @@ public class HotelFileLoader {
 			while (inputStream.hasNext()) {
 				record = inputStream.nextLine();
 				String[] fields = record.split("\\*");
-
+				
+			
+				
 				try {
 
 					// first, last, email - instance
@@ -99,6 +103,11 @@ public class HotelFileLoader {
 					// IF ** = they are ignored = *** and not *****
 					// IF *''*'' = ERROR THROW
 					arr[i] = dHF.getCustomerInstance(fields[1], fields[2], fields[0]);
+					
+					//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Specs weird!!!!!!!
+					//Index: 3,4
+					/*if(lengthVerification(fields))
+						arr[i] = (Customer) dHF.getCard(fields[3], fields[4]);*/
 
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
@@ -122,6 +131,25 @@ public class HotelFileLoader {
 
 		return arr;
 	}
+	
+	//!!!!!!!!!!!!!!Weird Specs!!!!!!!!!!!!!!
+	/**
+	 * Verify if the length is the right one
+	 * If not i will not instantiate the method
+	 * 
+	 * @param arr
+	 * @return boolean
+	 */
+	/*private static boolean lengthVerification(String [] arr){
+		final int maxSize = 5;
+		
+		if(maxSize == arr.length)
+			for(int i = 0; i < arr.length; i++)
+				if(arr[i]== null || arr[i].isEmpty())
+					return false;
+		
+		return true;
+	}*/
 
 	public static Reservation[] getReservationListFromSequentialFile(String filename, Customer[] customerList,
 			Room[] roomList) throws IOException, IllegalArgumentException {
