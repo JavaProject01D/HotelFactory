@@ -45,7 +45,6 @@ public class HotelFileLoader {
 
 				try {
 
-					// CATCH PARSE EXCEPTION!!!
 					arr[i] = dHF.getRoomInstance(Integer.parseInt(fields[0]), fields[1]);
 				
 				}catch(NumberFormatException nfe){
