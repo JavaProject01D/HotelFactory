@@ -152,7 +152,7 @@ public class SortMergeApp {
 				if (rooms[i].toString().charAt(k) == '*') {
 
 			
-				}//hererer
+				}
 				
 		
 			}
