@@ -153,32 +153,15 @@ public class DawsonCustomer implements Customer {
 	@Override
 	public String toString() {
 
-		if (this.creditCard != null) {
+		if (this.creditCard == null)
+			return this.email + "*" + this.name.getFirstName() + "*" + this.name.getLastName() +
+					"*" + "" + "*" + "";
 		
-		}
+		
 
 		return this.email + "*" + this.name.getFirstName() + "*" + this.name.getLastName() +
 				"*" + this.creditCard.getType() + "*" + this.creditCard.getNumber();
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	}
 }
