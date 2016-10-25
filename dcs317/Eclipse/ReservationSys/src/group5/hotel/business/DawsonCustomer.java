@@ -53,7 +53,7 @@ public class DawsonCustomer implements Customer {
 	public int compareTo(Customer customer) {
 		if (this.equals(customer))
 			return 0;
-		return this.email.compareToIgnoreCase(customer.getEmail().getAddress());
+		return this.email.getAddress().compareToIgnoreCase(customer.getEmail().getAddress());
 	}
 
 	/**
