@@ -144,19 +144,24 @@ public class SortMergeApp {
 		
 		Integer[] roomNums = new Integer[rooms.length];
 		
+		int k = 0;
+		
 		for (int i = 0; i < rooms.length; i++){
 			String delimeter = "*";
-			String num;
-			for (int k = 0; k < rooms[i].toString().length(); k++ ) {
-					
+			String num = "";
+
+				while(k < rooms[i].toString().length()) { 	
+				
+				num += rooms[i].toString().charAt(k);
+				
 				if (rooms[i].toString().charAt(k) == '*') {
 
-			
-				}//hererer
+					k = -1;
+				}
 				
-		
+				System.out.println(num);
+				k++;
 			}
-	
 	
 		}	
 	
