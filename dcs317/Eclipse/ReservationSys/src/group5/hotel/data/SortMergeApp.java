@@ -132,6 +132,8 @@ public class SortMergeApp {
 				}
 		
 		File sorted = new File ("datafiles");
+		
+		
 		sorted.mkdir();
 		
 	
@@ -148,10 +150,9 @@ public class SortMergeApp {
 			for (int k = 0; k < rooms[i].toString().length(); k++ ) {
 					
 				if (rooms[i].toString().charAt(k) == '*') {
-					
-					//zahraa was here
+
 			
-				}
+				}//hererer
 				
 		
 			}
