@@ -25,7 +25,7 @@ public class SortMergeApp {
 		/*
 		File sorted = new File ("datafiles");
 		sorted.mkdir();
-		//Denis
+
 		//Customers
 		Customer[] customers;
 		Customer[][] customerList;
@@ -103,51 +103,63 @@ public class SortMergeApp {
 	*/
 	public static void sortedRooms(){
 		
-		File database = new File ("datafiles");
+		File database = new File("dcs317/Eclipse/ReservationSys/datafiles");
 		database.mkdir();
 		//Rooms
 		Room[] rooms;
 		
 		try {
-			rooms = HotelFileLoader.getRoomListFromSequentialFile("rooms.txt");	
+			rooms = HotelFileLoader.getRoomListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\rooms.txt");	
 			//Sorting
+			//do wrapper method and return Integer and do sorting on that 
 			ListUtilities.sort(rooms);
-			
-			} catch (IOException e) {
-			System.out.println(e.getMessage()); //??
-		}
-	
-		if (database.exists()) 
-			try {
+			wrapper(rooms);
+			if (database.exists()) {
 				
-				rooms = HotelFileLoader.getRoomListFromSequentialFile("rooms.txt");	
+				rooms = HotelFileLoader.getRoomListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\rooms.txt");		
 
-				File room = new File (database + "/rooms.txt");
-				
+				File room = new File("dcs317/Eclipse/ReservationSys/datafiles/database/rooms.txt");
+			
 				// Write sortedRooms array to the file 
-				ListUtilities.saveListToTextFile(rooms, "rooms.txt");
+				ListUtilities.saveListToTextFile(rooms,"dcs317\\Eclipse\\ReservationSys\\datafiles\\database\\rooms.txt");
 				
+					}
+			
 				} catch (IOException e) {	
 					
-				System.out.print("Could not create file.." + e.getMessage());		
+				System.out.print("Could not create file..\n" + e.getMessage());		
 				
 				}
-		
-		
-		
-		
 		
 		File sorted = new File ("datafiles");
 		sorted.mkdir();
 		
+	
 		
 	}
 	
+	public static void wrapper(Room[] rooms) {
+		
+		Integer[] roomNums = new Integer[rooms.length];
+		
+		for (int i = 0; i < rooms.length; i++){
+			String delimeter = "*";
+			String num;
+			for (int k = 0; k < rooms[i].toString().length(); k++ ) {
+					
+				if (rooms[i].toString().charAt(k) == '*') {
+					
+					
+			
+				}
+		
+			}
+	
+	
+		}	
 	
 	
 	
-	
-	
-	
+	}	
 	
 }
