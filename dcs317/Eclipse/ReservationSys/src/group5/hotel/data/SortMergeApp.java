@@ -119,9 +119,11 @@ public class SortMergeApp {
 	
 		if (database.exists()) 
 			try {
+				
 				rooms = HotelFileLoader.getRoomListFromSequentialFile("rooms.txt");	
 
 				File room = new File (database + "/rooms.txt");
+				
 				// Write sortedRooms array to the file 
 				ListUtilities.saveListToTextFile(rooms, "rooms.txt");
 				
