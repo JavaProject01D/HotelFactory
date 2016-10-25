@@ -25,7 +25,7 @@ public class SortMergeApp {
 		/*
 		File sorted = new File ("datafiles");
 		sorted.mkdir();
-		
+		//Denis
 		//Customers
 		Customer[] customers;
 		Customer[][] customerList;

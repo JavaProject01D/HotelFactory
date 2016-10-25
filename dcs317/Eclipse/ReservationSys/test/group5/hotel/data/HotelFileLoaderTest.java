@@ -68,7 +68,7 @@ public class HotelFileLoaderTest {
 				System.out.println("ERROR: the given file should be Valid <--Fix It Please-->");
 			
 		}catch(Exception e){
-			System.out.println("Error: " + e.getMessage());
+			System.out.println("Error: " + e.getMessage() + "This Error should be catched somewhere!");
 			if(validation)
 				System.out.println("ERROR: the given file should be Valid <--Fix It Please-->");
 		}		
@@ -87,6 +87,7 @@ public class HotelFileLoaderTest {
 			loadCustomerFilesTest("Case " + i + "--Original Data--", path, true);
 		}
 		
+		//loadCustomerFilesTest("Case 1 ","dcs317\\Eclipse\\ReservationSys\\datafiles\\customers2.txt",true);
 		
 	}
 	
@@ -103,17 +104,17 @@ public class HotelFileLoaderTest {
 					System.out.println("RoomsFile " + i + ": " + cust[i]);
 			
 		}catch(IllegalArgumentException iae){
-			System.out.println("ArgumentException: " + iae.getMessage());
+			System.out.println("ArgumentException: " + iae.getMessage() + " IllegalArgumentException");
 			if(validation)
 				System.out.println("ERROR: the given file should be Valid <--Fix It Please-->");
 			
 		}catch(IOException ioe){
-			System.out.println("Error: " + ioe.getMessage());
+			System.out.println("Error: " + ioe.getMessage() + " IOException");
 			if(validation)
 				System.out.println("ERROR: the given file should be Valid <--Fix It Please-->");
 			
 		}catch(Exception e){
-			System.out.println("Error: " + e.getMessage());
+			System.out.println("Error: " + e.getMessage() + e.getClass()  + " This Error should be catched somewhere!");
 			if(validation)
 				System.out.println("ERROR: the given file should be Valid <--Fix It Please-->");
 		}

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Scanner;
 import dw317.hotel.business.interfaces.Customer;
 import dw317.hotel.business.interfaces.Reservation;
@@ -116,10 +117,10 @@ public class HotelFileLoader {
 					// IF *''*'' = ERROR THROW
 					arr[i] = dHF.getCustomerInstance(fields[1], fields[2], fields[0]);
 					
-					//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Specs weird!!!!!!!
+
 					//Index: 3,4
-					/*if(lengthVerification(fields))
-						arr[i] = (Customer) dHF.getCard(fields[3], fields[4]);*/
+					if(lengthVerification(fields))
+						arr[i].setCreditCard(Optional.of(dHF.getCard(fields[3], fields[4])));
 
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
@@ -146,7 +147,7 @@ public class HotelFileLoader {
 		return arr;
 	}
 	
-	//!!!!!!!!!!!!!!Weird Specs!!!!!!!!!!!!!!
+
 	/**
 	 * Verify if the length is the right one
 	 * If not i will not instantiate the method
@@ -154,7 +155,7 @@ public class HotelFileLoader {
 	 * @param arr
 	 * @return boolean
 	 */
-	/*private static boolean lengthVerification(String [] arr){
+	private static boolean lengthVerification(String [] arr){
 		final int maxSize = 5;
 		
 		if(maxSize == arr.length)
@@ -163,7 +164,7 @@ public class HotelFileLoader {
 					return false;
 		
 		return true;
-	}*/
+	}
 
 	public static Reservation[] getReservationListFromSequentialFile(String filename, Customer[] customerList,
 			Room[] roomList) throws IOException, IllegalArgumentException {
