@@ -40,19 +40,27 @@ public class ListUtilities {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void sort(Comparable[] list) throws IllegalArgumentException, NullPointerException {
-
-		if (list[list.length] == null)
+				
+		if (list[list.length - 1] == null)
 			throw new IllegalArgumentException("Not filled to capacity");
-		int index;
+		
+		for(int i = 0; i < list.length; i++)
+			if(list[i] == null)
+				throw new NullPointerException("The list given that will be sorted has a Null value.");
+		
+		Comparable temp;
+		
+		int index = 0;
 		for (int i = 0; i < list.length; i++) {
 			index = i;
-			for (int k = 1; k < list.length; k++) {
+			for (int k = i+1; k < list.length; k++) {
 
-				if (list[i].compareTo(list[k]) > 1)
+				if (list[i].compareTo(list[k]) > 0)
 					index = k;
 			}
-
+			temp = list[i];
 			list[i] = list[index];
+			list[index] = temp;
 		}
 	}
 
