@@ -21,7 +21,12 @@ public class HotelFileLoader {
 	private HotelFileLoader() {
 
 	}
-
+	/**
+	 * 
+	 * @param filename
+	 * @return
+	 * @throws IOException
+	 */
 	public static Room[] getRoomListFromSequentialFile(String filename) throws IOException {
 
 		Room[] arr = new Room[2];
@@ -42,7 +47,11 @@ public class HotelFileLoader {
 			while (inputStream.hasNext()) {
 				record = inputStream.nextLine();
 				String[] fields = record.split("\\*");
-
+				
+				//look if there is a blank line
+				if(fields.length == 1 && fields[0] == null || fields[0].isEmpty())				
+					continue;
+				
 				try {
 
 					arr[i] = dHF.getRoomInstance(Integer.parseInt(fields[0]), fields[1]);
@@ -95,7 +104,9 @@ public class HotelFileLoader {
 				record = inputStream.nextLine();
 				String[] fields = record.split("\\*");
 				
-			
+				//look for blank line
+				if(fields.length == 1 && fields[0] == null || fields[0].isEmpty())				
+					continue;				
 				
 				try {
 

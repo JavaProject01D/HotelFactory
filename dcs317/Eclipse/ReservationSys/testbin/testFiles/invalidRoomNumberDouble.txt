@@ -1,0 +1,7 @@
+101*normal
+102*normal
+102.0*normal
+704*suite
+104*normal
+105*normal
+106*normal
