@@ -35,11 +35,11 @@ public class DawsonCustomer implements Customer {
 	 * @param email
 	 */
 	public DawsonCustomer(String firstName, String lastName, String email) {
-	
-		this.name.setFirstName(firstName);
-		this.name.setLastName(lastName);
-	//	this.email = new Email(email);
-				
+		
+		name = new Name(firstName, lastName);
+		
+		this.email = new Email(email);
+						
 		this.creditCard = null;
 	}
 

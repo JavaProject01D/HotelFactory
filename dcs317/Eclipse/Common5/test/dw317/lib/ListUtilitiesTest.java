@@ -81,8 +81,6 @@ public class ListUtilitiesTest {
 		ListUtilities.sort(list1);
 		ListUtilities.sort(list2);
 		
-		/*for(int i=0; i < list1.length; i++)
-			System.out.println("List: " + list1[i]);*/
 		
 		try{
 			list3 = ListUtilities.merge(list1, list2, "testDup.txt");

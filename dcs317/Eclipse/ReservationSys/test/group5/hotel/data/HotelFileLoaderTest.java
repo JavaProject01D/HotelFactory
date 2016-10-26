@@ -114,7 +114,7 @@ public class HotelFileLoaderTest {
 				System.out.println("ERROR: the given file should be Valid <--Fix It Please-->");
 			
 		}catch(Exception e){
-			System.out.println("Error: " + e.getMessage() + e.getClass()  + " This Error should be catched somewhere!");
+			System.out.println("Error: " + " " + e.getMessage() + e.getClass()  + " This Error should be catched somewhere!");
 			if(validation)
 				System.out.println("ERROR: the given file should be Valid <--Fix It Please-->");
 		}
