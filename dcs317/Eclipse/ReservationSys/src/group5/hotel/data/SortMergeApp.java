@@ -18,8 +18,8 @@ public class SortMergeApp {
 	
 	public static void main (String[] args) {
 		
-		//sortedRooms();
-		sortedCustomers() ;
+		sortedRooms();
+	//	sortedCustomers() ;
 		
 	
 	}
@@ -53,46 +53,45 @@ public class SortMergeApp {
 				System.out.print("Could not create file..\n" + e.getMessage());		
 				
 				}
-	}
+		}
 	
-/*	public static void wrapper(Room[] rooms) {
+	public static void wrapper(Room[] rooms) {
 	
 		Integer[] roomNums = new Integer[rooms.length];
-		String delimeter = "*";
-		String num;
+	
+		String num = "";
 		int k = 0;
-		for (int i = 0; i < rooms.length; i++){
-			
-			while( k < 4 ) { 
-					
-				if (rooms[i].toString().charAt(k) == '*') {
-
-					k = 0;
-					System.out.println(rooms[i].toString().charAt(k));
-			
-				} else {
-					k++;
-				}
-				System.out.println(rooms[i].toString().charAt(k));
+		int temp;
 		
+		while ( k < rooms.length) {
+		
+		for (int i = 0; i < rooms.length; i++) {
+			
+				num += rooms[k].toString().charAt(i);
+		
+					if (num.length() == 3) 	{
+						i = -1;
+						roomNums[k] = Integer.parseInt(num);
+						temp = Integer.parseInt(num);
+						System.out.println(temp);
+						num = "";
+						k++;
+					}
+				}	
 			}
-	
-	
 		}	
 	
-	
-	
-	}	
-*/	
-		public static void wrapper(Room[] rooms) {
-		
+	public static void wrappper(Room[] rooms) {
+
+			
 			Integer[] list = new Integer[rooms.length];
+
 			int temp;
 	
 			int index = 0;
-			for (int i = 0; i < list.length; i++) {
+			for (int i = 0; i < rooms.length; i++) {
 				index = i;
-				for (int k = i+1; k < list.length; k++) {
+				for (int k = i+1; k < rooms.length; k++) {
 
 					if (list[i].compareTo(list[k]) > 0)
 						index = k;
@@ -105,7 +104,7 @@ public class SortMergeApp {
 			}
 		}
 		
-		public static void sortedCustomers() {
+	public static void sortedCustomers() {
 			
 			File sorted = new File ("dcs317/Eclipse/ReservationSys/datafiles");
 			sorted.mkdir();
@@ -164,7 +163,7 @@ public class SortMergeApp {
 			
 		}
 		
-		public static void sortedReservations(Customer[] customerList, Room[] roomList) {
+	public static void sortedReservations(Customer[] customerList, Room[] roomList) {
 		
 			Reservation[] reservations;
 			Reservation[][] reservationList = new Reservation[10][];
