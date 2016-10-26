@@ -86,18 +86,29 @@ public class HotelFileLoaderTest {
 			System.out.println(path);
 			loadCustomerFilesTest("Case " + i + "--Original Data--", path, true);
 		}
+				
+		path = "";
+		loadCustomerFilesTest("Case 11 - Valid with blank line", path, true);
 		
-		//loadCustomerFilesTest("Case 1 ","dcs317\\Eclipse\\ReservationSys\\datafiles\\customers2.txt",true);
+		path = "";
+		loadCustomerFilesTest("Case 12 - Valid with", path, true);
+		
+		path = "";
+		loadCustomerFilesTest("Case 13 - Valid with", path, true);
+		
+		path = "";
+		loadCustomerFilesTest("Case 14 - Valid with", path, true);
+		
 		
 	}
 	
 	private static void loadCustomerFilesTest(String testCase, String path, boolean validation){
 		Customer[] cust;
 		
+		System.out.println("\n" + testCase + " \nPath: " + path);
+		
 		try{
 			cust = HotelFileLoader.getCustomerListFromSequentialFile(path);
-			
-			System.out.println("\n" + testCase + " \nPath: " + path);
 			
 			if(validation)
 				for(int i = 0; i < cust.length; i++)

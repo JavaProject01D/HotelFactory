@@ -101,6 +101,7 @@ public class HotelFileLoader {
 
 			int i = 0;
 
+
 			while (inputStream.hasNext()) {
 				record = inputStream.nextLine();
 				String[] fields = record.split("\\*");
@@ -117,7 +118,7 @@ public class HotelFileLoader {
 					// IF *''*'' = ERROR THROW
 					arr[i] = dHF.getCustomerInstance(fields[1], fields[2], fields[0]);
 					
-
+					
 					//Index: 3,4
 					if(lengthVerification(fields))
 						arr[i].setCreditCard(Optional.of(dHF.getCard(fields[3], fields[4])));
@@ -162,8 +163,10 @@ public class HotelFileLoader {
 			for(int i = 0; i < arr.length; i++)
 				if(arr[i]== null || arr[i].isEmpty())
 					return false;
+				else
+					return true;
 		
-		return true;
+		return false;
 	}
 
 	public static Reservation[] getReservationListFromSequentialFile(String filename, Customer[] customerList,
