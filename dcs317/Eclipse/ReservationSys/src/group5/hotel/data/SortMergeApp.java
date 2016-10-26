@@ -63,7 +63,7 @@ public class SortMergeApp {
 		int k = 0;
 		int temp;
 		
-		while ( k < rooms.length) {
+		while ( k < rooms.length ) {
 		
 		for (int i = 0; i < rooms.length; i++) {
 			
