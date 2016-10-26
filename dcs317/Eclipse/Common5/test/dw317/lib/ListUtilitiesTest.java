@@ -67,7 +67,7 @@ public class ListUtilitiesTest {
 		mergeTest("Case 2 - Valid - Merge two Srting List", stringListOne, stringListTwo, true);
 				
 		String[] stringListOneDupl= new String[]{"z","a","y","h"};
-		String[] stringListTwoDupl = new String[]{"z","a","y","h"};
+		String[] stringListTwoDupl = new String[]{"v","g","y","h"};
 		mergeTest("Case 3 - Valid - Merge two Srting List", stringListOneDupl, stringListTwoDupl, true);
 		
 	}
@@ -80,6 +80,9 @@ public class ListUtilitiesTest {
 		
 		ListUtilities.sort(list1);
 		ListUtilities.sort(list2);
+		
+		/*for(int i=0; i < list1.length; i++)
+			System.out.println("List: " + list1[i]);*/
 		
 		try{
 			list3 = ListUtilities.merge(list1, list2, "testDup.txt");
