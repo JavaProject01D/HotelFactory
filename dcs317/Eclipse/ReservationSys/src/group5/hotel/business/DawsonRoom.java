@@ -82,7 +82,7 @@ public class DawsonRoom implements Room {
 	 */
 	public int getNumber() {
 
-		return this.roomNumber * 100;
+		return this.roomNumber % 100;
 
 	}
 

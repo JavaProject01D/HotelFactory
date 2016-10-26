@@ -79,9 +79,25 @@ public class SortMergeApp {
 					}
 				}	
 			}
+		int temp2;
+		int index = 0;
+		
+		for (int i = 0; i < rooms.length; i++) {
+			index = i;
+			for (int j = i+1; j < rooms.length; j++) {
+
+				if (roomNums[i].compareTo(roomNums[k]) > 0)
+					index = k;
+			}
+			temp2 = roomNums[i];
+			roomNums[i] = roomNums[index];
+			roomNums[index] = temp2;
+			
+			System.out.println(roomNums[i]);
+		}
 		}	
 	
-	public static void wrappper(Room[] rooms) {
+/*	public static void wrappper(Room[] rooms) {
 
 			
 			Integer[] list = new Integer[rooms.length];
@@ -103,6 +119,7 @@ public class SortMergeApp {
 				System.out.println(list[i]);
 			}
 		}
+	*/
 		
 	public static void sortedCustomers() {
 			

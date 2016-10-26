@@ -28,11 +28,6 @@ public abstract class AbstractCreditCard implements CreditCard {
 	 */
 
 	public AbstractCreditCard(CardType cardType, String number) throws IllegalArgumentException {
-
-		// Assigning each passed arguments to the class's fields value.
-		this.number = number;
-		this.cardType = cardType;
-
 		/*Checking if the passed values are null. If they are, throwing an
 		 * illegal argument exception.
 		 */
@@ -41,7 +36,12 @@ public abstract class AbstractCreditCard implements CreditCard {
 
 		if (cardType.equals(null))
 			throw new IllegalArgumentException("Card Type cannot be null!");
-	}
+	
+		// Assigning each passed arguments to the class's fields value.
+		this.number = validateLuhnAlgorithm(number);
+		this.cardType = cardType;
+
+	}	
 
 	/**
 	 * This method validates the credit card numbers using the Luhn Algorithm
@@ -107,28 +107,6 @@ public abstract class AbstractCreditCard implements CreditCard {
 			throw new IllegalArgumentException("Invalid card!" + temp + "\n" + number.toString());
 		else
 			return number;
-	}
-
-	/**
-	 * This method is a helper method for the validateLuhnAlgorithm method which
-	 * returns a boolean checking if the given String only contains numeric
-	 * values.
-	 * 
-	 * @param numbers
-	 * @author Zahraa Horeibi
-	 * @return boolean
-	 */
-	public static boolean isNumeric(String numbers) {
-
-		// Using a loop, we can get the index of every character from the String
-		for (int i = 0; i < numbers.length(); i++) {
-
-			// Checking whether the character the index i is a digit.
-			if (!Character.isDigit(numbers.charAt(i)))
-				return false;
-		}
-
-		return true;
 	}
 
 	/**
