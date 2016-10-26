@@ -176,11 +176,11 @@ public class ListUtilities {
 	 * @param dup
 	 */
 	private static void duplicates (Comparable<?> dup, String filename){
-		File duplicates = new File("dcs317/Eclipse/ReservationSys/testbin/testFiles");
+		File duplicates = new File("dcs317/Eclipse/ReservationSys/datafiles/duplicates");
 		
 		//System.out.println(filename);
 
-		if (duplicates.exists())
+		if (!duplicates.exists())
 			duplicates.mkdir(); 
 		 
 		File duplFile = new File (duplicates + "/" + filename);
@@ -188,7 +188,6 @@ public class ListUtilities {
 		try{
 			
 			duplFile.createNewFile();
-			System.out.println(duplFile.length());
 
 	
 		}catch(IOException ioe){
@@ -205,7 +204,6 @@ public class ListUtilities {
 	 * @param dup
 	 */
 	private static void writeToFile(String filename, Comparable<?> dup){
-		System.out.println(filename);
 		PrintWriter outputFile = null;
 		try {
 			outputFile = new PrintWriter (new BufferedWriter (new OutputStreamWriter 
