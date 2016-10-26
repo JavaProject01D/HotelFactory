@@ -55,7 +55,7 @@ public class ListUtilities {
 			index = i;
 			for (int k = i+1; k < list.length; k++) {
 
-				if (list[i].compareTo(list[k]) > 0)
+				if (list[k].compareTo(list[index]) < 0)
 					index = k;
 			}
 			temp = list[i];
@@ -176,8 +176,10 @@ public class ListUtilities {
 	 * @param dup
 	 */
 	private static void duplicates (Comparable<?> dup, String filename){
-		File duplicates = new File("datafiles/duplicates");
+		File duplicates = new File("dcs317/Eclipse/ReservationSys/datafiles/duplicates");
 		
+		//System.out.println(filename);
+
 		if (!duplicates.exists())
 			duplicates.mkdir(); 
 		 
@@ -186,7 +188,7 @@ public class ListUtilities {
 		try{
 			
 			duplFile.createNewFile();
-			System.out.println(duplFile.length());
+
 	
 		}catch(IOException ioe){
 			System.out.println("Could not create duplicate File: " + ioe.getMessage());
@@ -202,7 +204,6 @@ public class ListUtilities {
 	 * @param dup
 	 */
 	private static void writeToFile(String filename, Comparable<?> dup){
-		
 		PrintWriter outputFile = null;
 		try {
 			outputFile = new PrintWriter (new BufferedWriter (new OutputStreamWriter 
@@ -212,6 +213,7 @@ public class ListUtilities {
 			
 		}
 		catch (FileNotFoundException e) {
+			System.out.println("Error: " + e.getMessage());
 		}
 	
 		finally {
