@@ -14,19 +14,30 @@ import dw317.hotel.business.interfaces.Room;
 import group5.hotel.business.DawsonHotelFactory;
 
 /**
- * @author Denis Lebedev, Sevan Topalian
+ * The class HotelFileLoader will load data in arrays and 
+ * they gonna be used for another purpose.
+ * The class will load arrays of Customers, Rooms, and Reservation.
+ * 
+ * @author Denis Lebedev
  *
  */
 public class HotelFileLoader {
-
+	
+	/*
+	 * Private constructor to avoid instantiation
+	 */
 	private HotelFileLoader() {
 
 	}
 	/**
+	 * The method will read through the files given and
+	 * load objects that will hold data. Also, the data will be verified.
+	 * 
+	 * @author Denis Lebedev
 	 * 
 	 * @param filename
-	 * @return
-	 * @throws IOException
+	 * @return Room[]
+	 * @throws IOException if the filename does not exists or cannot instantiate BufferedReader
 	 */
 	public static Room[] getRoomListFromSequentialFile(String filename) throws IOException {
 
@@ -83,7 +94,18 @@ public class HotelFileLoader {
 
 		return arr;
 	}
-
+	
+	
+	/**
+	 * The method will read through the files given and
+	 * load objects that will hold data. Also, the data will be verified.
+	 * 
+	 * @author Denis Lebedev
+	 * 
+	 * @param filename
+	 * @return Customer[]
+	 * @throws IOException if the filename does not exists or cannot instantiate BufferedReader
+	 */
 	public static Customer[] getCustomerListFromSequentialFile(String filename) throws IOException {
 
 		Customer[] arr = new Customer[2];
@@ -153,20 +175,27 @@ public class HotelFileLoader {
 	 * Verify if the length is the right one
 	 * If not i will not instantiate the method
 	 * 
+	 * @author Denis Lebedev
+	 * 
 	 * @param arr
 	 * @return boolean
 	 */
 	private static boolean lengthVerification(String [] arr){
 		final int maxSize = 5;
 		
+		//If the size is not equal that mean the array does not contain a Card
+		if(maxSize != arr.length)
+			return false;
+		
+		//If the array is loaded, BUT there is blank spaces or nulls there is no Card
 		if(maxSize == arr.length)
-			for(int i = 0; i < arr.length; i++)
+			for(int i = 3; i < arr.length; i++)
 				if(arr[i]== null || arr[i].isEmpty())
 					return false;
-				else
-					return true;
+					
 		
-		return false;
+		//Else there is a Card	
+		return true;
 	}
 
 	public static Reservation[] getReservationListFromSequentialFile(String filename, Customer[] customerList,

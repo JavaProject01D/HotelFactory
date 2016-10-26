@@ -3,7 +3,13 @@ package dw317.lib;
 import java.io.IOException;
 
 import group5.util.ListUtilities;
-
+/** 
+ * This class will test the Utilities class 
+ * and all the sorts method.
+ * 
+ * @author Denis Lebedev
+ *
+ */
 public class ListUtilitiesTest {
 
 	public static void main(String[] args) {

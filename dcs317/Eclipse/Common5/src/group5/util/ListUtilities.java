@@ -15,20 +15,31 @@ import java.util.Comparator;
 import java.io.File;
 
 
-
+/**
+ * The class will have different sort methods
+ * like a selection sort and a merge method.
+ * The merger will compare two list and create a third sorted list.
+ * We are using the selection sort to sort all the lists before we 
+ * use it in the merger sort.
+ * Also, the class will provide a way to write to file.
+ * 
+ * @author Denis Lebedev
+ *
+ */
 public class ListUtilities {
 
 	private static final Charset CHARACTER_ENCODING = StandardCharsets.UTF_8;
 
-	/*
-	 * to prevent instantiation of the class
+	/**
+	 * We use a private constructor to prevent instantiation of the class
 	 */
 	private ListUtilities() {
 	}
 
-	/*
+	/**
 	 * Sorts a list of objects in ascending natural order using selection sort.
 	 * 
+	 *@author Denis Lebedev
 	 *
 	 * @param list A list of objects. Assumes that the list's capacity is equal
 	 * to the list's size.
@@ -40,13 +51,12 @@ public class ListUtilities {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void sort(Comparable[] list) throws IllegalArgumentException, NullPointerException {
-				
+			
+		if(list == null)
+			throw new NullPointerException("The list given that will be sorted has a Null value.");
+		
 		if (list[list.length - 1] == null)
 			throw new IllegalArgumentException("Not filled to capacity");
-		
-		for(int i = 0; i < list.length; i++)
-			if(list[i] == null)
-				throw new NullPointerException("The list given that will be sorted has a Null value.");
 		
 		Comparable temp;
 		
@@ -64,7 +74,7 @@ public class ListUtilities {
 		}
 	}
 
-	// Good for now ... ?
+
 	public static void saveListToTextFile(Object[] objects, String filename)
 			throws FileNotFoundException, UnsupportedEncodingException {
 		saveListToTextFile(objects, filename, false, CHARACTER_ENCODING);
@@ -93,7 +103,7 @@ public class ListUtilities {
 		}
 	}
 
-	/*
+	/**
 	 * Efficiently merges two sorted lists of objects in ascending natural
 	 * order. If the duplicate objects are in both lists, the object from list1
 	 * is merged into the resulting list, and both objects are written to the
@@ -103,6 +113,7 @@ public class ListUtilities {
 	 * contain objects that can be compared to each other and are filled to
 	 * capacity.
 	 * 
+	 *@author Denis Lebedev
 	 *
 	 * @param list1 A naturally sorted list of objects. Assumes that the list
 	 * contains no duplicates and that its capacity is equal to its size.
@@ -172,7 +183,10 @@ public class ListUtilities {
 	}
 	
 	/**
+	 *If there is a duplicates  the method will create
+	 * a text file that will hold all your duplicates.
 	 * 
+	 * @author Denis Lebedev
 	 * @param dup
 	 */
 	private static void duplicates (Comparable<?> dup, String filename){
@@ -199,7 +213,11 @@ public class ListUtilities {
 	
 	
 	/**
+	 * If the duplicates method is invoked this method
+	 * will use the created text file and write
+	 * all the founded duplicates in a specific place.
 	 * 
+	 * @author Denis Lebedev
 	 * @param filename
 	 * @param dup
 	 */
@@ -222,7 +240,7 @@ public class ListUtilities {
 		}
 	}
 
-	/*
+	/**
 	 * Sorts a list of objects in the given order.
 	 * 
 	 * Precondition: Assumes that the list is not null and that the list's

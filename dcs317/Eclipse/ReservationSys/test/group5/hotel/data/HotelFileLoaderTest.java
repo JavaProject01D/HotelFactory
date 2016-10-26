@@ -5,6 +5,15 @@ import java.io.IOException;
 import dw317.hotel.business.interfaces.Customer;
 import dw317.hotel.business.interfaces.Room;
 
+
+/**
+ * This class will test the HotelFileLoad class.
+ * It will load valid or invalid data and process
+ * through it.
+ * 
+ * @author Denis Lebedev
+ *
+ */
 public class HotelFileLoaderTest {
 
 	public static void main(String[] args) {
@@ -87,17 +96,26 @@ public class HotelFileLoaderTest {
 			loadCustomerFilesTest("Case " + i + "--Original Data--", path, true);
 		}
 				
-		path = "";
+		path = "dcs317\\Eclipse\\ReservationSys\\testBin\\testFiles\\customer\\validCustBlankLine.txt";
 		loadCustomerFilesTest("Case 11 - Valid with blank line", path, true);
 		
-		path = "";
-		loadCustomerFilesTest("Case 12 - Valid with", path, true);
+		path ="dcs317\\Eclipse\\ReservationSys\\testBin\\testFiles\\customer\\invalidCustName.txt";
+		loadCustomerFilesTest("Case 12 - Invalid Customer Name", path, false);
 		
-		path = "";
-		loadCustomerFilesTest("Case 13 - Valid with", path, true);
+		path = "dcs317\\Eclipse\\ReservationSys\\testBin\\testFiles\\customer\\invalidCustEmail.txt";
+		loadCustomerFilesTest("Case 13 - Invalid Customer Email", path, false);
 		
-		path = "";
-		loadCustomerFilesTest("Case 14 - Valid with", path, true);
+		path = "dcs317\\Eclipse\\ReservationSys\\testBin\\testFiles\\customer\\invalidCustHostName.txt";
+		loadCustomerFilesTest("Case 14 - Invalid Host Name", path, false);
+		
+		path = "dcs317\\Eclipse\\ReservationSys\\testBin\\testFiles\\customer\\invalidCustLastName.txt";
+		loadCustomerFilesTest("Case 15 - Invalid Last Name", path, false);
+		
+		path = "dcs317\\Eclipse\\ReservationSys\\testBin\\testFiles\\customer\\invalidCardType.txt";
+		loadCustomerFilesTest("Case 16 - Invalid Card Type", path, false);
+		
+		path = "dcs317\\Eclipse\\ReservationSys\\testBin\\testFiles\\customer\\invalidCardNumber.txt";
+		loadCustomerFilesTest("Case 17 - Invalid Card Number", path, false);
 		
 		
 	}
