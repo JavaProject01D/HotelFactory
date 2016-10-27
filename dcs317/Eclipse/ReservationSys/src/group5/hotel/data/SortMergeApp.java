@@ -68,20 +68,43 @@ public class SortMergeApp {
 		//	Customer[] customers;
 			Customer[][] customerList = new Customer[10][];
 			
-			Comparable[] cust = new Customer[10];
+			//Comparable[] cust = new Customer[10];
 			
 			String customerFileName;
 			int k = 1;
 			int index = 2;
 			
 			try {
-				for (int i = 1; i < customerList.length; i++){
+				for (int i = 0; i < customerList.length; i++){
 				
-					customerFileName = "customers" + i + ".txt";
+					customerFileName = "customers" + (i+1) + ".txt";
 					System.out.println("I1: " +i);
 					customerList[i] = HotelFileLoader.getCustomerListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\" + customerFileName);
-					System.out.println("Customer: " + customerList[i]);				
+					//System.out.println("Customer: " + customerList[i]);				
 					}
+				
+				/*for(int i = 0; i < customerList.length ; i++){
+					System.out.println("\t\tCustomer: " + customerList[i]);
+					for(int j = 0; j < customerList[i].length; j++)
+					System.out.println("Customer: " + customerList[i][j]);
+				}*/
+				
+				System.out.println("Customer: " + customerList[1]);	
+				Comparable[] custo = customerList[1];
+				
+				for(int i = 0; i < custo.length ; i++)
+					System.out.println("\t\tCusto: " + custo[i]);
+				
+				//Customer[] cust = customerList[1][];
+				
+				//System.out.println("Cust: " + cust[1]);
+				
+				//System.out.println("Custo: " + custo[1]);
+				
+				ListUtilities.sort(custo);
+				
+				for(int i = 0; i < custo.length ; i++)
+					System.out.println("Custo: " + custo[i]);
 				
 			}catch(IOException ioe){
 				
