@@ -67,10 +67,9 @@ public class Email implements Serializable, Comparable<Email> {
 		
 		Email data = (Email) object;
 		
-		if(this.address.indexOf('@') == data.address.indexOf('@'))
-			if(this.address.substring(0, this.address.indexOf('@')).equalsIgnoreCase(data.address.substring(0, data.address.indexOf('@'))))
-				if(this.address.substring(this.address.indexOf('@')).equalsIgnoreCase(data.address.substring(data.address.indexOf('@'))))
-					return true;
+		if(this.address.equalsIgnoreCase(data.address))
+			return true;
+		
 		return false;
 	}
 	
@@ -154,7 +153,7 @@ public class Email implements Serializable, Comparable<Email> {
 	 */
 	private static boolean validateUserId(String userId, String specialChar){
 	
-		if(userId.length() >= 32 || userId.length() <= 1
+		if(userId.length() > 32 || userId.length() < 1
 				|| userId.matches(specialChar)
 				|| !userId.matches(".*[a-zA-Z].*") 
 				|| (userId.charAt(0) == '.' || userId.charAt( userId.length() - 1 ) == '.')
@@ -163,6 +162,7 @@ public class Email implements Serializable, Comparable<Email> {
 		
 		return true;
 	}
+	
 	/**
 	 * The method will validate the userId
 	 * by using regex
@@ -172,7 +172,7 @@ public class Email implements Serializable, Comparable<Email> {
 	 */
 	private static boolean validateHostName(String hostName, String specialChar){
 		
-		if(hostName.length() >= 32 || hostName.length() <= 1
+		if(hostName.length() > 32 || hostName.length() < 1
 				|| !hostName.matches(".*[a-zA-Z].*")
 				|| hostName.charAt(0) == '-'
 				|| hostName.charAt(hostName.length() -1) == '-'

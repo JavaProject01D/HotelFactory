@@ -45,7 +45,10 @@ public class DawsonReservation implements Reservation{
 		try{
 			checkIn = LocalDate.of(inYear, inMonth, inDay);
 			checkOut = LocalDate.of(outYear, outMonth, outDay);
-		}catch (DateTimeException iae){
+			
+			if(!checkIn.isBefore(checkOut))
+				throw new DateTimeException("");
+		}catch (DateTimeException dte){
 			throw new IllegalArgumentException("Date given is invalid");
 		}
 	}
@@ -61,6 +64,7 @@ public class DawsonReservation implements Reservation{
 		return new DawsonCustomer(aCustomer.getName().getFirstName(),
 								   aCustomer.getName().getLastName(),
 								   aCustomer.getEmail().getAddress());
+								   //aCustomer.setCreditCard(aCustomer.getCreditCard());
 	}
 
 	/**
@@ -91,11 +95,9 @@ public class DawsonReservation implements Reservation{
 		
 		DawsonReservation data = (DawsonReservation) object;
 		
-		if(!(this.getCustomer().getName().getFullName().equalsIgnoreCase(data.getCustomer().getName().getFullName()))) return false;
-		
-		if(!(this.getCustomer().getEmail().getAddress().equalsIgnoreCase(data.getCustomer().getEmail().getAddress()))) return false;
-		
-		if(!(this.getRoom().getRoomNumber() == data.getRoom().getRoomNumber())) return false;
+		if(!(this.getCustomer().equals(data.getCustomer()))) return false;
+				
+		if(!(this.getRoom().equals(data.getRoom()))) return false;
 		
 		if(!(this.checkIn.isEqual(data.checkIn))) return false;
 		
@@ -129,15 +131,14 @@ public class DawsonReservation implements Reservation{
 	@Override
 	public boolean overlap(Reservation other) {
 		
-		if(aRoom.getNumber() == other.getRoom().getNumber()){
-			if(checkIn.isAfter(other.getCheckInDate())
-				&& checkOut.isBefore(other.getCheckInDate()))	
-				return false;
-			
-			if(checkIn.isAfter(other.getCheckOutDate()))
-				return false;			
-		}		
-		return true;
+		if(this.equals(other))
+			return true;
+		
+			if(this.checkIn.isBefore(other.getCheckOutDate())
+				&& this.checkOut.isBefore(other.getCheckInDate()))	
+				return true;
+				
+		return false;
 	}
 	
 	/**
@@ -165,9 +166,9 @@ public class DawsonReservation implements Reservation{
 	@Override
 	public int compareTo(Reservation reserve) {
 		if(this.aRoom.equals(reserve.getRoom()))
-			return this.aRoom.compareTo(reserve.getRoom());
+			return checkIn.compareTo(reserve.getCheckInDate());
 		
-		return checkIn.compareTo(reserve.getCheckInDate());
+		return this.aRoom.compareTo(reserve.getRoom());		
 	}
 	
 	/**

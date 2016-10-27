@@ -109,7 +109,7 @@ public class DawsonReservationTest {
 			
 			Reservation test2 = new DawsonReservation(cust2, room2, 2015, 12, 8, 2016, 10, 8);
 			
-			System.out.println("\nTesting Equal Method: \n");
+			System.out.println("\n___Testing Equal Method___ \n");
 			if(test.equals(test2))
 				System.out.println("Test is equal to Test2");
 			else
