@@ -89,11 +89,11 @@ public class SortMergeApp {
 					System.out.println("Customer: " + customerList[i][j]);
 				}*/
 				
-				System.out.println("Customer: " + customerList[1]);	
+				//System.out.println("Customer: " + customerList[1]);	
 				Comparable[] custo = customerList[1];
 				
-				for(int i = 0; i < custo.length ; i++)
-					System.out.println("\t\tCusto: " + custo[i]);
+				for(int i = 0; i < customerList.length ; i++){
+					//System.out.println("\t\tCusto: " + custo[i]);
 				
 				//Customer[] cust = customerList[1][];
 				
@@ -101,10 +101,13 @@ public class SortMergeApp {
 				
 				//System.out.println("Custo: " + custo[1]);
 				
-				ListUtilities.sort(custo);
-				
-				for(int i = 0; i < custo.length ; i++)
-					System.out.println("Custo: " + custo[i]);
+				ListUtilities.sort(customerList[i]);
+				}
+				for(int i = 0; i < customerList.length ; i++){
+					System.out.println("New I: "  +i);
+					for(int j = 0; j < customerList[i].length; j++)
+						System.out.println("Customer: " + customerList[i][j]);
+				}
 				
 			}catch(IOException ioe){
 				

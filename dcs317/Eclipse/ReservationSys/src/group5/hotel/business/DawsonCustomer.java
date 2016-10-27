@@ -51,7 +51,7 @@ public class DawsonCustomer implements Customer {
 	 */
 	@Override
 	public int compareTo(Customer customer) {
-		if (this.equals(customer))
+		if (this == customer)
 			return 0;
 		return this.email.getAddress().compareToIgnoreCase(customer.getEmail().getAddress());
 	}
