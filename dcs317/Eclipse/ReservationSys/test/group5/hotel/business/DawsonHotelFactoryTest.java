@@ -63,8 +63,6 @@ public class DawsonHotelFactoryTest {
 	
 		getToCopy("toCopy getReservationInstance Case 2 - Invalid Date ", cust, room, 2015, 10, 50, 2015, 12, 5, false);
 		
-		cust = new DawsonCustomer("Jo--kes", "Caterpilla", "JokesOnYou@gmail.com");
-		getToCopy("toCopy getReservationInstance Case 3 - Invalid First Name ", cust, room, 2015, 10, 5, 2015, 12, 5, false);
 	}
 	
 	private static void getCustomerInstance(String testCase, String fName, String lName, String email, boolean validation){
@@ -179,7 +177,7 @@ public class DawsonHotelFactoryTest {
 				System.out.println("\n\tError the Data should not be valid. <===>FAILED TEST<===>\n");
 		}
 		catch (Exception b){
-			System.out.print("\tUNEXPECTED EXCEPTION TYPE! " + b.getClass() +  " "  + b.getMessage() + " ==== FAILED TEST ====\n");
+			System.out.print("\tUNEXPECTED EXCEPTION TYPE! " + b.getClass() +  " "  + b.getMessage() + " <==== FAILED TEST ====\n");
 			if (validation)
 				System.out.print("It was expected VALID");
 		}
@@ -194,7 +192,7 @@ public class DawsonHotelFactoryTest {
 		try{
 			Reservation toCopy = new DawsonReservation(aCustomer, aRoom, inYear, inMonth, inDay, 
 														outYear, outMonth, outDay);
-			Reservation reserve = dHF.getReservationInstance(toCopy);
+			dHF.getReservationInstance(toCopy);
 
 		if(validation)
 			System.out.println("\n\tThe data is VALID");

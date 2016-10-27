@@ -139,14 +139,13 @@ public class HotelFileLoader {
 					// IF ** = they are ignored = *** and not *****
 					// IF *''*'' = ERROR THROW
 					arr[i] = dHF.getCustomerInstance(fields[1], fields[2], fields[0]);
-					
-					
-					//Index: 3,4
+										
 					if(lengthVerification(fields))
 						arr[i].setCreditCard(Optional.of(dHF.getCard(fields[3], fields[4])));
 
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
+					continue;
 				}
 				
 				i++;

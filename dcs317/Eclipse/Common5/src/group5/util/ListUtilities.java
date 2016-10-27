@@ -192,8 +192,6 @@ public class ListUtilities {
 	private static void duplicates (Comparable<?> dup, String filename){
 		File duplicates = new File("dcs317/Eclipse/ReservationSys/datafiles/duplicates");
 		
-		//System.out.println(filename);
-
 		if (!duplicates.exists())
 			duplicates.mkdir(); 
 		 

@@ -157,7 +157,7 @@ public class Email implements Serializable, Comparable<Email> {
 				|| userId.matches(specialChar)
 				|| !userId.matches(".*[a-zA-Z].*") 
 				|| (userId.charAt(0) == '.' || userId.charAt( userId.length() - 1 ) == '.')
-				|| userId.charAt(userId.indexOf('.') + 1) == '.')
+				|| userId.matches(".*\\.\\..*"))
 			return false;
 		
 		return true;
