@@ -2,6 +2,8 @@ package dw317.hotel.business.interfaces;
 
 import java.io.Serializable;
 
+import dw317.hotel.business.RoomType;
+
 /**
  * @author Sevan Topalian
  * @version 27/09/2016

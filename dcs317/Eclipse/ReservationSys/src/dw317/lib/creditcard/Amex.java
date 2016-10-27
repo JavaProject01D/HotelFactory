@@ -39,11 +39,15 @@ public class Amex extends AbstractCreditCard {
 		 * If one of the following is not respected, an Illegal Argument
 		 * Exception with an appropriate message will be thrown.
 		 */
-		if (number == null 
-				|| number.length() != 15 
-				|| Integer.parseInt(number.substring(0, 2)) < 34
-				|| Integer.parseInt(number.substring(0, 2)) > 37)
-			throw new IllegalArgumentException("The Amex card given does not respect the validation.");
+		try{
+			if (number == null 
+					|| number.length() != 15 
+					|| Integer.parseInt(number.substring(0, 2)) != 34
+					|| Integer.parseInt(number.substring(0, 2)) != 37)
+				throw new IllegalArgumentException("The Amex card given does not respect the validation.");
+		}catch(NumberFormatException npe){
+			throw new IllegalArgumentException("The Visa card given does not respect the validation.");
+		}
 
 		return number;
 	}

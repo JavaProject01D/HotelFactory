@@ -1,10 +1,11 @@
 
-package dw317.hotel.business.interfaces;
+package dw317.hotel.business;
 
 /**
  * The class is an Enum that
  * define final values which repesents
  * the room type.
+ * 
  * @author Zahraa Horeibi
  * @version 9/27/2016
  */

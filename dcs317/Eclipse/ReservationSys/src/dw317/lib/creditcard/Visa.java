@@ -38,8 +38,12 @@ public class Visa extends AbstractCreditCard {
 		 * If one of the following is not respected, an Illegal Argument
 		 * Exception with an appropriate message will be thrown.
 		 */
-		if (number == null || number.length() != 16 || Integer.parseInt(number.substring(0, 1)) != 4)
+		try{
+			if (number == null || number.length() != 16 || Integer.parseInt(number.substring(0, 1)) != 4)
+				throw new IllegalArgumentException("The Visa card given does not respect the validation.");
+		}catch(NumberFormatException npe){
 			throw new IllegalArgumentException("The Visa card given does not respect the validation.");
+		}
 
 		return number;
 	}

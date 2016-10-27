@@ -1,6 +1,6 @@
 package group5.hotel.business;
 
-import dw317.hotel.business.interfaces.RoomType;
+import dw317.hotel.business.RoomType;
 import dw317.hotel.business.interfaces.Customer;
 import dw317.hotel.business.interfaces.HotelFactory;
 import dw317.hotel.business.interfaces.Reservation;
