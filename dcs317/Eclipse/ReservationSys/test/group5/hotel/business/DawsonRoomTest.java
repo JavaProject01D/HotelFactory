@@ -1,7 +1,7 @@
 package group5.hotel.business;
 
 import dw317.hotel.business.interfaces.Room;
-import dw317.hotel.business.interfaces.RoomType;
+import dw317.hotel.business.RoomType;
 
 
 /**

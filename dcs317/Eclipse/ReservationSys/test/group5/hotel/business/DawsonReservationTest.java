@@ -3,7 +3,7 @@ package group5.hotel.business;
 import dw317.hotel.business.interfaces.Customer;
 import dw317.hotel.business.interfaces.Reservation;
 import dw317.hotel.business.interfaces.Room;
-import dw317.hotel.business.interfaces.RoomType;
+import dw317.hotel.business.RoomType;
 
 /**
  * The following code will try all the
