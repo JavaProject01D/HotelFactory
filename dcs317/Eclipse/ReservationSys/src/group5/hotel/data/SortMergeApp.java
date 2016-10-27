@@ -121,62 +121,73 @@ public class SortMergeApp {
 		}
 	*/
 		
+	@SuppressWarnings("rawtypes")
 	public static void sortedCustomers() {
 			
 			File sorted = new File ("dcs317/Eclipse/ReservationSys/datafiles");
 			sorted.mkdir();
 			//Customers
 			Customer[] customers;
-			Customer[][] customerList = new Customer[10][];
+			Customer[][] customerList = new Customer[10];
 			
 			Reservation[] reservations;
 			Reservation[][] reservationList = new Reservation[10][];
 		
-			int k = 0;
+			int k = 1;
 			int index = 2;
 			
 			for (int i = 1; i < 11; i++){
 				
 				String customerFileName = "customers" + i + ".txt";
-				String sortedCustFileName = "sortedCustomers" + i + ".txt";
 				
-				String resFileName = "reservations" + i + ".txt";
-				String sortedResFileName = "sortedReservations" + i + ".txt";
-				
-			try {
-				
-				customers = HotelFileLoader.getCustomerListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\" + customerFileName);
-				//Sorting
-				ListUtilities.sort(customers);
-				customerList[k] = customers;
-				k++;
+				try {
 					
-					Customer[] temp = ListUtilities.merge(customerList[0], customerList[1], "duplicateCustomers.txt");
-					ListUtilities.merge(temp,customerList[index], "duplicateCustomers.txt");
-						index++;		
-						
-						//reservations = HotelFileLoader.getReservationListFromSequentialFile(String filename, Customer[] customerList,
-						//			Room[] roomList);
-							
-						if (sorted.exists()) {
-							customers = HotelFileLoader.getCustomerListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\" + customerFileName);
-							File cust = new File ("dcs317/Eclipse/ReservationSys/datafiles/database/sorted" + sortedCustFileName);
-							//Write sortedCustomers array to the file
-							ListUtilities.saveListToTextFile(customerList[i], sortedCustFileName);
-						
-							File allCusts = new File ("dcs317/Eclipse/ReservationSys/datafiles/database/customers.txt");
-							
-							File room = new File ("dcs317/Eclipse/ReservationSys/datafiles/database/sorted" + sortedResFileName);
-						}					
-					
-					} catch (IOException e) {	
-						
+					customerList[i] = HotelFileLoader.getCustomerListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\" + customerFileName);
+				
+				}catch (IOException e){
 					System.out.print("Could not create file.." + e.getMessage());	
 					
-					}
-		
-			} 
-			
+				}
+			}
+					
+				for(int j = 0; j < customerList.length ; j++){
+					
+					String sortedCustFileName = "sortedCustomers" + j + ".txt";					
+					String resFileName = "reservations" + j + ".txt";
+					String sortedResFileName = "sortedReservations" + j + ".txt";
+					
+					Customer[]list2;
+					
+					//Sorting
+					ListUtilities.sort(customerList[j]);
+					list2 = customerList[j];
+					//customerList[k] = customers;
+					//k+=2;
+						//i++;
+						Comparable[] temp = ListUtilities.merge(customerList[j], customerList[j], "duplicateCustomers.txt");
+						ListUtilities.merge(temp,customerList[index], "duplicateCustomers.txt");
+							index++;		
+							
+							//reservations = HotelFileLoader.getReservationListFromSequentialFile(String filename, Customer[] customerList,
+							//			Room[] roomList);
+								
+							if (sorted.exists()) {
+								customers = HotelFileLoader.getCustomerListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\" + customerFileName);
+								File cust = new File ("dcs317/Eclipse/ReservationSys/datafiles/database/sorted" + sortedCustFileName);
+								//Write sortedCustomers array to the file
+								ListUtilities.saveListToTextFile(customerList[j], sortedCustFileName);
+							
+								File allCusts = new File ("dcs317/Eclipse/ReservationSys/datafiles/database/customers.txt");
+								
+								File room = new File ("dcs317/Eclipse/ReservationSys/datafiles/database/sorted" + sortedResFileName);
+							}					
+						
+						/*} catch (IOException e) {	
+							
+						System.out.print("Could not create file.." + e.getMessage());	
+						
+						}*/
+				}
 			
 		}
 		
