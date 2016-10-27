@@ -9,7 +9,6 @@ import group5.util.ListUtilities;
 import java.util.Comparator;
 
 import dw317.hotel.business.interfaces.Room;
-//me
 /**
  * @author Zahraa
  *
@@ -69,29 +68,42 @@ public class SortMergeApp {
 		//	Customer[] customers;
 			Customer[][] customerList = new Customer[10][];
 			
+			Comparable[] cust = new Customer[10];
+			
 			String customerFileName;
 			int k = 1;
 			int index = 2;
 			
-			for (int i = 1; i < 10; i++){
+			try {
+				for (int i = 1; i < customerList.length; i++){
 				
-				customerFileName = "customers" + i + ".txt";
-				
-				try {
-					
+					customerFileName = "customers" + i + ".txt";
+					System.out.println("I1: " +i);
 					customerList[i] = HotelFileLoader.getCustomerListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\" + customerFileName);
+					System.out.println("Customer: " + customerList[i]);				
+					}
 				
+			}catch(IOException ioe){
 				
+			}
+				
+		}
 			
 					
-				for(int j = 0; j < customerList.length ; j++){
+				/*for(int j = 0; j < customerList.length ; j++){
 					
-					String sortedCustFileName = "sortedCustomers" + j + ".txt";		
-
-					Customer[]list2;
+					//for(int i=0; i < customerList[j].length; i++)
+					
+					//String sortedCustFileName = "sortedCustomers" + j + ".txt";		
+					
+					System.out.println("J: " +j);
+					
+					Customer[]list2 = new Customer[10];
+					Comparable[] custo = customerList[j];
+					
 					
 					//Sorting
-					ListUtilities.sort(customerList[j]);
+					ListUtilities.sort(custo);
 					list2 = customerList[j];
 					//customerList[k] = customers;
 					//k+=2;
@@ -105,9 +117,9 @@ public class SortMergeApp {
 						
 							if (sorted.exists()) {
 						//		customers = HotelFileLoader.getCustomerListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\" + customerFileName);
-								File cust = new File ("dcs317/Eclipse/ReservationSys/datafiles/database/sorted" + sortedCustFileName);
+								//File cust = new File ("dcs317/Eclipse/ReservationSys/datafiles/database/sorted" + sortedCustFileName);
 								//Write sortedCustomers array to the file
-								ListUtilities.saveListToTextFile(customerList[j], sortedCustFileName);
+								//ListUtilities.saveListToTextFile(customerList[j], sortedCustFileName);
 							
 								File allCusts = new File ("dcs317/Eclipse/ReservationSys/datafiles/database/customers.txt");
 							}	
@@ -117,7 +129,7 @@ public class SortMergeApp {
 					System.out.print("Could not create file.." + e.getMessage());	
 			}			
 		}
-	}		
+	//}		*/
 		
 	public static void sortedReservations(Customer[] customerList, Room[] roomList) {
 		

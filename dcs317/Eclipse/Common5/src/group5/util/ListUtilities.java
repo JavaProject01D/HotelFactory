@@ -53,7 +53,7 @@ public class ListUtilities {
 	public static void sort(Comparable[] list) throws IllegalArgumentException, NullPointerException {
 			
 		if(list == null)
-			throw new NullPointerException("The list given that will be sorted has a Null value.");
+			throw new NullPointerException("The list given is Null.");
 		
 		if (list[list.length - 1] == null)
 			throw new IllegalArgumentException("Not filled to capacity");
