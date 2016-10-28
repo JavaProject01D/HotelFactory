@@ -130,7 +130,7 @@ public class DawsonCustomer implements Customer {
 		
 		if (obj instanceof Customer){
 		Customer cust = (Customer) obj;
-	// ignoreCase?	
+		
 		if (!this.getEmail().getAddress().equalsIgnoreCase((cust.getEmail().getAddress())))
 			return false;
 

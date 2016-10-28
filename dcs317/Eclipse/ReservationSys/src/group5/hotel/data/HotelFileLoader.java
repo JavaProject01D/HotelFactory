@@ -155,7 +155,7 @@ public class HotelFileLoader {
 
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
-					//If i found a null I will not add it to the array
+					//If I found a null I will not add it to the array
 					continue;
 				}
 
@@ -266,7 +266,7 @@ public class HotelFileLoader {
 							throw new IllegalArgumentException("Room does not exist");
 					}
 					
-				//added by Denis
+				//added
 				} catch (NumberFormatException nbe) {
 					System.out.println(nbe.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
 					continue;

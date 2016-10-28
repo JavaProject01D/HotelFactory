@@ -60,11 +60,12 @@ public class DawsonReservation implements Reservation{
 	 */
 	@Override
 	public Customer getCustomer() {
-		
+		aCustomer.setCreditCard(aCustomer.getCreditCard());
+
 		return new DawsonCustomer(aCustomer.getName().getFirstName(),
 								   aCustomer.getName().getLastName(),
 								   aCustomer.getEmail().getAddress());
-								   //aCustomer.setCreditCard(aCustomer.getCreditCard());
+								   
 	}
 
 	/**
