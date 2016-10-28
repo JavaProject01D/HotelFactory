@@ -1,6 +1,3 @@
-/**
- * 
- */
 package group5.hotel.data;
 
 import java.io.BufferedReader;
