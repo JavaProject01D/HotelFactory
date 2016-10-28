@@ -136,8 +136,18 @@ public class HotelFileLoader {
 
 			while (inputStream.hasNext()) {
 				record = inputStream.nextLine();
-				String[] fields = record.split("\\*");
 
+				if(record.length() - record.replace("*", "").length() < 3)
+					throw new IllegalArgumentException("Error: the record contain only two *");
+				
+				
+				String[] fields = record.split("\\*");
+				
+				//System.out.println("SPECIAL LENGTH: " + fields.length);
+				
+				/*for(int j =0; j < fields.length; j++)
+					System.out.println("ContainAt" + j + ": " + fields[j]);*/
+				
 				// look for blank line
 				if (fields.length == 1 && fields[0] == null || fields[0].isEmpty())
 					continue;

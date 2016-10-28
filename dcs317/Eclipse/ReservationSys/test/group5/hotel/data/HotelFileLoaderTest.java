@@ -46,6 +46,7 @@ public class HotelFileLoaderTest {
 		
 		path = "dcs317\\Eclipse\\ReservationSys\\testbin\\testFiles\\rooms\\validRoomWithBlank.txt";
 		loadRoomFilesTest("Case 6 - Valid room file - Blank Line for the next Room", path, true);
+		
 	}
 	
 	private static void loadRoomFilesTest(String testCase, String path, boolean validation){
@@ -112,11 +113,10 @@ public class HotelFileLoaderTest {
 		loadCustomerFilesTest("Case 15 - Invalid Last Name", path, false);
 		
 		path = "dcs317\\Eclipse\\ReservationSys\\testBin\\testFiles\\customer\\invalidCardType.txt";
-		loadCustomerFilesTest("Case 16 - Invalid Card Type", path, false);
+		loadCustomerFilesTest("Case 16 - Invalid Card Type", path, false);		
 		
 		path = "dcs317\\Eclipse\\ReservationSys\\testBin\\testFiles\\customer\\invalidCardNumber.txt";
 		loadCustomerFilesTest("Case 17 - Invalid Card Number", path, false);
-		
 		
 	}
 	
