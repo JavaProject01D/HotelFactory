@@ -74,8 +74,13 @@ public class HotelFileLoader {
 				} catch (NumberFormatException nfe) {
 					System.out.println(nfe.getMessage() + "\nThe given room is invalid: Parse Exception!!"
 							+ "\nFileName: " + filename + "\nRecord: " + record);
+					//avoid to have nulls in my array of Rooms
+					continue;
+					
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
+					//avoid to have nulls in my array of Rooms
+					continue;
 				}
 				i++;
 
@@ -89,6 +94,7 @@ public class HotelFileLoader {
 
 		} catch (IOException io) {
 			System.out.println(io.getMessage());
+			
 		}
 
 		// Close Scanner
@@ -149,6 +155,7 @@ public class HotelFileLoader {
 
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
+					//If i found a null I will not add it to the array
 					continue;
 				}
 
@@ -175,7 +182,7 @@ public class HotelFileLoader {
 
 	/**
 	 * Verify if the length is the right one If not i will not instantiate the
-	 * method
+	 * method, but only for cutomers file
 	 * 
 	 * @author Denis Lebedev
 	 * 
@@ -258,6 +265,11 @@ public class HotelFileLoader {
 						else if(!roomExists)
 							throw new IllegalArgumentException("Room does not exist");
 					}
+					
+				//added by Denis
+				} catch (NumberFormatException nbe) {
+					System.out.println(nbe.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
+					continue;
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
 					continue;

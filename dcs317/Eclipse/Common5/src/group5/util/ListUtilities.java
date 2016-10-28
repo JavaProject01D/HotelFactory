@@ -58,7 +58,7 @@ public class ListUtilities {
 		if (list[list.length - 1] == null)
 			throw new IllegalArgumentException("Not filled to capacity");
 		
-		Comparable temp;
+		Object temp;
 		
 		int index = 0;
 		for (int i = 0; i < list.length; i++) {
@@ -70,7 +70,7 @@ public class ListUtilities {
 			}
 			temp = list[i];
 			list[i] = list[index];
-			list[index] = temp;
+			list[index] = (Comparable) temp;
 		}
 	}
 
@@ -162,7 +162,7 @@ public class ListUtilities {
 		
 		}//end of while loop
 		
-		
+		//look if there is something else at the end of the array
 		 if (list1Ind < list1.length ) {
 		           for (int i = list1Ind; i < list1.length; i++) {
 		            list3[list3Ind] = list1[i];
@@ -189,7 +189,7 @@ public class ListUtilities {
 	 * @author Denis Lebedev
 	 * @param dup
 	 */
-	private static void duplicates (Comparable<?> dup, String filename){
+	private static void duplicates (Object dup, String filename){
 		File duplicates = new File("dcs317/Eclipse/ReservationSys/datafiles/duplicates");
 		
 		if (!duplicates.exists())
@@ -219,7 +219,7 @@ public class ListUtilities {
 	 * @param filename
 	 * @param dup
 	 */
-	private static void writeToFile(String filename, Comparable<?> dup){
+	private static void writeToFile(String filename, Object dup){
 		PrintWriter outputFile = null;
 		try {
 			outputFile = new PrintWriter (new BufferedWriter (new OutputStreamWriter 
