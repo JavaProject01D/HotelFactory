@@ -127,7 +127,7 @@ public class Email implements Serializable, Comparable<Email> {
 		if(email == null
 			|| email.isEmpty() 
 			|| email.indexOf('@') == -1
-			|| email.indexOf('@', email.indexOf('@') +1) != -1)
+			|| (email.length() - email.replace("@", "").length()) != 1)
 			throw new IllegalArgumentException("Your email is empty or invalid");
 		String userId = email.substring(0, email.indexOf('@'));
 		String hostName = email.substring(email.indexOf('@') + 1);
