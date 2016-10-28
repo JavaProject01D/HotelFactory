@@ -150,7 +150,7 @@ public class DawsonReservation implements Reservation{
 	@Override
 	public String toString(){
 		return aCustomer.getEmail().getAddress() + "*" + this.checkIn.getYear() + "*" + this.checkIn.getMonth() +
-				"*" + this.checkIn.getDayOfMonth() + "*" + this.checkIn.getYear() +
+				"*" + this.checkIn.getDayOfMonth() + "*" + this.checkOut.getYear() +
 				"*" + this.checkOut.getMonth() + "*" + this.checkOut.getDayOfMonth() + 
 				"*" + aRoom.getRoomNumber();
 	}
