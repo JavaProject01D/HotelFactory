@@ -252,10 +252,10 @@ public class HotelFileLoader {
 								if (roomList[r].getRoomNumber() == (Integer.parseInt(fields[7]))) {
 									roomExists = true;
 									roomPosition = r;
+									break;
 								} else
 									roomExists = false;
 							}
-
 							break;
 						} else
 							customerExists = false;
