@@ -267,8 +267,8 @@ public class HotelFileLoader {
 					}
 					
 				//added
-				} catch (NumberFormatException nbe) {
-					System.out.println(nbe.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
+				} catch (NumberFormatException nfe) {
+					System.out.println(nfe.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
 					continue;
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
