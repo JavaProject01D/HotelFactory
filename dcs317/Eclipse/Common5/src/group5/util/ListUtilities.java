@@ -245,20 +245,29 @@ public class ListUtilities {
 	 * capacity is equal to the list's size.
 	 * 
 	 *
-	 * @param list A list of objects. Assumes that the list's capacity is equal
-	 * to the list's size.
+	 * @param list
+	 *            A list of objects. Assumes that the list's capacity is equal
+	 *            to the list's size.
 	 * 
-	 * @param sortOrder A Comparator object that defines the sort order
+	 * @param sortOrder
+	 *            A Comparator object that defines the sort order
 	 * 
 	 * 
-	 * @throws IllegalArgumentException if the parameter is * not full to
-	 * capacity.
+	 * @throws IllegalArgumentException
+	 *             if the parameter is not full to capacity.
 	 *
-	 * @throws NullPointerException if the list or sortOrder * are null.
+	 * @throws NullPointerException
+	 *             if the list or sortOrder are null.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void sort(Comparable[] list, Comparator sortOrder)
 			throws IllegalArgumentException, NullPointerException {
-		Arrays.sort(list, sortOrder);
+		try {
+			Arrays.sort(list, sortOrder);
+		} catch (IllegalArgumentException iae) {
+			System.out.println("Illegal arguments. " + iae.getMessage());
+		} catch (NullPointerException np) {
+			System.out.println("Null pointer exception. " + np.getMessage());
+		}
 	}
 }
