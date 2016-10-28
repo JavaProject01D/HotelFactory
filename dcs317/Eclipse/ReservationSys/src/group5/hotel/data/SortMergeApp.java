@@ -30,25 +30,19 @@ public class SortMergeApp {
 			database.mkdir();
 		//Rooms
 		Room[] rooms;
-
-		
 		File room = new File(database + "/" +"rooms.txt");
 		
 		try {
-			rooms = HotelFileLoader.getRoomListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\rooms.txt");	
+			rooms = HotelFileLoader.getRoomListFromSequentialFile("dcs317/Eclipse/ReservationSys/datafiles/rooms.txt");	
+			//System.out.println(rooms.length);
 			
 			//Sorting
 			//do wrapper method and return Integer and do sorting on that 
-
 			ListUtilities.sort(rooms);
-				
-				rooms = HotelFileLoader.getRoomListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\rooms.txt");		
-				
-				//File room = new File(database + "/" +"rooms.txt");
 				room.createNewFile();
 				
 				// Write sortedRooms array to the file 
-				ListUtilities.saveListToTextFile(rooms,"dcs317\\Eclipse\\ReservationSys\\datafiles\\database\\rooms.txt");
+				ListUtilities.saveListToTextFile(rooms,"dcs317/Eclipse/ReservationSys/datafiles/database/rooms.txt");
 				
 			
 				} catch (IOException e) {	
@@ -62,7 +56,12 @@ public class SortMergeApp {
 	@SuppressWarnings("rawtypes")
 	public static void sortedCustomers() throws IOException {
 			
+			File database = new File("dcs317/Eclipse/ReservationSys/datafiles/database");
+			if(!database.exists())
+			database.mkdir();
+		
 			File sorted = new File ("dcs317/Eclipse/ReservationSys/datafiles/sorted");
+			if (!sorted.exists())
 			sorted.mkdir();
 			//Customers
 		//	Customer[] customers;
@@ -71,45 +70,39 @@ public class SortMergeApp {
 			//Comparable[] cust = new Customer[10];
 			
 			String customerFileName;
+			String sortedCustFileName;
 			int k = 1;
 			int index = 2;
 			
 			try {
-				for (int i = 0; i < customerList.length; i++){
-				
+				for (int i = 0; i < customerList.length; i++){			
 					customerFileName = "customers" + (i+1) + ".txt";
-					System.out.println("I1: " +i);
-					customerList[i] = HotelFileLoader.getCustomerListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\" + customerFileName);
-					//System.out.println("Customer: " + customerList[i]);				
+					customerList[i] = HotelFileLoader.getCustomerListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\" + customerFileName);				
+					}
+			//	Comparable[] custo = customerList[1];
+				
+				for(int i = 0; i < customerList.length ; i++){
+				ListUtilities.sort(customerList[i]);
+					}
+				for(int i = 0; i < customerList.length ; i++){
+					for(int j = 0; j < customerList[i].length; j++)	
+						if (sorted.exists()) {
+								
+									sortedCustFileName = "sortedCustomers" + (i+1) + ".txt";
+									File cust = new File (sorted + "/" +  sortedCustFileName);
+									cust.createNewFile();	
+									
+									// Write sortedCustomers array to the file					
+									ListUtilities.saveListToTextFile(customerList[i], "dcs317/Eclipse/ReservationSys/datafiles/sorted" + "/" + sortedCustFileName);
+								
+									File allCusts = new File (database + "/customers.txt");
+									allCusts.createNewFile();
+								
+					//	System.out.println("Customer: " + customerList[i][j]);
+						}
 					}
 				
-				/*for(int i = 0; i < customerList.length ; i++){
-					System.out.println("\t\tCustomer: " + customerList[i]);
-					for(int j = 0; j < customerList[i].length; j++)
-					System.out.println("Customer: " + customerList[i][j]);
-				}*/
-				
-				//System.out.println("Customer: " + customerList[1]);	
-				Comparable[] custo = customerList[1];
-				
-				for(int i = 0; i < customerList.length ; i++){
-					//System.out.println("\t\tCusto: " + custo[i]);
-				
-				//Customer[] cust = customerList[1][];
-				
-				//System.out.println("Cust: " + cust[1]);
-				
-				//System.out.println("Custo: " + custo[1]);
-				
-				ListUtilities.sort(customerList[i]);
-				}
-				for(int i = 0; i < customerList.length ; i++){
-					System.out.println("New I: "  +i);
-					for(int j = 0; j < customerList[i].length; j++)
-						System.out.println("Customer: " + customerList[i][j]);
-				}
-				
-			}catch(IOException ioe){
+				}	catch(IOException ioe){
 				
 			}
 				

@@ -101,6 +101,10 @@ public class ListUtilities {
 		} catch (FileNotFoundException e) {
 			throw new FileNotFoundException("Error saving list! Unable to access the device " + filename);
 		}
+		finally {
+			if (outputFile != null)  //successfully opened
+				outputFile.close();  //flushes buffer and releases resources
+		}
 	}
 
 	/**

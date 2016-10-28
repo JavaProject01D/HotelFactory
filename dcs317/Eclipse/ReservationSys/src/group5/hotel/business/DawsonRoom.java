@@ -170,9 +170,9 @@ public class DawsonRoom implements Room {
 
 	@Override
 	public final int compareTo(Room room) {
-		if (roomNumber > room.getNumber()) {
+		if (this.getRoomNumber() > room.getRoomNumber()) {
 			return 1;
-		} else if (roomNumber == room.getRoomNumber()) {
+		} else if (this.getRoomNumber() == room.getRoomNumber()) {
 			return 0;
 		} else {
 			return -1;
