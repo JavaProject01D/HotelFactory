@@ -19,7 +19,13 @@ import group5.hotel.business.ReservationByCustSorter;
 
 /**
  * @author Sevan Topalian
- *
+ * 
+ *         This class will test the ReservationByCustSorter class. It will run
+ *         through the custSorterTest file and sort all the reservations
+ *         sequentially in an array according to the defined sorting order (by
+ *         customer, and if they are the same, by check in date). It will print
+ *         out the unsorted and sorted arrays so that it is possible to view
+ *         that the array has in fact been sorted properly.
  */
 public class ReservationByCustSorterTest {
 
@@ -70,16 +76,16 @@ public class ReservationByCustSorterTest {
 
 		// Close Scanner
 		inputStream.close();
-		
+
 		System.out.println("\nFilled reservation array (unsorted):");
-		for(Reservation reservation : arr){
+		for (Reservation reservation : arr) {
 			System.out.println(reservation);
 		}
-		
+
 		Arrays.sort(arr, new ReservationByCustSorter());
-		
+
 		System.out.println("\nSorted array:");
-		for(Reservation reservation : arr){
+		for (Reservation reservation : arr) {
 			System.out.println(reservation);
 		}
 	}

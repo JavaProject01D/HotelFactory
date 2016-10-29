@@ -19,7 +19,14 @@ import group5.hotel.business.ReservationByCheckOutSorter;
 
 /**
  * @author Sevan Topalian
- *
+ * 
+ *         This class will test the ReservationByCheckoutSorter class. It will
+ *         run through the checkOutSorterTest file and sort all the reservations
+ *         sequentially in an array according to the defined sorting order (by
+ *         check out date, and if they are the same, by default order by using
+ *         compareTo). It will print out the unsorted and sorted arrays so that
+ *         it is possible to view that the array has in fact been sorted
+ *         properly.
  */
 public class ReservationByCheckOutSorterTest {
 
@@ -70,16 +77,16 @@ public class ReservationByCheckOutSorterTest {
 
 		// Close Scanner
 		inputStream.close();
-		
+
 		System.out.println("\nFilled reservation array (unsorted):");
-		for(Reservation reservation : arr){
+		for (Reservation reservation : arr) {
 			System.out.println(reservation);
 		}
-		
+
 		Arrays.sort(arr, new ReservationByCheckOutSorter());
-		
+
 		System.out.println("\nSorted array:");
-		for(Reservation reservation : arr){
+		for (Reservation reservation : arr) {
 			System.out.println(reservation);
 		}
 	}
