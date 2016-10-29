@@ -74,12 +74,12 @@ public class HotelFileLoader {
 				} catch (NumberFormatException nfe) {
 					System.out.println(nfe.getMessage() + "\nThe given room is invalid: Parse Exception!!"
 							+ "\nFileName: " + filename + "\nRecord: " + record);
-					//avoid to have nulls in my array of Rooms
+					// avoid to have nulls in my array of Rooms
 					continue;
-					
+
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
-					//avoid to have nulls in my array of Rooms
+					// avoid to have nulls in my array of Rooms
 					continue;
 				}
 				i++;
@@ -94,7 +94,7 @@ public class HotelFileLoader {
 
 		} catch (IOException io) {
 			System.out.println(io.getMessage());
-			
+
 		}
 
 		// Close Scanner
@@ -136,17 +136,18 @@ public class HotelFileLoader {
 
 			while (inputStream.hasNext()) {
 				record = inputStream.nextLine();
-								
-				String[] fields = record.split("\\*");				
-				
+
+				String[] fields = record.split("\\*");
+
 				// look for blank line
 				if (fields.length == 1 && fields[0] == null || fields[0].isEmpty())
 					continue;
-				
-				//It looks if a record have at LEAST 5 *
-				if(record.length() - record.replace("*", "").length() != 4){
+
+				// It looks if a record have at LEAST 5 *
+				if (record.length() - record.replace("*", "").length() != 4) {
 					System.out.println("Error: the record contain less than four *");
-					continue;}
+					continue;
+				}
 
 				try {
 
@@ -161,7 +162,7 @@ public class HotelFileLoader {
 
 				} catch (IllegalArgumentException iae) {
 					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
-					//If I found a null I will not add it to the array
+					// If I found a null I will not add it to the array
 					continue;
 				}
 
@@ -213,6 +214,25 @@ public class HotelFileLoader {
 		return true;
 	}
 
+	/**
+	 * Returns an array of Reservations found in a file by matching them with
+	 * the Customer and Room arrays given to the method.
+	 * 
+	 * @param filename
+	 *            The path to the file containing the reservations
+	 * @param customerList
+	 *            An array of customers to match the reservations with
+	 * @param roomList
+	 *            An array of rooms to match the reservations with
+	 * @return Reservation[] An array of reservations found in the specified
+	 *         file, matched with the customers and rooms found in their
+	 *         respective arrays
+	 * @throws IOException
+	 *             If there is a problem with the file
+	 * @throws IllegalArgumentException
+	 *             If the customer or room from the reservation cannot be found
+	 *             in the array
+	 */
 	public static Reservation[] getReservationListFromSequentialFile(String filename, Customer[] customerList,
 			Room[] roomList) throws IOException, IllegalArgumentException {
 
@@ -266,13 +286,13 @@ public class HotelFileLoader {
 								Integer.parseInt(fields[1]), Integer.parseInt(fields[2]), Integer.parseInt(fields[3]),
 								Integer.parseInt(fields[4]), Integer.parseInt(fields[5]), Integer.parseInt(fields[6]));
 					else {
-						if(!customerExists)
+						if (!customerExists)
 							throw new IllegalArgumentException("Customer does not exist");
-						else if(!roomExists)
+						else if (!roomExists)
 							throw new IllegalArgumentException("Room does not exist");
 					}
-					
-				//added
+
+					// added
 				} catch (NumberFormatException nfe) {
 					System.out.println(nfe.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
 					continue;
