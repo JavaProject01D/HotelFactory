@@ -1,9 +1,21 @@
 package group5.hotel.data;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Scanner;
 
+import dw317.hotel.business.RoomType;
 import dw317.hotel.business.interfaces.Customer;
+import dw317.hotel.business.interfaces.Reservation;
 import dw317.hotel.business.interfaces.Room;
+import group5.hotel.business.DawsonCustomer;
+import group5.hotel.business.DawsonRoom;
+import group5.hotel.data.HotelFileLoader;
 
 
 /**
@@ -20,9 +32,9 @@ public class HotelFileLoaderTest {
 		// TODO Auto-generated method stub
 		loadRoomFilesTest();
 		loadCustomerFilesTest();
+		getReservationListFromSequentialFileTest();
 	}
-	
-	
+
 	private static void loadRoomFilesTest(){
 		
 		System.out.println("\n_______________Validate The Room Loading_________________\n");
@@ -149,5 +161,119 @@ public class HotelFileLoaderTest {
 		}
 		
 	}
+	
+	/**
+	 * @author Sevan Topalian
+	 */
+	private static void getReservationListFromSequentialFileTest() {
+		System.out.println("\nTesting getReservationListFromSequentialFile");
+		
+		Customer[] customerArray = populateCustomerArray();
+		Room[] roomArray = populateRoomArray();
+		Reservation[] reservationArray = null;
+		
+		try {
+			System.out.println("\nPopulating Reservation Array");
+			reservationArray = HotelFileLoader.getReservationListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\reservations1.txt", customerArray, roomArray);
+		} catch (IllegalArgumentException e) {
+			System.out.println("Error! " + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Error! " + e.getMessage());
+		}
+		
+		for(Reservation reservation : reservationArray){
+			System.out.println("\nReservation created: " + reservation);
+		}
+		System.out.println("\nFinished populating Reservation array");
+	}
 
+	private static Customer[] populateCustomerArray(){
+		String filename = "dcs317\\Eclipse\\ReservationSys\\datafiles\\customers1.txt";
+		Customer[] customer = new Customer[2];
+
+		Scanner inputStream = null;
+		String record = null;
+
+		BufferedReader outStream = null;
+		try {
+			outStream = new BufferedReader(
+					new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8));
+		} catch (FileNotFoundException e) {
+			System.out.println("Error, file not found. " + e.getMessage());
+		}
+
+		inputStream = new Scanner(outStream);
+		
+		System.out.println("\nPopulating Customer array");
+
+		int i = 0;
+
+		while (inputStream.hasNext()) {
+			record = inputStream.nextLine();
+			String[] fields = record.split("\\*");
+
+			customer[i] = new DawsonCustomer(fields[1], fields[2], fields[0]);
+			System.out.println("\nCreated customer: " + customer[i]);
+
+			i++;
+
+			if (i >= customer.length) // resize
+				customer = Arrays.copyOf(customer, customer.length * 2 + 1);
+		} // end of the while loop
+
+		// shrink
+		customer = Arrays.copyOf(customer, i);
+
+		// Close Scanner
+		inputStream.close();
+		
+		System.out.println("\nFinished populating Customer array");
+		
+		return customer;
+	}
+	
+	private static Room[] populateRoomArray() {
+		String filename = "dcs317\\Eclipse\\ReservationSys\\datafiles\\rooms.txt";
+		Room[] room = new Room[2];
+
+		Scanner inputStream = null;
+		String record = null;
+
+		BufferedReader outStream = null;
+		try {
+			outStream = new BufferedReader(
+					new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8));
+		} catch (FileNotFoundException e) {
+			System.out.println("Error, file not found. " + e.getMessage());
+		}
+
+		inputStream = new Scanner(outStream);
+		
+		System.out.println("\nPopulating Room array");
+
+		int i = 0;
+
+		while (inputStream.hasNext()) {
+			record = inputStream.nextLine();
+			String[] fields = record.split("\\*");
+
+			room[i] = new DawsonRoom(Integer.parseInt(fields[0]), RoomType.valueOf(fields[1].toUpperCase()));
+			System.out.println("\nCreated room: " + room[i]);
+
+			i++;
+
+			if (i >= room.length) // resize
+				room = Arrays.copyOf(room, room.length * 2 + 1);
+		} // end of the while loop
+
+		// shrink
+		room = Arrays.copyOf(room, i);
+
+		// Close Scanner
+		inputStream.close();
+		
+		System.out.println("\nFinished populating Room array");
+		
+		return room;
+	}
 }
