@@ -64,7 +64,7 @@ public class HotelFileLoader {
 				String[] fields = record.split("\\*");
 
 				// look if there is a blank line
-				if (fields.length == 1 && fields[0] == null || fields[0].isEmpty())
+				if (fields.length == 1)
 					continue;
 
 				try {
@@ -140,7 +140,7 @@ public class HotelFileLoader {
 				String[] fields = record.split("\\*");
 
 				// look for blank line
-				if (fields.length == 1 && fields[0] == null || fields[0].isEmpty())
+				if (fields.length == 1)
 					continue;
 
 				// It looks if a record have at LEAST 5 *
@@ -261,7 +261,7 @@ public class HotelFileLoader {
 				String[] fields = record.split("\\*");
 
 				// look for blank line
-				if (fields.length == 1 && fields[0] == null || fields[0].isEmpty())
+				if (fields.length == 1)
 					continue;
 
 				try {
