@@ -58,7 +58,7 @@ public class ListUtilities {
 		if (list[list.length - 1] == null)
 			throw new IllegalArgumentException("Not filled to capacity");
 		
-		Object temp;
+		Comparable temp;
 		
 		int index = 0;
 		for (int i = 0; i < list.length; i++) {
@@ -70,7 +70,7 @@ public class ListUtilities {
 			}
 			temp = list[i];
 			list[i] = list[index];
-			list[index] = (Comparable) temp;
+			list[index] =  temp;
 		}
 	}
 
@@ -227,7 +227,7 @@ public class ListUtilities {
 		PrintWriter outputFile = null;
 		try {
 			outputFile = new PrintWriter (new BufferedWriter (new OutputStreamWriter 
-					(new FileOutputStream (filename, true), StandardCharsets.UTF_8)));
+					(new FileOutputStream (filename, false), StandardCharsets.UTF_8)));
 		
 			outputFile.println(dup);
 			

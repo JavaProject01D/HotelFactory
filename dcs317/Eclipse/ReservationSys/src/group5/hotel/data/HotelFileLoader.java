@@ -18,7 +18,7 @@ import group5.hotel.business.DawsonHotelFactory;
  * another purpose. The class will load arrays of Customers, Rooms, and
  * Reservation.
  * 
- * @author Denis Lebedev, Sevan Topalian (Reservation method)
+ * @author Denis Lebedev, Sevan Topalian 
  *
  */
 public class HotelFileLoader {
@@ -217,6 +217,8 @@ public class HotelFileLoader {
 	/**
 	 * Returns an array of Reservations found in a file by matching them with
 	 * the Customer and Room arrays given to the method.
+	 * 
+	 * @author Sevan Topalian 
 	 * 
 	 * @param filename
 	 *            The path to the file containing the reservations

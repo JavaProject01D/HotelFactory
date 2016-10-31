@@ -6,7 +6,6 @@ import dw317.hotel.business.interfaces.Reservation;
 import group5.hotel.data.HotelFileLoader;
 import group5.util.ListUtilities;
 
-import java.util.Comparator;
 
 import dw317.hotel.business.interfaces.Room;
 /**

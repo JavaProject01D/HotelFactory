@@ -150,9 +150,9 @@ public class DawsonReservation implements Reservation{
 	 */
 	@Override
 	public String toString(){
-		return aCustomer.getEmail().getAddress() + "*" + this.checkIn.getYear() + "*" + this.checkIn.getMonth() +
+		return aCustomer.getEmail().getAddress() + "*" + this.checkIn.getYear() + "*" + this.checkIn.getMonthValue() +
 				"*" + this.checkIn.getDayOfMonth() + "*" + this.checkOut.getYear() +
-				"*" + this.checkOut.getMonth() + "*" + this.checkOut.getDayOfMonth() + 
+				"*" + this.checkOut.getMonthValue() + "*" + this.checkOut.getDayOfMonth() + 
 				"*" + aRoom.getRoomNumber();
 	}
 	
@@ -167,9 +167,9 @@ public class DawsonReservation implements Reservation{
 	@Override
 	public int compareTo(Reservation reserve) {
 		if(this.aRoom.equals(reserve.getRoom()))
-			return checkIn.compareTo(reserve.getCheckInDate());
+			return this.aRoom.compareTo(reserve.getRoom());		
 		
-		return this.aRoom.compareTo(reserve.getRoom());		
+		return checkIn.compareTo(reserve.getCheckInDate());
 	}
 	
 	/**
