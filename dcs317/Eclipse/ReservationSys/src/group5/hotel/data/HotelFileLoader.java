@@ -99,7 +99,8 @@ public class HotelFileLoader {
 
 		// Close Scanner
 		finally {
-			inputStream.close();
+			if (inputStream != null)
+				inputStream.close();
 		}
 
 		return arr;
@@ -145,7 +146,7 @@ public class HotelFileLoader {
 
 				// It looks if a record have at LEAST 5 *
 				if (record.length() - record.replace("*", "").length() != 4) {
-					System.out.println("Error: the record contain less than four *");
+					System.out.println("\nError: the record contain less than four *" + "\nFileName: " + filename + "\nRecord: " + record);
 					continue;
 				}
 
@@ -161,7 +162,7 @@ public class HotelFileLoader {
 						arr[i].setCreditCard(Optional.of(dHF.getCard(fields[3], fields[4])));
 
 				} catch (IllegalArgumentException iae) {
-					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
+					System.out.println("\n" + iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
 					// If I found a null I will not add it to the array
 					continue;
 				}
@@ -181,7 +182,8 @@ public class HotelFileLoader {
 
 		// Close Scanner
 		finally {
-			inputStream.close();
+			if (inputStream != null)
+				inputStream.close();
 		}
 
 		return arr;
@@ -296,10 +298,10 @@ public class HotelFileLoader {
 
 					// added
 				} catch (NumberFormatException nfe) {
-					System.out.println(nfe.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
+					System.out.println("\n" + nfe.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
 					continue;
 				} catch (IllegalArgumentException iae) {
-					System.out.println(iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
+					System.out.println("\n" + iae.getMessage() + "\nFileName: " + filename + "\nRecord: " + record);
 					continue;
 				}
 
@@ -318,7 +320,8 @@ public class HotelFileLoader {
 
 		// Close Scanner
 		finally {
-			inputStream.close();
+			if (inputStream != null)
+				inputStream.close();
 		}
 
 		return arr;

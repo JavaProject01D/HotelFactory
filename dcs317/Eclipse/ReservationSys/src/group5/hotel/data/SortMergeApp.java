@@ -160,7 +160,7 @@ public class SortMergeApp {
 				reservationFileName = "reservations" + (i+1) + ".txt";
 				reservationList[i] = HotelFileLoader.getReservationListFromSequentialFile("dcs317\\Eclipse\\ReservationSys\\datafiles\\" + reservationFileName, fullyLoadedCustomer, sortedRooms);				
 			}
-	
+			
 			// Sorting every text file individually 
 			for(int i = 0; i < reservationList.length ; i++){
 				ListUtilities.sort(reservationList[i]);

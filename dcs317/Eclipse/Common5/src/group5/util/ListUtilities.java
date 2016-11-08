@@ -63,7 +63,7 @@ public class ListUtilities {
 		int index = 0;
 		for (int i = 0; i < list.length; i++) {
 			index = i;
-			for (int k = i+1; k < list.length; k++) {
+			for (int k = i+1; k < list.length -1; k++) {
 
 				if (list[k].compareTo(list[index]) < 0)
 					index = k;
