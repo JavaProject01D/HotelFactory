@@ -5,7 +5,12 @@ import java.util.List;
 
 import dw317.hotel.business.interfaces.Customer;
 import dw317.hotel.business.interfaces.HotelFactory;
-import dw317.hotel.business.interfaces.Room;
+import dw317.hotel.data.DuplicateCustomerException;
+import dw317.hotel.data.NonExistingCustomerException;
+import dw317.hotel.data.interfaces.ListPersistenceObject;
+import dw317.lib.Email;
+import dw317.lib.creditcard.CreditCard;
+import group5.hotel.business.DawsonHotelFactory;
 
 public class CustomerListDB {
 	private List<Customer> database;
@@ -14,14 +19,15 @@ public class CustomerListDB {
 		
 	public CustomerListDB (ListPersistenceObject listPersistenceObject){
 		this.listPersistenceObject = listPersistenceObject;
-		this.database = this.listPersistenceObject.getRoomDatabase();
+		this.database = this.listPersistenceObject.getCustomerDatabase();
+		factory = DawsonHotelFactory.DAWSON;
 	}
 
 	public CustomerListDB (ListPersistenceObject listPersistenceObject,
 						HotelFactory factory){
 		
 		this.listPersistenceObject = listPersistenceObject;
-		this.database = this.listPersistenceObject.getRoomDatabase();
+		this.database = this.listPersistenceObject.getCustomerDatabase();
 		this.factory = factory;
 	}
 
@@ -50,6 +56,7 @@ public class CustomerListDB {
 	//@Override
 	public Customer getCustomer(Email email)
 				throws NonExistingCustomerException{
+		return null;
 		
 	}
 	
@@ -60,7 +67,7 @@ public class CustomerListDB {
 	}
 	
 	
-	private static void binarySearch(List<? extends Food> menuList, String item){
+	/*private static void binarySearch(List<? extends Food> menuList, String item){
 		Food search = new Fruit(item,0,"","");
 		
 		int first, last, middle;
@@ -83,5 +90,5 @@ public class CustomerListDB {
 			if(first > last )
 				System.out.println("The given object is not in the list Bouuuh!");
 		}
-	}
+	}*/
 }
