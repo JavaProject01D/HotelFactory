@@ -7,12 +7,13 @@ import dw317.hotel.business.interfaces.Customer;
 import dw317.hotel.business.interfaces.HotelFactory;
 import dw317.hotel.data.DuplicateCustomerException;
 import dw317.hotel.data.NonExistingCustomerException;
+import dw317.hotel.data.interfaces.CustomerDAO;
 import dw317.hotel.data.interfaces.ListPersistenceObject;
 import dw317.lib.Email;
 import dw317.lib.creditcard.CreditCard;
 import group5.hotel.business.DawsonHotelFactory;
 
-public class CustomerListDB {
+public class CustomerListDB implements CustomerDAO{
 	private List<Customer> database;
 	private final ListPersistenceObject listPersistenceObject;
 	private final HotelFactory factory; 
@@ -34,55 +35,73 @@ public class CustomerListDB {
 	@Override 
 	public String toString(){
 		int num = database.size();
-		StringBuilder str = new StringBuilder("Number of rooms in database: " + num);
+		StringBuilder str = new StringBuilder("\nNumber of customers in database: " + num);
 		for (Customer r : database) {
 			str.append("\n" + r.toString());
 		}
 		return str.toString();
 	}
 	
-	//@Override
+	@Override
 	public void add (Customer cust)
 			throws DuplicateCustomerException{
 		
+		if(binarySearch(database, cust.getEmail()))
+			throw new DuplicateCustomerException();
+				
+		database.add(factory.getCustomerInstance(cust.getName().getFirstName(), 
+						cust.getName().getLastName(), cust.getEmail().getAddress()));
+		//Keep their creditcard 
+		cust.setCreditCard(cust.getCreditCard());
 	}
 	
-	//@Override
+	@Override
 	public void disconnect()
 			throws IOException{
 		
 	}
 	
-	//@Override
+	@Override
 	public Customer getCustomer(Email email)
 				throws NonExistingCustomerException{
 		return null;
 		
 	}
 	
-	//@Override 
+	@Override 
 	public void update (Email email, CreditCard card)
 			throws NonExistingCustomerException{
 		
 	}
 	
 	
-	/*private static void binarySearch(List<? extends Food> menuList, String item){
-		Food search = new Fruit(item,0,"","");
+	private static boolean binarySearch(List<Customer> list, Email cust){
+		
+		System.out.println("Start BinarySearch");
 		
 		int first, last, middle;
 		
 		first = 0;
-		last = menuList.size() -1;
+		last = list.size() -1;
 		middle = (first+last)/2;
 		boolean found = false;
 		
-		while( first <= last && !found){
-			if(menuList.get(middle).compareTo(search) < 0)
+		for(int i=0; i < list.size() ; i++){
+			System.out.println("List: " + list.get(i));
+		}
+		
+		System.out.println("\nTry to find: " + cust);
+
+		
+		while( first <= last && !found ){
+			//middle = (first + last)/2;
+			if(list.get(middle).getEmail().compareTo(cust) < 0){
 				first = middle+1;
-			else if(menuList.get(middle).equals(search)){
-				System.out.println(search.getName() + " found at location " + (middle +1) +".");
+				middle = (first + last)/2;
+			}else if(list.get(middle).getEmail().equals(cust)){
+				System.out.println(cust.getAddress() + " found at location " + (middle +1) +".");
 				found = true;
+				break;
 			}else{
 				last = middle-1;
 				middle = (first+last)/2;
@@ -90,5 +109,8 @@ public class CustomerListDB {
 			if(first > last )
 				System.out.println("The given object is not in the list Bouuuh!");
 		}
-	}*/
+		
+		System.out.println("Found: " + found);
+		return found; 
+	}
 }

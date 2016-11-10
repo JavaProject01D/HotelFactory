@@ -100,8 +100,7 @@ public class Email implements Serializable, Comparable<Email> {
 		if(this.getHost().equalsIgnoreCase(email.getHost()))
 			return this.getUserId().compareToIgnoreCase(email.getUserId());
 				
-		return getHost().compareToIgnoreCase(email.getHost());
-		
+		return this.getHost().compareToIgnoreCase(email.getHost());
 	}
 	
 	/**
