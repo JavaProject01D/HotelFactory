@@ -57,38 +57,48 @@ public class ReservationListDB implements ReservationDAO {
 	
 	@Override
 	public void add(Reservation reserv) throws DuplicateReservationException {
-			for (Reservation r : database) {
-				if (r.equals(reserv))
-					throw new DuplicateReservationException();
-			}
+		
+		int position = binarySearch(this.database, reserv);
 			// Creating a deep copy of reserv
-			Reservation copyReserv = new DawsonReservation(reserv.getCustomer(), reserv.getRoom(), reserv.getCheckInDate().getYear(),
-															reserv.getCheckInDate().getMonthValue(), reserv.getCheckInDate().getDayOfMonth(),
-															reserv.getCheckOutDate().getYear(), reserv.getCheckOutDate().getMonthValue(),											
-															reserv.getCheckOutDate().getDayOfMonth());										
+			Reservation copyReserv = factory.getReservationInstance(reserv);									
 				
-			//binary search so we can insert it at the correct position
-			database.add(copyReserv);			
-				
-				
+			//binary search so we can insert it at the correct position, not sure
+			database.add(binarySearch(this.database, copyReserv),copyReserv);			
+			
 	}
 
 	@Override
-	public void disconnect() throws IOException {
-		// TODO Auto-generated method stub
-		
+	public void disconnect() throws IOException {		
+		this.listPersistenceObject.saveReservationDatabase(this.database);
+		this.database = null;
+		new ReservationListDB(this.listPersistenceObject, this.factory);
 	}
 
 	@Override
 	public List<Reservation> getReservations(Customer cust) {
-		// TODO Auto-generated method stub
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		return null;
 	}
 
 	@Override
 	public void cancel(Reservation reserv) throws NonExistingReservationException {
-		// TODO Auto-generated method stub
+	
+		int index = binarySearchForIndex(this.database, reserv);
+		int result = binarySearch(this.database, reserv);	
+			
+			if ( result == 0 ) 
+				this.database.remove(index);
 		
+			if (result == -1)  // fix -1 return
+				throw new NonExistingReservationException();		
 	}
 
 	@Override
@@ -114,6 +124,61 @@ public class ReservationListDB implements ReservationDAO {
 		// TODO Auto-generated method stub
 		
 	}
+	private static int binarySearch(List<? extends Reservation> reservationList, Reservation res) {
+
+			int low = 0;
+			int high = reservationList.size() - 1;
+			int mid = (low + high) / 2;
+			int result;
+
+
+			while ( low <= high) {
+				
+				mid = (low + high) / 2;
+				result = reservationList.get(mid).compareTo(res);
+				
+				System.out.println(result);
+				if (result == 0) {
+					return 0;
+				}
+				else if (result < 0) {
+					low = mid + 1;
+					return -1;
+				}
+				else 
+					high = mid - 1;	
+				return 1;
+			}	
+			return -1;
+	}
+	
+	private static int binarySearchForIndex(List<? extends Reservation> reservationList, Reservation res) {
+
+		int low = 0;
+		int high = reservationList.size() - 1;
+		int mid = (low + high) / 2;
+		int result;
+
+
+		while ( low <= high) {
+			
+			mid = (low + high) / 2;
+			result = reservationList.get(mid).compareTo(res);
+			
+			System.out.println(result);
+			if (result == 0) {
+				return mid;
+			}
+			else if (result < 0) {
+				low = mid + 1;
+				return -1;
+			}
+			else 
+				high = mid - 1;	
+			return 1;
+		}	
+		return -1;
+}
 }
 	
 	
