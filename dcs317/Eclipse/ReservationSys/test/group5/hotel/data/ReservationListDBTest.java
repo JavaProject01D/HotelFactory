@@ -3,10 +3,15 @@ package group5.hotel.data;
 import java.io.File;
 import java.io.IOException;
 
+import dw317.hotel.business.RoomType;
 import dw317.hotel.business.interfaces.Customer;
 import dw317.hotel.business.interfaces.Reservation;
+import dw317.hotel.business.interfaces.Room;
+
+import dw317.hotel.data.DuplicateReservationException;
 import group5.hotel.business.DawsonCustomer;
 import group5.hotel.business.DawsonReservation;
+import group5.hotel.business.DawsonRoom;
 import group5.util.ListUtilities;
 
 public class ReservationListDBTest {
@@ -20,30 +25,37 @@ public class ReservationListDBTest {
 	
 	private static void setup() {
 		
-		String[] rooms = new String[4];
-		rooms[0] = "101*normal";
-		rooms[1] = "102*normal";
-		rooms[2] = "301*suite";
-		rooms[3] = "401*penthouse";
+		String[] rooms = new String[8];
+		rooms[0] = "206*normal";
+		rooms[1] = "401*normal";
+		rooms[2] = "406*normal";
+		rooms[3] = "503*normal";
+		rooms[4] = "601*normal";
+		rooms[5] = "704*suite";
+		rooms[6] = "801*penthouse";
+		rooms[7] = "801*penthouse";
 		
 		String[] custs = new String[8];
-		custs [0] = "raj@aing.ru*Raj*Wong*visa*4556737586899855";
-		custs [1] = "joe.mancini@mail.me*Joe*Mancini**";
-		//...
-		custs [7] = "d@zzz.com*Da*Ja*amex*347964972957716";
+		custs [0] = "bob.b.y_lee@hotmail.ca*Bobby*Lee*mastercard*5458325441641567";
+		custs [1] = "madoriHu@host.com*Humico*Madori*mastercard*5233382411178726";
+		custs [2] = "Jean_Gero@gg.fr*Jean*Gerophar*visa*4929596474756407";
+		custs [3] = "MyNameIsSheila@localhost*Sheila*Kaif*AMEX*374425782767815";
+		custs [4] = "cuty.kathy.2008@yahoo.ca*Kathy*Perry**";
+		custs [5] = "robert.is-awesome@mail.me*Robert*Siri*Visa*4485011762777210";
+		custs [6] = "john.bussiness@gmail.ca*Johny-Laurence*Smith**";
+		custs [7] = "Umila-Gangee@local.ca*Umila*Gangee**";
 		
 		
-		String[] reservs = new String[8];
-		reservs [0] = "raj@aing.ru*2016*9*10*2016*9*15*101";
-		reservs [1] = "meow@cats.com*2017*5*20*2015*4*20*101";
-		reservs [2] = "weee@double_u.com*2015*6*10*2016*7*19*305";
-		reservs [3] = "nothefeds@fbi.gov*1979*1*1*2016*9*6*404";
-		reservs [4] = "food@fedora.com*2010*5*20*2011*4*20*208";		
-		reservs [5] = "joe.mancini@mail.me*2016*10*10*2016*10*20*401";
-		reservs [6] = "flowerpower2@peace.net*2016*10*11*2016*11*2*704";	
-		reservs [7] = "yas@yahoo.com*2018*5*20*2019*4*20*801";
-		
-		
+
+		String[] reservs = new String[8];	
+		reservs [0] = "bob.b.y_lee@hotmail.ca*2016*8*30*2016*12*25*206";
+		reservs [1] = "madoriHu@host.com*2016*10*26*2016*12*30*401";
+		reservs [2] = "Jean_Gero@gg.fr*2016*11*28*2017*2*25*406";
+		reservs [3] = "MyNameIsSheila@localhost*2017*5*9*2017*6*1*503";
+		reservs [4] = "cuty.kathy.2008@yahoo.ca*2016*12*25*2017*1*1*601";
+		reservs [5] = "robert.is-awesome@mail.me*2017*1*1*2018*1*1*704";
+		reservs [6] = "john.bussiness@gmail.ca*2016*9*20*2016*9*26*801";
+		reservs [7] = "Umila-Gangee@local.ca*2017*5*5*2017*7*8*801";
 		
 		File dir = new File("testfiles");
 		try{
@@ -83,25 +95,57 @@ public class ReservationListDBTest {
 		SequentialTextFileList file = new SequentialTextFileList
 				("testfiles/testRooms.txt", "testfiles/testCustomers.txt",
 						"testfiles/testReservations.txt");
-		ReservationListDB db = new ReservationListDB(file);
 		
+		ReservationListDB db = new ReservationListDB(file);
 		System.out.println(db.toString());
 		
-		//ListPersistentObject
-		
-		Reservation[] resToAdd = new DawsonReservation[6];
 		String[] testcase = new String[6];
-		Customer someCust = new DawsonCustomer("Igor","Chekovski", "darkestSoul@mail.ru");
 	
-		//new ReservationListDB(this.listPersistenceObject, this.factory);
-		
-		testcase[0] = " Case 1: Invalid room number";
-		//resToAdd[0] = new DawsonReservation(someCust, , 1979,1,1, 2016,9,6);
+		Reservation[] resToAdd = new DawsonReservation[6];
 
+		testcase[0] = " Case 1: Valid Data";
+		resToAdd[0] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"), new DawsonRoom(105, RoomType.NORMAL), 2008, 10, 5, 2010, 10, 5);
+				
+		testcase[1] = " Case 2: Invalid Data: Customer already in list";
+		resToAdd[1] = new DawsonReservation(new DawsonCustomer("Humico", "Madori", "madoriHu@host.com"), new DawsonRoom(401, RoomType.NORMAL), 2016, 10, 26, 2016, 12, 30);
+
+		for(int i=0; i < resToAdd.length; i++){
+			System.out.println(testcase[i]);
+			
+			try{
+				db.add(resToAdd[i]);				
+			}catch(DuplicateReservationException dce){
+				System.out.println("DuplicateReservation: " + dce.getMessage());
+				continue;
+			}catch(Exception e){
+				System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> " );
+				continue;
+			}
+			
+		}
+		System.out.println("\n==== List ====");
+		System.out.println(db.toString());
+		
+	teardown();
+		
+		
+		
 		
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	//new ReservationListDB(this.listPersistenceObject, this.factory);
 	
 	
 	/*private static void testToString() {

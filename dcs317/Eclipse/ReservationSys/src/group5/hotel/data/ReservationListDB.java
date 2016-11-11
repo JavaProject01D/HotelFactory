@@ -67,7 +67,7 @@ public class ReservationListDB implements ReservationDAO {
 				
 				if (index > 0)
 					throw new DuplicateReservationException();
-			//binary search so we can insert it at the correct position, not sure
+			//binary search so we can insert it at the correct position (not sure)
 			database.add(index,copyReserv);			
 			
 	}
@@ -84,14 +84,18 @@ public class ReservationListDB implements ReservationDAO {
 	}
 
 	@Override
-	public List<Reservation> getReservations(Customer cust) {
+	public ArrayList<Reservation> getReservations(Customer cust) {
 		
+		ArrayList<Reservation> res = new ArrayList<Reservation>();
 		
-		
-		cust.getEmail();
-		//complete
-		
-		return null;
+		for ( int i = 0; i < database.size(); i++) {	
+			for ( Reservation r : this.database) {
+				if (r.getCustomer().equals(cust)) {
+					res.set(i, r);
+				}	
+			}
+		}			
+		return res;
 	}
 
 	@Override
@@ -122,8 +126,7 @@ public class ReservationListDB implements ReservationDAO {
 
 	@Override
 	public ArrayList<Room> getFreeRooms(LocalDate checkin, LocalDate checkout) {
-	 
-		ArrayList<Room> emptyRooms = new ArrayList<Room>(20);
+		ArrayList<Room> emptyRooms = new ArrayList<Room>();
 		
 		for ( int i = 0; i < database.size(); i++) {		
 			for ( Reservation r : this.database) {
@@ -137,16 +140,25 @@ public class ReservationListDB implements ReservationDAO {
 
 	@Override
 	public List<Room> getFreeRooms(LocalDate checkin, LocalDate checkout, RoomType roomType) {
-
+		ArrayList<Room> emptyRooms = new ArrayList<Room>();
 		
-		
-		return null;
+		for ( int i = 0; i < database.size(); i++) {		
+			for ( Reservation r : this.database) {
+				if ( r.getRoom().equals(roomType) && 
+					  !checkin.isBefore(checkout) && !checkout.isAfter(checkin)) {
+						emptyRooms.set(i, r.getRoom());	
+				}	
+			}
+		}	
+		return emptyRooms;
 	}
 
 	@Override
 	public void clearAllPast() {
 		for ( Reservation r : this.database ) {
-			
+			if (r.getCheckOutDate().isBefore(LocalDate.now())) {
+				// ?? 
+			}
 		}			
 	}
 
@@ -162,7 +174,6 @@ public class ReservationListDB implements ReservationDAO {
 			
 			mid = (low + high) / 2;
 			result = reservationList.get(mid).compareTo(res);
-			System.out.println(result);
 			
 			if (result == 0) {
 				return mid;

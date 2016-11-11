@@ -1,4 +1,0 @@
-101*normal
-102*normal
-301*suite
-401*penthouse
