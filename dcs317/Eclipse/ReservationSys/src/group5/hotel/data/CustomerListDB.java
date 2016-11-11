@@ -47,14 +47,16 @@ public class CustomerListDB implements CustomerDAO{
 	@Override
 	public void add (Customer cust)
 			throws DuplicateCustomerException{
-		
-		if(binarySearch(database, cust.getEmail()) != -1)
+		int index =(binarySearch(database, cust.getEmail()));
+		if(index > 0)
 			throw new DuplicateCustomerException();
+		
+		index = -(index);
 				
-		database.add(factory.getCustomerInstance(cust.getName().getFirstName(), 
+		database.add(index, factory.getCustomerInstance(cust.getName().getFirstName(), 
 						cust.getName().getLastName(), cust.getEmail().getAddress()));
 		//Keep their creditcard 
-		cust.setCreditCard(cust.getCreditCard());
+		database.get(index).setCreditCard(cust.getCreditCard());
 	}
 	
 	@Override
@@ -77,7 +79,7 @@ public class CustomerListDB implements CustomerDAO{
 	public Customer getCustomer(Email email)
 				throws NonExistingCustomerException{
 		int index = binarySearch(database, email);
-		if(index != -1)
+		if(index < 0)
 			throw new NonExistingCustomerException();
 		
 		return database.get(index);
@@ -89,7 +91,7 @@ public class CustomerListDB implements CustomerDAO{
 			throws NonExistingCustomerException{
 		int index = binarySearch(database,email);
 		
-		if(index != -1)
+		if(index < 0)
 			throw new NonExistingCustomerException();
 		
 		database.get(index).setCreditCard(Optional.ofNullable(card));
@@ -102,30 +104,22 @@ public class CustomerListDB implements CustomerDAO{
 		
 		first = 0;
 		last = list.size() -1;
-		middle = (first+last)/2;
-		int found = -1;
-		
-		/*for(int i=0; i < list.size() ; i++){
-			System.out.println("List: " + list.get(i));
-		}
-		
-		System.out.println("\nTry to find: " + cust);*/
+		middle =0;
 
 		
-		while( first <= last && found == -1){
+		while( first <= last){
+			middle = (first + last)/2;
 			if(list.get(middle).getEmail().compareTo(cust) < 0){
 				first = middle+1;
 				middle = (first + last)/2;
 			}else if(list.get(middle).getEmail().equals(cust)){
-				//System.out.println(cust.getAddress() + " found at location " + (middle +1) +".");
-				found = middle;
+				//I found so i return the middle
+				return middle;
 			}else{
 				last = middle-1;
-				middle = (first+last)/2;
 			}
 
 		}
-		System.out.println("Found: " + found);
-		return found; 
+		return -(last +1); 
 	}
 }
