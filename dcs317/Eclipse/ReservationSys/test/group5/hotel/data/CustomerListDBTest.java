@@ -3,10 +3,13 @@ package group5.hotel.data;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import dw317.hotel.business.interfaces.Customer;
 import dw317.hotel.data.DuplicateCustomerException;
+import dw317.lib.creditcard.CreditCard.CardType;
 import group5.hotel.business.DawsonCustomer;
+import group5.hotel.business.DawsonHotelFactory;
 import group5.util.ListUtilities;
 
 public class CustomerListDBTest {
@@ -14,7 +17,7 @@ public class CustomerListDBTest {
 
 	public static void main(String[] args) {
 		testAddCustomer();
-		
+		testGetCustomer();
 	}
 
 	public static void setup(){
@@ -107,20 +110,59 @@ public class CustomerListDBTest {
 		
 		System.out.println("_______________________________________________\n");
 		
-		//List<Customer> listC;
-		//Customer does not EXIST
-		Customer custToAdd = new DawsonCustomer("Macho","Hoho","ggggggg@gggggg.me");
-		try{
+		Customer[] custToAdd = new DawsonCustomer[5];  
+		String[] testCase = new String[5];
+
+			testCase[0] = new String ("\nTest Case 1 -- Invalid Email Exist! --> ggggggg@gggggg.me");
+			custToAdd[0] = new DawsonCustomer("Macho","Hoho","ggggggg@gggggg.me");
 		
-			db.add(custToAdd);
-		}catch(DuplicateCustomerException dce){
-			System.out.println("DuplicateCustomer: " + dce.getMessage());
+			/*testCase[1] = new String ("\nTest Case 2 -- Valid Email do not Exist! --> ALoveYou@AaaMe.me");
+			custToAdd[1] = new DawsonCustomer("Macho","Hoho","ALoveYou@AaaMe.me");
 			
-		}catch(Exception e){
-			System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> " );
-		}
+			testCase[2] = new String ("\nTest Case 3 -- Valid Customer with a CreditCard! --> Babouche@DoNotContact.Me");
+			custToAdd[2] = new DawsonCustomer("Macho","Hoho","Babouche@DoNotContact.Me");
+			custToAdd[2].setCreditCard(Optional.of(
+							DawsonHotelFactory.DAWSON.getCard("Amex", "340872454717316")));
+			
+			testCase[3] = new String ("\nTest Case 4 -- Invalid Name! --> ImP3rf3ct");
+			custToAdd[3] = new DawsonCustomer("ImPerfect","Hoho","Perfection@IsJava.com");
+			
+			testCase[4] = new String ("\nTest Case 5 -- Invalid Same Email ! --> Babouche@DoNotContact.Me");
+			custToAdd[4] = new DawsonCustomer("Macho","Hoho","Babouche@DoNotContact.Me");	*/			
 		
+			
+			for(int i=0; i < custToAdd.length; i++){
+				System.out.println(testCase[i]);
+				
+				try{
+					db.add(custToAdd[i]);
+					
+					
+					
+				}catch(DuplicateCustomerException dce){
+					System.out.println("DuplicateCustomer: " + dce.getMessage());
+					continue;
+				}catch(Exception e){
+					System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> " );
+					continue;
+				}
+				
+			}
+			System.out.println("\n<---> Added Item <--->");
+			System.out.println(db.toString());
+			
 		teardown();
+	}
+	
+	private static void testGetCustomer(){
+		setup();
+		SequentialTextFileList file = new SequentialTextFileList
+				("testfiles/testRooms.txt", "testfiles/testCustomers.txt",
+						"testfiles/testReservations.txt");
+		CustomerListDB db = new CustomerListDB(file);
+		
+		
+		teardown();		
 	}
 }
 

@@ -111,7 +111,7 @@ public class SequentialTextFileList implements ListPersistenceObject{
 	 */
 	@Override
 	public void saveCustomerDatabase(List<Customer> custs) throws IOException {
-		//For now we’ll use the existing saveListToTextFile utility method.
+		//For now well use the existing saveListToTextFile utility method.
 		Customer[] custArray = 
 				custs.toArray(new Customer[custs.size()]);
 		ListUtilities.saveListToTextFile(custArray, customerFilename);
@@ -122,7 +122,7 @@ public class SequentialTextFileList implements ListPersistenceObject{
 	 */
 	@Override
 	public void saveReservationDatabase(List<Reservation> reservs) throws IOException {
-		//For now we’ll use the existing saveListToTextFile utility method.
+		//For now weï¿½ll use the existing saveListToTextFile utility method.
 		Reservation[] resArray = 
 				reservs.toArray(new Reservation[reservs.size()]);
 		ListUtilities.saveListToTextFile(resArray, reservationFilename);	
