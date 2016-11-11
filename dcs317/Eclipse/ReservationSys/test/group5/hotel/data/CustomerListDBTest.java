@@ -22,7 +22,9 @@ public class CustomerListDBTest {
 		System.out.println("\n\n\t<------> TestGetCustomer <------>");
 		//testGetCustomer();
 		System.out.println("\n\n\t<------> TestUpdate <------>");
-		testUpdate();
+		//testUpdate();
+		System.out.println("\n\n\t<------> TestDisconect <------>");
+		testDisconect();
 	}
 
 	public static void setup(){
@@ -41,7 +43,7 @@ public class CustomerListDBTest {
 		custs[2] = "cccc@ccccc.me*Joe*Mancini**";
 		custs[3] = "dddd@dddd.me*YouSeeMe*NowYouDont*mastercard*520189554761329";
 		custs[4] = "eeeee@eeeee.me*Horibi*Mily**";
-		custs[5] = "fffff@ffffff.me*Horibi*Mily**";
+		custs[5] = "fffff@ffffff.me*Horibi*Mily*masterCard*5201895554761329";
 		custs[6] = "ggggggg@gggggg.me*Horibi*Mily*visa*4532913138654408";
 		
 
@@ -213,19 +215,24 @@ public class CustomerListDBTest {
 		custToUpdate[0] = new DawsonCustomer("Joe","Mancini","Shaco@Love.me");
 		cardHolder[0] = new String("masterCard*5201895554761329");
 		
-		testCase[1] = new String ("\nTest Case 2 -- Change a CreditCard to Empty --> ggggggg@gggggg.me");
-		custToUpdate[1] = new DawsonCustomer("Macho","Hoho","ggggggg@gggggg.me");		
+		testCase[1] = new String ("\nTest Case 2 -- Add a CreditCard to Empty customer--> bbbb@bbbb.me");
+		custToUpdate[1] = new DawsonCustomer("Macho","Hoho","bbbb@bbbb.me");
+		cardHolder[1] = new String("masterCard*5201895554761329");
 		
-		testCase[2] = new String ("\nTest Case 3 -- Add a CreditCard to Empty customer--> bbbb@bbbb.me");
-		custToUpdate[2] = new DawsonCustomer("Macho","Hoho","bbbb@bbbb.me");
-		
+		testCase[2] = new String ("\nTest Case 3 -- Change a CreditCard from a customer--> fffff@ffffff.me");
+		custToUpdate[2] = new DawsonCustomer("Macho","Hoho","fffff@ffffff.me");
+		cardHolder[2] = new String("visa*4532913138654408");
 		
 		for(int i=0; i < custToUpdate.length; i++)
 	
 			try{
 				System.out.println(testCase[i]);
-				//db.update(custToUpdate[i].getEmail(), DawsonHotelFactory.DAWSON(cardHolder[0]));
+				db.update(custToUpdate[i].getEmail(), 
+						DawsonHotelFactory.DAWSON.getCard(cardHolder[i].substring(0,cardHolder[i].indexOf("*")), 
+												cardHolder[i].substring(cardHolder[i].indexOf("*")+1)));
+				
 				System.out.println("Searching for " + custToUpdate[i].getEmail().getAddress() + "\tFound: " + db.getCustomer(custToUpdate[i].getEmail()));
+				
 			}catch(NonExistingCustomerException nce){
 				System.out.println("CustomerNotFound: " + nce.getMessage());
 				continue;
@@ -233,6 +240,45 @@ public class CustomerListDBTest {
 				System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> " );
 				continue;
 		}
+		
+		teardown();	
+	}
+	
+	private static void testDisconect(){
+		setup();
+		SequentialTextFileList file = new SequentialTextFileList
+				("testfiles/testRooms.txt", "testfiles/testCustomers.txt",
+						"testfiles/testReservations.txt");
+		CustomerListDB db = new CustomerListDB(file);
+		
+		System.out.println("_______________________________________________\n");
+		
+		System.out.println("\nLIST USED:");
+		
+		System.out.println(db.toString());
+		
+		Customer cust = new DawsonCustomer("Shaco","Onme","SHACO@Dcode.break");
+		
+		try{
+			System.out.println("\nAdding a customer then Disconect: ");
+			db.add(cust);
+			
+			System.out.println(db.toString());
+			
+			System.out.println("\nDisconect--->");
+			db.disconnect();
+		}catch(DuplicateCustomerException dce){
+			System.out.println("DuplicateCustomerException: " + dce.getMessage());
+		}catch(IOException ioe){
+			System.out.println("IOE Exception: " + ioe.getMessage());
+		}catch(Exception e){
+			System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> " );
+		}
+		
+		System.out.println("\nReconnect--->");
+		CustomerListDB dbTwo = new CustomerListDB(file);
+		
+		System.out.println(dbTwo.toString());
 		
 		teardown();	
 	}
