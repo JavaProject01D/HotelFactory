@@ -267,23 +267,20 @@ public class HotelFileLoader {
 					continue;
 
 				try {
-					for (int c = 0; c < customerList.length; c++) {
+					for (int c = 0; c < customerList.length && !customerExists; c++) {
 						if (customerList[c].getEmail().getAddress().equals(fields[0])) {
 							customerExists = true;
 							customerPosition = c;
 
-							for (int r = 0; r < roomList.length; r++) {
+							for (int r = 0; r < roomList.length && !roomExists; r++) {
 								if (roomList[r].getRoomNumber() == (Integer.parseInt(fields[7]))) {
 									roomExists = true;
 									roomPosition = r;
-									break;
-								} else
-									roomExists = false;
+								}
 							}
-							break;
-						} else
-							customerExists = false;
+						}
 					}
+						
 
 					if (customerExists && roomExists)
 						arr[i] = dHF.getReservationInstance(customerList[customerPosition], roomList[roomPosition],
