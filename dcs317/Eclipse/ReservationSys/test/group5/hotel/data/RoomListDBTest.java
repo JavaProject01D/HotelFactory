@@ -8,6 +8,12 @@ import dw317.hotel.business.RoomType;
 import dw317.hotel.business.interfaces.Room;
 import group5.util.ListUtilities;
 
+/**
+ * The code was given by Jaya.
+ * 
+ * @author Teacher
+ *
+ */
 public class RoomListDBTest {
 
 	public static void main(String[] args) {
@@ -32,9 +38,9 @@ public class RoomListDBTest {
 
 		String[] reservs = new String[8];
 		reservs [0] = "raj@aing.ru*2016*9*10*2016*9*15*101";
-		reservs [1] = "joe.mancini@mail.me*2016*10*10*2016*10*20*401";
+		reservs [1] = "joe.mancini@mail.me*2016*10*10*2016*10*20*101";
 		//...
-		reservs [7] = "d@zzz.com*2016*10*12*2016*10*15*102";
+		reservs [7] = "d@zzz.com*2017*10*12*2017*10*15*401";
 
 		File dir = new File("testfiles");
 		try{

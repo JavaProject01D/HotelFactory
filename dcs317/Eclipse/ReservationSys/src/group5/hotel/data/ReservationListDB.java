@@ -255,9 +255,9 @@ public class ReservationListDB implements ReservationDAO {
 
 	@Override
 	public void clearAllPast() {
-		for (Reservation r : this.database) {
-			if (r.getCheckOutDate().isBefore(LocalDate.now())) {
-				// ??
+		for (int i =0; i < database.size() ; i++) {
+			if (database.get(i).getCheckOutDate().isBefore(LocalDate.now())) {
+				database.remove(i);
 			}
 		}
 	}
