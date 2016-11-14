@@ -27,6 +27,7 @@ public class ReservationListDBTest {
 		testGetReservedRooms();
 		testGetFreeRooms();
 		testThreeParamsGetFreeRooms();
+		testClearAllPast();
 
 	}
 
@@ -365,5 +366,29 @@ public class ReservationListDBTest {
 		}
 		teardown();
 	}
+	
+
+	private static void testClearAllPast() {
+		setup();
+		SequentialTextFileList file = new SequentialTextFileList("testfiles/testRooms.txt",
+				"testfiles/testCustomers.txt", "testfiles/testReservations.txt");
+
+		ReservationListDB db = new ReservationListDB(file);
+		System.out.println(db.toString());
+		System.out.println("________________________ TESTING clearAllPast() _______________________\n");
+
+			try {
+				db.clearAllPast();
+			} catch (Exception e) {
+				System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> ");
+			}
+
+		System.out.println("\n==== List After Clearing ====");
+		System.out.println(db.toString());
+
+		teardown();
+
+	}
+
 
 }
