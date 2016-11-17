@@ -14,7 +14,12 @@ import dw317.lib.creditcard.CreditCard;
  */
 public enum DawsonHotelFactory implements HotelFactory {
 	DAWSON;
-
+	
+	@Override
+	public AllocationPolicy getAllocationPolicy(ReservationDAO reservations){
+		return new DawsonHotelAllocationPolicy(reservations);
+	}
+	
 	@Override
 	public Customer getCustomerInstance(String firstName, String lastName, String email) {
 		return new DawsonCustomer(firstName, lastName, email);

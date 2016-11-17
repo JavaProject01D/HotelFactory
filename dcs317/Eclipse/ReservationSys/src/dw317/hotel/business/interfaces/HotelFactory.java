@@ -23,4 +23,8 @@ public interface HotelFactory extends Serializable {
 			int outYear, int outMonth, int outDay);
 	
 	Reservation getReservationInstance(Reservation toCopy);
+	
+	//ADDED IN PHASE IV
+	AllocationPolicy getAllocationPolicy(ReservationDAO reservations);
+
 }

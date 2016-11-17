@@ -106,6 +106,11 @@ public class ListUtilities {
 				outputFile.close();  //flushes buffer and releases resources
 		}
 	}
+	
+	
+	
+	
+	
 
 	/**
 	 * Efficiently merges two sorted lists of objects in ascending natural
@@ -137,7 +142,12 @@ public class ListUtilities {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Comparable[] merge(Comparable[] list1, Comparable[] list2, String duplicateFileName)
 			throws IOException {
-
+		
+		if(list1 == null || list2 == null)
+			throw new NullPointerException("The list given is Null.");
+		
+		if (list1[list1.length - 1] == null || list2[list2.length - 1] == null)
+			throw new IllegalArgumentException("Not filled to capacity");
 		Comparable[] list3 = (Comparable[]) Array.newInstance(
 				list1.getClass().getComponentType(), list1.length + list2.length);
 		
