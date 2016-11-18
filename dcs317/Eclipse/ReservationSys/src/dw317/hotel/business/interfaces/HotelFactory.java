@@ -1,7 +1,6 @@
 package dw317.hotel.business.interfaces;
-
 import java.io.Serializable;
-
+import dw317.hotel.data.interfaces.ReservationDAO;
 import dw317.lib.creditcard.CreditCard;
 
 /**

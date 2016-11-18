@@ -1,10 +1,12 @@
 package group5.hotel.business;
 
 import dw317.hotel.business.RoomType;
+import dw317.hotel.business.interfaces.AllocationPolicy;
 import dw317.hotel.business.interfaces.Customer;
 import dw317.hotel.business.interfaces.HotelFactory;
 import dw317.hotel.business.interfaces.Reservation;
 import dw317.hotel.business.interfaces.Room;
+import dw317.hotel.data.interfaces.ReservationDAO;
 import dw317.lib.creditcard.CreditCard;
 
 /**
