@@ -98,15 +98,21 @@ public class ReservationListDB implements ReservationDAO {
 
 	@Override
 	public void add(Reservation reserv) throws DuplicateReservationException {
-		// Creating a deep copy of reserv
-		Reservation copyReserv = factory.getReservationInstance(reserv);
-
-		int index = binarySearch(this.database, copyReserv);
+		
+		for(int i =0; i < database.size(); i++){
+			if(database.get(i).overlap(reserv))
+				throw new IllegalArgumentException("Error overlap");
+		
+		}
+		
+		int index = binarySearch(this.database, reserv);
 		index = -(index) -1;
 
 		if (index > 0)
 			throw new DuplicateReservationException();
 		
+		// Creating a deep copy of reserv
+		Reservation copyReserv = factory.getReservationInstance(reserv);
 		database.add(index, copyReserv);
 
 	}
@@ -275,7 +281,7 @@ public class ReservationListDB implements ReservationDAO {
 
 	private static int binarySearch(List<? extends Reservation> reservationList, Reservation res) {
 
-		/*int low = 0;
+		int low = 0;
 		int high = reservationList.size() - 1;
 		int mid = (low + high) / 2;
 		int result;
@@ -293,9 +299,9 @@ public class ReservationListDB implements ReservationDAO {
 				high = mid - 1;
 		}
 		return -(high + 1);
-	}*/
+	}
 	
-		int first, last, middle;
+		/*int first, last, middle;
 		
 		first = 0;
 		last = reservationList.size() - 1;
@@ -315,5 +321,5 @@ public class ReservationListDB implements ReservationDAO {
 	
 		}
 		return -(first +1); 
-	}
+	}*/
 }

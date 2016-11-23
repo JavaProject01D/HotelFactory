@@ -2,13 +2,11 @@ package group5.hotel.data;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 import dw317.hotel.business.interfaces.Customer;
 import dw317.hotel.data.DuplicateCustomerException;
 import dw317.hotel.data.NonExistingCustomerException;
-import dw317.lib.creditcard.CreditCard.CardType;
 import group5.hotel.business.DawsonCustomer;
 import group5.hotel.business.DawsonHotelFactory;
 import group5.util.ListUtilities;
