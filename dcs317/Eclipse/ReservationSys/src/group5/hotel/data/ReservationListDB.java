@@ -60,6 +60,7 @@ public class ReservationListDB implements ReservationDAO {
 
 		this.listPersistenceObject = listPersistenceObject;
 		this.allRooms = this.listPersistenceObject.getRoomDatabase();
+		this.database = this.listPersistenceObject.getReservationDatabase();
 		this.factory = factory;
 
 	}
@@ -101,11 +102,11 @@ public class ReservationListDB implements ReservationDAO {
 		Reservation copyReserv = factory.getReservationInstance(reserv);
 
 		int index = binarySearch(this.database, copyReserv);
-		index = -(index);
+		index = -(index) -1;
 
 		if (index > 0)
 			throw new DuplicateReservationException();
-		// binary search so we can insert it at the correct position (not sure)
+		
 		database.add(index, copyReserv);
 
 	}
@@ -274,7 +275,7 @@ public class ReservationListDB implements ReservationDAO {
 
 	private static int binarySearch(List<? extends Reservation> reservationList, Reservation res) {
 
-		int low = 0;
+		/*int low = 0;
 		int high = reservationList.size() - 1;
 		int mid = (low + high) / 2;
 		int result;
@@ -292,5 +293,27 @@ public class ReservationListDB implements ReservationDAO {
 				high = mid - 1;
 		}
 		return -(high + 1);
+	}*/
+	
+		int first, last, middle;
+		
+		first = 0;
+		last = reservationList.size() - 1;
+		middle =0;
+	
+		
+		while( first <= last){
+			middle = (first + last)/2;
+			if(reservationList.get(middle).equals(res)){
+				//I found so i return the middle
+				return middle;
+			}else if(reservationList.get(middle).compareTo(res) < 0){
+				first = middle+1;
+			}else{
+				last = middle-1;			
+			}
+	
+		}
+		return -(first +1); 
 	}
 }

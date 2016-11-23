@@ -21,13 +21,13 @@ public class ReservationListDBTest {
 
 	public static void main(String[] args) {
 		testAdd();
-		testDisconnect();
+		/*testDisconnect();
 		testCancel();
 		testGetReservations();
 		testGetReservedRooms();
 		testGetFreeRooms();
 		testThreeParamsGetFreeRooms();
-		testClearAllPast();
+		testClearAllPast();*/
 
 	}
 
@@ -44,13 +44,13 @@ public class ReservationListDBTest {
 		rooms[7] = "801*penthouse";
 
 		String[] custs = new String[8];
-		custs[0] = "bob.b.y_lee@hotmail.ca*Bobby*Lee*mastercard*5458325441641567";
-		custs[1] = "madoriHu@host.com*Humico*Madori*mastercard*5233382411178726";
-		custs[2] = "Jean_Gero@gg.fr*Jean*Gerophar*visa*4929596474756407";
-		custs[3] = "MyNameIsSheila@localhost*Sheila*Kaif*AMEX*374425782767815";
-		custs[4] = "cuty.kathy.2008@yahoo.ca*Kathy*Perry**";
-		custs[5] = "robert.is-awesome@mail.me*Robert*Siri*Visa*4485011762777210";
-		custs[6] = "john.bussiness@gmail.ca*Johny-Laurence*Smith**";
+		custs[0] = "bbbb@aaaa*Bobby*Lee*mastercard*5458325441641567";
+		custs[1] = "bbbb@bbbb*Humico*Madori*mastercard*5233382411178726";
+		custs[2] = "ccccc*CCCc*Jean*Gerophar*visa*4929596474756407";
+		custs[3] = "eeeeee.ee@eee.com*Sheila*Kaif*AMEX*374425782767815";
+		custs[4] = "gggg@gggg.com*Kathy*Perry**";
+		custs[5] = "iiiiii@iiii*Robert*Siri*Visa*4485011762777210";
+		custs[6] = "bbbb@jjjjj*Johny-Laurence*Smith**";
 		custs[7] = "Umila-Gangee@local.ca*Umila*Gangee**";
 
 		String[] reservs = new String[8];
