@@ -100,17 +100,25 @@ public class ReservationListDBTest {
 		System.out.println(db.toString());
 		System.out.println("________________________ TESTING add() _______________________\n");
 
-		String[] testcase = new String[2];
+		String[] testcase = new String[4];
 
-		Reservation[] resToAdd = new DawsonReservation[2];
+		Reservation[] resToAdd = new DawsonReservation[4];
 
 		testcase[0] = " Case 1: Valid Data";
 		resToAdd[0] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
 				new DawsonRoom(105, RoomType.NORMAL), 2008, 10, 5, 2010, 10, 5);
 
-		testcase[1] = " Case 2: Invalid Data: Reservation already in list";
+		testcase[1] = " Case 2: Invalid Data: Overlap";
 		resToAdd[1] = new DawsonReservation(new DawsonCustomer("Humico", "Madori", "yyyy@yyyy"),
 				new DawsonRoom(401, RoomType.NORMAL), 2016, 10, 26, 2016, 12, 30);
+		
+		testcase[2] = " Case 3: Valid Data: Room is available";
+		resToAdd[2] = new DawsonReservation(new DawsonCustomer("Humico", "Madori", "zzz@zzz"),
+				new DawsonRoom(402, RoomType.NORMAL), 2017, 11, 5, 2018, 1, 5);
+		
+		testcase[3] = " Case 4: Valid Data: Room exist, but different checkIn";
+		resToAdd[3] = new DawsonReservation(new DawsonCustomer("Humico", "Madori", "zzz@zzz"),
+				new DawsonRoom(105, RoomType.NORMAL), 2017, 11, 5, 2018, 1, 5);
 
 		for (int i = 0; i < resToAdd.length; i++) {
 			System.out.println(testcase[i]);

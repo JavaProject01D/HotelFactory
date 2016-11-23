@@ -90,6 +90,7 @@ public class ReservationListDB implements ReservationDAO {
 	 * reference to a copy of the object referenced by the reserv and not the
 	 * actual object being referenced by the parameter.
 	 * 
+	 * Updated by Denis Lebedev
 	 * @author Zahraa Horeibi
 	 * @param reserv
 	 * @throws DuplicateReservationException
@@ -100,16 +101,16 @@ public class ReservationListDB implements ReservationDAO {
 	public void add(Reservation reserv) throws DuplicateReservationException {
 		
 		for(int i =0; i < database.size(); i++){
-			if(database.get(i).overlap(reserv))
+			if(database.get(i).overlap(reserv) && database.get(i).getRoom().getNumber() == reserv.getRoom().getNumber())
 				throw new IllegalArgumentException("Error overlap");
-		
 		}
 		
 		int index = binarySearch(this.database, reserv);
-		index = -(index) -1;
-
+		
 		if (index > 0)
 			throw new DuplicateReservationException();
+		
+		index = -(index) -1;
 		
 		// Creating a deep copy of reserv
 		Reservation copyReserv = factory.getReservationInstance(reserv);
@@ -127,11 +128,7 @@ public class ReservationListDB implements ReservationDAO {
 	@Override
 	public void disconnect() throws IOException {
 
-		try {
-			this.listPersistenceObject.saveReservationDatabase(this.database);
-		} catch (IOException ie) {
-			throw new IOException("Error saving to file!");
-		}
+		this.listPersistenceObject.saveReservationDatabase(this.database);
 		this.database = null;
 	}
 
@@ -274,6 +271,7 @@ public class ReservationListDB implements ReservationDAO {
 	 * reservation inside of the reservation list (database) using a binary
 	 * search.
 	 * 
+	 * @author Denis Lebedev
 	 * @param reservationList
 	 * @param res
 	 * @return int
@@ -281,27 +279,7 @@ public class ReservationListDB implements ReservationDAO {
 
 	private static int binarySearch(List<? extends Reservation> reservationList, Reservation res) {
 
-		int low = 0;
-		int high = reservationList.size() - 1;
-		int mid = (low + high) / 2;
-		int result;
-
-		while (low <= high) {
-
-			mid = (low + high) / 2;
-			result = reservationList.get(mid).compareTo(res);
-
-			if (result == 0) {
-				return mid;
-			} else if (result < 0) {
-				low = mid + 1;
-			} else
-				high = mid - 1;
-		}
-		return -(high + 1);
-	}
-	
-		/*int first, last, middle;
+		int first, last, middle;
 		
 		first = 0;
 		last = reservationList.size() - 1;
@@ -321,5 +299,5 @@ public class ReservationListDB implements ReservationDAO {
 	
 		}
 		return -(first +1); 
-	}*/
+	}
 }
