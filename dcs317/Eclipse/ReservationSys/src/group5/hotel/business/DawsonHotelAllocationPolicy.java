@@ -21,7 +21,7 @@ public class DawsonHotelAllocationPolicy implements AllocationPolicy {
 		this.reservationDAO = res;
 	}
 
-
+//heh
 	@Override
 	public Optional<Room> getAvailableRoom(LocalDate checkin, LocalDate checkout, RoomType roomType) {
 

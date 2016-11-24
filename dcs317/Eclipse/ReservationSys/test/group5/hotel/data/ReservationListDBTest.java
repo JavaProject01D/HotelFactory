@@ -131,7 +131,7 @@ public class ReservationListDBTest {
 
 		teardown();
 
-	}
+	} // he
 
 	private static void testDisconnect() {
 		setup();

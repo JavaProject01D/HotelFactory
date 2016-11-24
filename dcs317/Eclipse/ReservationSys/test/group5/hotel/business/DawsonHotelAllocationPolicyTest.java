@@ -95,7 +95,7 @@ public class DawsonHotelAllocationPolicyTest {
 		resToSearch[1] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
 				new DawsonRoom(105, RoomType.NORMAL), 2008, 10, 5, 2010, 10, 5);
 		
-		
+		//heh
 		//dhap.getAvailableRoom(resToSearch[1].getCheckInDate(), resToSearch[1].getCheckOutDate(), resToSearch[1].getRoom().getRoomType());
 		Optional<Room> r;
 		for (int i = 0; i < resToSearch.length; i++) {
