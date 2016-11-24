@@ -198,7 +198,7 @@ public class ReservationListDB implements ReservationDAO {
 					if(rooms.size() == 0)
 						rooms.add(r.getRoom());
 					else										
-						if(roomSearch(rooms, r.getRoom()) == -1)
+						if(binarySearch(rooms, r.getRoom()) < 0)
 							rooms.add(r.getRoom());											
 				}
 			}
@@ -223,20 +223,11 @@ public class ReservationListDB implements ReservationDAO {
 		//NOT A DEEP COPY CHANGE AFTER
 		if(occupiedRoom.size() == 0)
 			return (ArrayList<Room>) allRooms;
-		
-		//System.out.println(occupiedRoom);
-		
-		System.out.println(occupiedRoom);
-		
+				
 		for(int i  =0; i < allRooms.size() ; i++){
 			
-			
-			//if(allRooms.get(i))
-				System.out.println("RoomExist");
-			/*for(int j =0; j < database.size(); j++){
-				if(roomNum != database.get(j).getRoom().getRoomNumber())
-					emptyRooms.add(database.get(j).getRoom());
-			}*/
+			if(binarySearch(occupiedRoom, allRooms.get(i)) < 0)
+				emptyRooms.add(allRooms.get(i));
 		}
 		
 		return emptyRooms;
@@ -255,7 +246,8 @@ public class ReservationListDB implements ReservationDAO {
 	@Override
 	public ArrayList<Room> getFreeRooms(LocalDate checkin, LocalDate checkout, RoomType roomType) {
 		ArrayList<Room> emptyRooms = new ArrayList<Room>();
-
+		List<Room> occupiedRoom = getReservedRooms(checkin, checkout);
+		
 		for (int i = 0; i < database.size(); i++) {
 			for (Reservation r : this.database) {
 				if (r.getRoom().equals(roomType) && !checkin.isBefore(checkout) && !checkout.isAfter(checkin)) {
@@ -278,6 +270,7 @@ public class ReservationListDB implements ReservationDAO {
 		for (int i =0; i < database.size() ; i++) {
 			if (database.get(i).getCheckOutDate().isBefore(LocalDate.now())) {
 				database.remove(i);
+				i--;
 			}
 		}
 	}
@@ -318,33 +311,14 @@ public class ReservationListDB implements ReservationDAO {
 	}
 	
 	/**
-	 * The method will look sequentially if the roomNumber is in the list
-	 * if he does not found the element he will return FALSE.
-	 * If the method return true that mean we found the room already in the
-	 * roomList.
+	 * Overload binarySearch
 	 * 
-	 * Change it to BinarySearch?
+	 * @author Denis Lebedev
 	 * 
 	 * @param roomList
 	 * @param room
-	 * @return boolean
+	 * @return int
 	 */
-	private static int roomSearch(List<Room> roomList, Room room){
-		//boolean found = false;
-		int index = -1;
-		
-		for(int i =0; i < roomList.size(); i++){
-			//System.out.println("RoomList: " + roomList.get(i).getRoomNumber() + "\tRoom: " + room.getRoomNumber() );
-			if(roomList.get(i).getRoomNumber() == room.getRoomNumber()){
-				System.out.println("RoomList: " + roomList.get(i).getRoomNumber() + "\tRoom: " + room.getRoomNumber()  + " " + i);
-				index = i;
-			}
-		}
-		
-		System.out.println(index);
-		return index;
-	}
-	
 	private static int binarySearch(List<Room> roomList, Room room){
 		
 		int first, last, middle;
@@ -361,7 +335,7 @@ public class ReservationListDB implements ReservationDAO {
 			else if(roomList.get(middle).getRoomNumber() < room.getRoomNumber())
 				first = middle+1;
 			else
-				last = middle=1;
+				last = middle-1;			
 		}
 		
 		return -(first +1);
