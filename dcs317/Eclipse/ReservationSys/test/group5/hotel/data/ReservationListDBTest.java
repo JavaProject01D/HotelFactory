@@ -3,6 +3,7 @@ package group5.hotel.data;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import dw317.hotel.business.RoomType;
 import dw317.hotel.business.interfaces.Customer;
@@ -20,13 +21,13 @@ import group5.util.ListUtilities;
 public class ReservationListDBTest {
 
 	public static void main(String[] args) {
-		testAdd();
-		/*testDisconnect();
+		/*testAdd();
+		testDisconnect();
 		testCancel();
 		testGetReservations();
-		testGetReservedRooms();
+		testGetReservedRooms();*/
 		testGetFreeRooms();
-		testThreeParamsGetFreeRooms();
+		/*testThreeParamsGetFreeRooms();
 		testClearAllPast();*/
 
 	}
@@ -271,9 +272,10 @@ public class ReservationListDBTest {
 		System.out.println("\nLIST USED:");
 
 		System.out.println(db.toString());
-
-		String[] testcase = new String[6];
-		Reservation[] resToSearch = new DawsonReservation[6];
+		
+		List<Room> output = new ArrayList<Room>();
+		String[] testcase = new String[3];
+		Reservation[] resToSearch = new DawsonReservation[3];
 
 		testcase[0] = "\n Case 1: Valid Data";
 		resToSearch[0] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
@@ -281,13 +283,23 @@ public class ReservationListDBTest {
 
 		testcase[1] = "\n Case 2: Invalid Data: Invalid dates in list";
 		resToSearch[1] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
-				new DawsonRoom(105, RoomType.NORMAL), 1995, 10, 26, 1996, 12, 30);
+				new DawsonRoom(206, RoomType.NORMAL), 2016, 9, 26, 2017, 12, 30);
+		
+		testcase[2] = "\n Case 3: Invalid Data: Invalid dates in list, but more specific date";
+		resToSearch[2] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
+				new DawsonRoom(206, RoomType.NORMAL), 2017, 5, 5, 2017, 7, 8);
 
 		for (int i = 0; i < resToSearch.length; i++) {
 			System.out.println(testcase[i]);
 
 			try {
-				db.getReservedRooms(resToSearch[i].getCheckInDate(), resToSearch[i].getCheckOutDate());
+				output = db.getReservedRooms(resToSearch[i].getCheckInDate(), resToSearch[i].getCheckOutDate());
+				
+				if(output.size() == 0)
+					System.out.println("All the rooms are available for the given date: " + output);
+				else
+					System.out.println("Rooms occupied for the given date: " + output);
+				
 			} catch (Exception e) {
 				System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> ");
 				continue;
@@ -309,23 +321,35 @@ public class ReservationListDBTest {
 		System.out.println("\nLIST USED:");
 
 		System.out.println(db.toString());
-
-		String[] testcase = new String[6];
-		Reservation[] resToSearch = new DawsonReservation[6];
+		
+		List<Room> output = new ArrayList<Room>();
+		String[] testcase = new String[3];
+		Reservation[] resToSearch = new DawsonReservation[3];
 
 		testcase[0] = "\n Case 1: Valid Data";
 		resToSearch[0] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
 				new DawsonRoom(105, RoomType.NORMAL), 1995, 10, 26, 1996, 12, 30);
 
-		testcase[1] = "\n Case 2: Invalid Data: Date used already";
+		testcase[1] = "\n Case 2: Invalid Data: Invalid dates in list";
 		resToSearch[1] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
-				new DawsonRoom(105, RoomType.NORMAL), 2008, 10, 5, 2010, 10, 5);
+				new DawsonRoom(206, RoomType.NORMAL), 2016, 9, 26, 2017, 12, 30);
+		
+		testcase[2] = "\n Case 3: Invalid Data: Invalid dates in list, but more specific date";
+		resToSearch[2] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
+				new DawsonRoom(206, RoomType.NORMAL), 2017, 5, 5, 2017, 7, 8);
 
 		for (int i = 0; i < resToSearch.length; i++) {
 			System.out.println(testcase[i]);
 
 			try {
-				db.getFreeRooms(resToSearch[i].getCheckInDate(), resToSearch[i].getCheckOutDate());
+				
+				output = db.getFreeRooms(resToSearch[i].getCheckInDate(), resToSearch[i].getCheckOutDate());
+				
+				if(output.size() == 0)
+					System.out.println("No Free Room for the given date: " + output);
+				else
+					System.out.println("Free Rooms for the given date: " + output);
+								
 			} catch (Exception e) {
 				System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> ");
 				continue;
