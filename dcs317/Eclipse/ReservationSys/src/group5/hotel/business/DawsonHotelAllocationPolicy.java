@@ -64,27 +64,22 @@ public class DawsonHotelAllocationPolicy implements AllocationPolicy {
 		return 0; // ??
 	}
 	
-	/*
-	
-	public static int freeRoom(List<Integer> list) {
+/*	public static Room[] freeRooms(List<Room> list) {
 
 		int count = 0, tempCount;
-		int room = list.get(0);
+		int room = list.get(0).getRoomNumber();
 		int temp = 0;
-
-		List<Integer> dubs = new ArrayList<Integer>();
 
 		for (int i = 0; i < list.size() - 1; i++) {
 			tempCount = 0;
-			temp = list.get(i);
+			temp = list.get(i).getRoomNumber();
 
 			for (int j = 0; j < list.size(); j++) {
 
-				if ((list.get(i) / 100) == (list.get(j) / 100)) {
+				if ((list.get(i).getFloor()) == (list.get(j).getFloor())) {
 					tempCount++;
 					// System.out.println("TempCount++: " + tempCount);
 				}
-
 			} // end of j
 
 			// System.out.println(temp);
@@ -93,7 +88,6 @@ public class DawsonHotelAllocationPolicy implements AllocationPolicy {
 				room = temp;
 				// System.out.println(room + " a " + temp);
 				count = tempCount;
-
 			} // end of if
 		}
 
@@ -101,10 +95,11 @@ public class DawsonHotelAllocationPolicy implements AllocationPolicy {
 
 	}
 
+}
+
+
+
 */
-
-
-
 
 
 
