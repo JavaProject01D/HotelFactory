@@ -27,6 +27,8 @@ public class ReservationListDBTest {
 		testGetFreeRooms();
 		testThreeParamsGetFreeRooms();
 		testClearAllPast();
+		
+		
 
 	}
 
@@ -51,7 +53,7 @@ public class ReservationListDBTest {
 		custs[5] = "iiiiii@iiii*Robert*Siri*Visa*4485011762777210";
 		custs[6] = "bbbb@jjjjj*Johny-Laurence*Smith**";
 		custs[7] = "yyyy@yyyy*Umila*Gangee**";
-
+		
 		String[] reservs = new String[8];
 		reservs[0] = "bbbb@aaaa*2016*8*30*2016*12*25*206";
 		reservs[1] = "bbbb@bbbb*2016*10*26*2016*12*30*401";
@@ -99,9 +101,9 @@ public class ReservationListDBTest {
 		System.out.println(db.toString());
 		System.out.println("________________________ TESTING add() _______________________\n");
 
-		String[] testcase = new String[4];
+		String[] testcase = new String[3];
 
-		Reservation[] resToAdd = new DawsonReservation[4];
+		Reservation[] resToAdd = new DawsonReservation[3];
 
 		testcase[0] = " Case 1: Valid Data";
 		resToAdd[0] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
@@ -111,13 +113,9 @@ public class ReservationListDBTest {
 		resToAdd[1] = new DawsonReservation(new DawsonCustomer("Humico", "Madori", "yyyy@yyyy"),
 				new DawsonRoom(401, RoomType.NORMAL), 2016, 10, 26, 2016, 12, 30);
 		
-		testcase[2] = " Case 3: Valid Data: Room is available";
+		testcase[2] = " Case 4: Valid Data: Room exist, but different checkIn";
 		resToAdd[2] = new DawsonReservation(new DawsonCustomer("Humico", "Madori", "zzz@zzz"),
-				new DawsonRoom(402, RoomType.NORMAL), 2017, 11, 5, 2018, 1, 5);
-		
-		testcase[3] = " Case 4: Valid Data: Room exist, but different checkIn";
-		resToAdd[3] = new DawsonReservation(new DawsonCustomer("Humico", "Madori", "zzz@zzz"),
-				new DawsonRoom(105, RoomType.NORMAL), 2017, 11, 5, 2018, 1, 5);
+				new DawsonRoom(105, RoomType.NORMAL), 2019, 11, 5, 2020, 1, 5);
 
 		for (int i = 0; i < resToAdd.length; i++) {
 			System.out.println(testcase[i]);
@@ -126,9 +124,6 @@ public class ReservationListDBTest {
 				db.add(resToAdd[i]);
 			} catch (DuplicateReservationException dce) {
 				System.out.println("DuplicateReservation: " + dce.getMessage());
-				continue;
-			} catch (IllegalArgumentException iae){
-				System.out.println("IllegalArgumentException: " + iae.getMessage());
 				continue;
 			} catch (Exception e) {
 				System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> ");
@@ -141,7 +136,7 @@ public class ReservationListDBTest {
 
 		teardown();
 
-	} // he
+	}
 
 	private static void testDisconnect() {
 		setup();
@@ -154,9 +149,9 @@ public class ReservationListDBTest {
 		System.out.println("\nLIST USED:");
 
 		System.out.println(db.toString());
-
-		Reservation res = new DawsonReservation(new DawsonCustomer("Hum", "Mad", "mad@host.com"),
-				new DawsonRoom(602, RoomType.NORMAL), 2016, 10, 26, 2016, 12, 30);
+		
+		Reservation res = new DawsonReservation(new DawsonCustomer("Sheila", "Kaif", "eeeeee.ee@eee.com"),
+				new DawsonRoom(601, RoomType.NORMAL), 2019, 10, 26, 2019, 12, 30);
 
 		try {
 			System.out.println("\nAdding a customer then Disconect: ");
@@ -215,7 +210,7 @@ public class ReservationListDBTest {
 
 			try {
 				db.cancel(resToAdd[i]);
-				System.out.println(db.toString());
+				
 				
 			} catch (NonExistingReservationException dce) {
 				System.out.println("NonExistingReservation: " + dce.getMessage());
@@ -242,12 +237,13 @@ public class ReservationListDBTest {
 		System.out.println("\nLIST USED:");
 
 		System.out.println(db.toString());
-
-		Customer[] custToSearch = new DawsonCustomer[3];
-		String[] testCase = new String[3];
-
+		
+		Customer[] custToSearch = new DawsonCustomer[2];
+		String[] testCase = new String[2];
+		
+		
 		testCase[0] = new String("\nTest Case 1 Valid get Email Exist in the Database ");
-		custToSearch[0] = new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com");
+		custToSearch[0] = new DawsonCustomer("Humico", "Madori", "bbbb@bbbb");
 
 		testCase[1] = new String("\nTest Case 2 Invalid Email does not exist in the Database ");
 		custToSearch[1] = new DawsonCustomer("Dominica", "Esperente", "piquanteChiquita@hotmail.com");
@@ -256,7 +252,8 @@ public class ReservationListDBTest {
 			System.out.println(testCase[i]);
 
 			try {
-				db.getReservations(custToSearch[i]);
+				System.out.println(db.getReservations(custToSearch[i]));
+				
 			} catch (Exception e) {
 				System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> ");
 				continue;

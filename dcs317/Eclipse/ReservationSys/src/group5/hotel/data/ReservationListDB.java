@@ -18,7 +18,7 @@ import group5.hotel.business.DawsonHotelFactory;
 
 
 /**
- * 
+ * Updated by Denis Lebedev
  * @author Zahraa Horeibi
  * @version 11/13/2016
  */
@@ -101,8 +101,8 @@ public class ReservationListDB implements ReservationDAO {
 	public void add(Reservation reserv) throws DuplicateReservationException {
 		
 		for(int i =0; i < database.size(); i++){
-			if(database.get(i).overlap(reserv) && database.get(i).getRoom().getNumber() == reserv.getRoom().getNumber())
-				throw new IllegalArgumentException("Error overlap");
+			if(database.get(i).overlap(reserv))
+				throw new DuplicateReservationException("Error overlap");
 		}
 		
 		int index = binarySearch(this.database, reserv);
@@ -112,9 +112,7 @@ public class ReservationListDB implements ReservationDAO {
 		
 		index = -(index) -1;
 		
-		// Creating a deep copy of reserv
-		Reservation copyReserv = factory.getReservationInstance(reserv);
-		database.add(index, copyReserv);
+		database.add(index, factory.getReservationInstance(reserv));
 
 	}
 
@@ -136,6 +134,7 @@ public class ReservationListDB implements ReservationDAO {
 	 * Returns a copy of the Reservations belonging to the given customer, or an
 	 * empty ArrayList.
 	 * 
+	 * Updated by Denis Lebedev
 	 * @author Zahraa Horeibi
 	 * @param cust
 	 * @return ArrayList
@@ -143,11 +142,11 @@ public class ReservationListDB implements ReservationDAO {
 	@Override
 	public ArrayList<Reservation> getReservations(Customer cust) {
 		
-		//ERROR ELEMENTS ARE NOT DEEP COPIED ~~~ java notes 
 		ArrayList<Reservation> res = new ArrayList<Reservation>();
 
 		for (int i = 0; i < database.size(); i++) {
-			res.add(database.get(i));
+			if(database.get(i).getCustomer().equals(cust))
+				res.add(database.get(i));
 			}
 		
 		return res;
@@ -157,6 +156,7 @@ public class ReservationListDB implements ReservationDAO {
 	 * Removes the given reservation from the database if it is found; otherwise
 	 * throw a NonExistingReservationException.
 	 * 
+	 * Updated by Denis Lebedev
 	 * @author Zahraa Horeibi
 	 * @param reserv
 	 * @throws NonExistingReservationException
@@ -178,6 +178,7 @@ public class ReservationListDB implements ReservationDAO {
 	 * been reserved with the checkin date of the reservation before the
 	 * checkout date provided, and the checkout date of the reservation is after
 	 * the checkin date provided: in this case the room is reserved.
+	 * 
 	 * Updated by Denis Lebedev
 	 * 
 	 * @author Zahraa Horeibi
@@ -210,6 +211,7 @@ public class ReservationListDB implements ReservationDAO {
 	 * Returns an ArrayList with all unreserved Rooms overlapping during the
 	 * time period
 	 * 
+	 * Updated by Denis Lebedev
 	 * @author Zahraa Horeibi
 	 * @param checkin
 	 * @param checkout
@@ -222,7 +224,7 @@ public class ReservationListDB implements ReservationDAO {
 		
 		//NOT A DEEP COPY CHANGE AFTER
 		if(occupiedRoom.size() == 0)
-			return (ArrayList<Room>) allRooms;
+			return new ArrayList<Room>(allRooms);
 				
 		for(int i  =0; i < allRooms.size() ; i++){
 			
@@ -249,7 +251,6 @@ public class ReservationListDB implements ReservationDAO {
 		ArrayList<Room> emptyRooms = new ArrayList<Room>();
 		ArrayList<Room> freeRoom = getFreeRooms(checkin, checkout);
 				
-		//NOT A DEEP COPY CHANGE AFTER
 		if(freeRoom.size() == 0)
 			return freeRoom;
 								
@@ -264,6 +265,7 @@ public class ReservationListDB implements ReservationDAO {
 	 * This method removes all Reservations whose checkout date is before the
 	 * current date
 	 * 
+	 * Updated by Denis Lebedev
 	 * @author Zahraa Horeibi
 	 */
 
@@ -313,7 +315,8 @@ public class ReservationListDB implements ReservationDAO {
 	}
 	
 	/**
-	 * Overload binarySearch
+	 * Overloaded binarySearch for integers of
+	 * a Room
 	 * 
 	 * @author Denis Lebedev
 	 * 
