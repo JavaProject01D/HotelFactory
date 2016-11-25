@@ -23,86 +23,68 @@ public class ObjectSerializedList implements ListPersistenceObject {
 		this.roomFile = roomFile;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Room> getRoomDatabase() {
-		Room[] rooms = null;
+		List<Room> rooms = null;
 		try{
-			rooms = (Room[]) Utilities.deserializeObject(roomFile);
+			rooms = (List<Room>) Utilities.deserializeObject(roomFile);
 		}catch(IOException oie){
 			return new ArrayList<Room>();
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage() + "in ObjectSerializedList");
-		}
-		
-		// Create the adapter object that will be used as an argument to 
-		// instantiate an ArrayList instance.
+		}		
 
-		List<Room> listAdapter = java.util.Arrays.asList(rooms);
-
-		// return a reference to an ArrayList instance.
-		return new ArrayList<Room>(listAdapter);
+		return rooms;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Customer> getCustomerDatabase() {
-		Customer[] customers = null;
+		List<Customer> customers = null;
 		try{
-			customers = (Customer[]) Utilities.deserializeObject(customerFile);
+			customers = (List<Customer>) Utilities.deserializeObject(customerFile);
 		}catch(IOException oie){
 			return new ArrayList<Customer>();
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage() + "in ObjectSerializedList");
 		}
-		
-		// Create the adapter object that will be used as an argument to 
-		// instantiate an ArrayList instance.
 
-		List<Customer> listAdapter = java.util.Arrays.asList(customers);
-
-		// return a reference to an ArrayList instance.
-		return new ArrayList<Customer>(listAdapter);
+		return customers;
 	}
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "unchecked" })
 	@Override
 	public List<Reservation> getReservationDatabase() {
-		Room[] rooms = null;
-		Customer[] customer = null;
-		Reservation[] reserve = null;
+		List<Room> rooms = null;
+		List<Customer> customer = null;
+		List<Reservation> reserve = null;
 
 		try{
-			rooms = (Room[]) Utilities.deserializeObject(roomFile);
-			customer = (Customer[]) Utilities.deserializeObject(customerFile);
-			reserve = (Reservation[]) Utilities.deserializeObject(reservationFile);					
+			rooms = (List<Room>) Utilities.deserializeObject(roomFile);
+			customer = (List<Customer>) Utilities.deserializeObject(customerFile);
+			reserve = (List<Reservation>) Utilities.deserializeObject(reservationFile);					
 		}
 		catch (IOException e) {
 			return new ArrayList<Reservation>();
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage() + "in ObjectSerializedList");
 		}
-		
-		// Create the adapter object that will be used as an argument to 
-		// instantiate an ArrayList instance.
 
-		List<Reservation> listAdapter = java.util.Arrays.asList(reserve);
-
-		// return a reference to an ArrayList instance.
-		return new ArrayList<Reservation>(listAdapter);
+		return reserve;
 	}
 
 	@Override
 	public void saveCustomerDatabase(List<Customer> custs) throws IOException {
 		
-		Customer[] custArray = custs.toArray(new Customer[custs.size()]);
-		Utilities.serializeObject(custArray, customerFile);
+		Utilities.serializeObject(custs, customerFile);
 		
 	}
 
 	@Override
 	public void saveReservationDatabase(List<Reservation> reserve) throws IOException {
 		
-		Reservation[] resArray = reserve.toArray(new Reservation[reserve.size()]);
-		Utilities.serializeObject(resArray, reservationFile);
+		Utilities.serializeObject(reserve, reservationFile);
 		
 	}	
 }
