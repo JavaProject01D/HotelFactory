@@ -2,13 +2,11 @@ package group5.hotel.data;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 import dw317.hotel.business.interfaces.Customer;
 import dw317.hotel.data.DuplicateCustomerException;
 import dw317.hotel.data.NonExistingCustomerException;
-import dw317.lib.creditcard.CreditCard.CardType;
 import group5.hotel.business.DawsonCustomer;
 import group5.hotel.business.DawsonHotelFactory;
 import group5.util.ListUtilities;
@@ -29,11 +27,11 @@ public class CustomerListDBTest {
 
 	public static void setup(){
 	
-		/*String[] rooms = new String[4];
+		String[] rooms = new String[4];
 		rooms[0] = "101*normal";
 		rooms[1] = "102*normal";
 		rooms[2] = "301*suite";
-		rooms[3] = "401*penthouse";*/
+		rooms[3] = "401*penthouse";
 		
 		System.out.println("\nCreating instance of Valid and Invalid Customers: ");
 		
@@ -48,11 +46,11 @@ public class CustomerListDBTest {
 		
 
 
-		/*String[] reservs = new String[8];
+		String[] reservs = new String[8];
 		reservs [0] = "raj@aing.ru*2016*9*10*2016*9*15*101";
 		reservs [1] = "joe.mancini@mail.me*2016*10*10*2016*10*20*401";
 		//...
-		reservs [7] = "d@zzz.com*2016*10*12*2016*10*15*102";*/
+		reservs [7] = "d@zzz.com*2016*10*12*2016*10*15*102";
 		
 		
 		File dir = new File("testfiles");
@@ -60,12 +58,12 @@ public class CustomerListDBTest {
 			if (!dir.exists()){  
 				dir.mkdirs();
 			}
-			/*ListUtilities.saveListToTextFile(rooms, 
-					"testfiles/testRooms.txt");*/
+			ListUtilities.saveListToTextFile(rooms, 
+					"testfiles/testRooms.txt");
 			ListUtilities.saveListToTextFile(custs, 
 					"testfiles/testCustomers.txt");
-			/*ListUtilities.saveListToTextFile(reservs, 
-					"testfiles/testReservations.txt");*/
+			ListUtilities.saveListToTextFile(reservs, 
+					"testfiles/testReservations.txt");
 		}
 		catch(IOException io){
 			System.out.println

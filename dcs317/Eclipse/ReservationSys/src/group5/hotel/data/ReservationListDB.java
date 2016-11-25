@@ -15,7 +15,7 @@ import dw317.hotel.data.NonExistingReservationException;
 import dw317.hotel.data.interfaces.ListPersistenceObject;
 import dw317.hotel.data.interfaces.ReservationDAO;
 import group5.hotel.business.DawsonHotelFactory;
-import group5.hotel.business.DawsonReservation;
+
 
 /**
  * 
@@ -60,6 +60,7 @@ public class ReservationListDB implements ReservationDAO {
 
 		this.listPersistenceObject = listPersistenceObject;
 		this.allRooms = this.listPersistenceObject.getRoomDatabase();
+		this.database = this.listPersistenceObject.getReservationDatabase();
 		this.factory = factory;
 
 	}
@@ -89,6 +90,7 @@ public class ReservationListDB implements ReservationDAO {
 	 * reference to a copy of the object referenced by the reserv and not the
 	 * actual object being referenced by the parameter.
 	 * 
+	 * Updated by Denis Lebedev
 	 * @author Zahraa Horeibi
 	 * @param reserv
 	 * @throws DuplicateReservationException
@@ -97,15 +99,21 @@ public class ReservationListDB implements ReservationDAO {
 
 	@Override
 	public void add(Reservation reserv) throws DuplicateReservationException {
-		// Creating a deep copy of reserv
-		Reservation copyReserv = factory.getReservationInstance(reserv);
-
-		int index = binarySearch(this.database, copyReserv);
-		index = -(index);
-
+		
+		for(int i =0; i < database.size(); i++){
+			if(database.get(i).overlap(reserv) && database.get(i).getRoom().getNumber() == reserv.getRoom().getNumber())
+				throw new IllegalArgumentException("Error overlap");
+		}
+		
+		int index = binarySearch(this.database, reserv);
+		
 		if (index > 0)
 			throw new DuplicateReservationException();
-		// binary search so we can insert it at the correct position (not sure)
+		
+		index = -(index) -1;
+		
+		// Creating a deep copy of reserv
+		Reservation copyReserv = factory.getReservationInstance(reserv);
 		database.add(index, copyReserv);
 
 	}
@@ -120,11 +128,7 @@ public class ReservationListDB implements ReservationDAO {
 	@Override
 	public void disconnect() throws IOException {
 
-		try {
-			this.listPersistenceObject.saveReservationDatabase(this.database);
-		} catch (IOException ie) {
-			throw new IOException("Error saving to file!");
-		}
+		this.listPersistenceObject.saveReservationDatabase(this.database);
 		this.database = null;
 	}
 
@@ -138,16 +142,14 @@ public class ReservationListDB implements ReservationDAO {
 	 */
 	@Override
 	public ArrayList<Reservation> getReservations(Customer cust) {
-
+		
+		//ERROR ELEMENTS ARE NOT DEEP COPIED ~~~ java notes 
 		ArrayList<Reservation> res = new ArrayList<Reservation>();
 
 		for (int i = 0; i < database.size(); i++) {
-			for (Reservation r : this.database) {
-				if (r.getCustomer().equals(cust)) {
-					res.set(i, r);
-				}
+			res.add(database.get(i));
 			}
-		}
+		
 		return res;
 	}
 
@@ -163,10 +165,11 @@ public class ReservationListDB implements ReservationDAO {
 	@Override
 	public void cancel(Reservation reserv) throws NonExistingReservationException {
 		int index = binarySearch(this.database, reserv);
-		if (index > 0)
-			this.database.remove(index);
+			
 		if (index < 0)
-			throw new NonExistingReservationException();
+			throw new NonExistingReservationException("The reservation given does not exist.");
+		
+		this.database.remove(index);
 	}
 
 	/**
@@ -175,6 +178,7 @@ public class ReservationListDB implements ReservationDAO {
 	 * been reserved with the checkin date of the reservation before the
 	 * checkout date provided, and the checkout date of the reservation is after
 	 * the checkin date provided: in this case the room is reserved.
+	 * Updated by Denis Lebedev
 	 * 
 	 * @author Zahraa Horeibi
 	 * @param checkin
@@ -189,10 +193,13 @@ public class ReservationListDB implements ReservationDAO {
 
 		for (int i = 0; i < database.size(); i++) {
 			for (Reservation r : this.database) {
-				if (checkin.isBefore(checkout) && checkout.isAfter(checkin)) {
-					if (r.getCheckInDate().equals(checkin) && r.getCheckOutDate().equals(checkout)) {
-						rooms.set(i, r.getRoom());
-					}
+				if ((r.getCheckInDate().isBefore(checkout) && r.getCheckOutDate().isAfter(checkin))){
+					//Give at least one element	
+					if(rooms.size() == 0)
+						rooms.add(r.getRoom());
+					else										
+						if(binarySearch(rooms, r.getRoom()) < 0)
+							rooms.add(r.getRoom());											
 				}
 			}
 		}
@@ -211,14 +218,18 @@ public class ReservationListDB implements ReservationDAO {
 	@Override
 	public ArrayList<Room> getFreeRooms(LocalDate checkin, LocalDate checkout) {
 		ArrayList<Room> emptyRooms = new ArrayList<Room>();
-
-		for (int i = 0; i < database.size(); i++) {
-			for (Reservation r : this.database) {
-				if (!checkin.isBefore(checkout) && !checkout.isAfter(checkin)) {
-					emptyRooms.set(i, r.getRoom());
-				}
-			}
+		List<Room> occupiedRoom = getReservedRooms(checkin, checkout);
+		
+		//NOT A DEEP COPY CHANGE AFTER
+		if(occupiedRoom.size() == 0)
+			return (ArrayList<Room>) allRooms;
+				
+		for(int i  =0; i < allRooms.size() ; i++){
+			
+			if(binarySearch(occupiedRoom, allRooms.get(i)) < 0)
+				emptyRooms.add(allRooms.get(i));
 		}
+		
 		return emptyRooms;
 	}
 
@@ -226,6 +237,7 @@ public class ReservationListDB implements ReservationDAO {
 	 * Returns an ArrayList with all unreserved Rooms with the given room type
 	 * overlapping during the time period
 	 * 
+	 * Updated by Denis Lebedev
 	 * @author Zahraa Horeibi
 	 * @param checkin
 	 * @param checkout
@@ -235,14 +247,16 @@ public class ReservationListDB implements ReservationDAO {
 	@Override
 	public ArrayList<Room> getFreeRooms(LocalDate checkin, LocalDate checkout, RoomType roomType) {
 		ArrayList<Room> emptyRooms = new ArrayList<Room>();
-
-		for (int i = 0; i < database.size(); i++) {
-			for (Reservation r : this.database) {
-				if (r.getRoom().equals(roomType) && !checkin.isBefore(checkout) && !checkout.isAfter(checkin)) {
-					emptyRooms.set(i, r.getRoom());
-				}
-			}
-		}
+		ArrayList<Room> freeRoom = getFreeRooms(checkin, checkout);
+				
+		//NOT A DEEP COPY CHANGE AFTER
+		if(freeRoom.size() == 0)
+			return freeRoom;
+								
+		for(int i  =0; i < freeRoom.size(); i++){			
+			if(freeRoom.get(i).getRoomType().equals(roomType))
+				emptyRooms.add(freeRoom.get(i));
+		}			
 		return emptyRooms;
 	}
 
@@ -258,6 +272,7 @@ public class ReservationListDB implements ReservationDAO {
 		for (int i =0; i < database.size() ; i++) {
 			if (database.get(i).getCheckOutDate().isBefore(LocalDate.now())) {
 				database.remove(i);
+				i--;
 			}
 		}
 	}
@@ -267,6 +282,7 @@ public class ReservationListDB implements ReservationDAO {
 	 * reservation inside of the reservation list (database) using a binary
 	 * search.
 	 * 
+	 * @author Denis Lebedev
 	 * @param reservationList
 	 * @param res
 	 * @return int
@@ -274,23 +290,56 @@ public class ReservationListDB implements ReservationDAO {
 
 	private static int binarySearch(List<? extends Reservation> reservationList, Reservation res) {
 
-		int low = 0;
-		int high = reservationList.size() - 1;
-		int mid = (low + high) / 2;
-		int result;
-
-		while (low <= high) {
-
-			mid = (low + high) / 2;
-			result = reservationList.get(mid).compareTo(res);
-
-			if (result == 0) {
-				return mid;
-			} else if (result < 0) {
-				low = mid + 1;
-			} else
-				high = mid - 1;
+		int first, last, middle;
+		
+		first = 0;
+		last = reservationList.size() - 1;
+		middle =0;
+	
+		
+		while( first <= last){
+			middle = (first + last)/2;
+			if(reservationList.get(middle).equals(res)){
+				//I found so i return the middle
+				return middle;
+			}else if(reservationList.get(middle).compareTo(res) < 0){
+				first = middle+1;
+			}else{
+				last = middle-1;			
+			}
+	
 		}
-		return -(high + 1);
+		return -(first +1); 
+	}
+	
+	/**
+	 * Overload binarySearch
+	 * 
+	 * @author Denis Lebedev
+	 * 
+	 * @param roomList
+	 * @param room
+	 * @return int
+	 */
+	private static int binarySearch(List<Room> roomList, Room room){
+		
+		int first, last, middle;
+		
+		first = 0;
+		last = roomList.size() - 1;
+		middle =0;
+		
+		while( first <= last){
+			middle = (first + last)/2;
+			
+			if(roomList.get(middle).getRoomNumber() == room.getRoomNumber())
+				return middle;
+			else if(roomList.get(middle).getRoomNumber() < room.getRoomNumber())
+				first = middle+1;
+			else
+				last = middle-1;			
+		}
+		
+		return -(first +1);
 	}
 }

@@ -136,7 +136,7 @@ public class DawsonReservation implements Reservation{
 			return true;
 		
 			if(this.checkIn.isBefore(other.getCheckOutDate())
-				&& this.checkOut.isBefore(other.getCheckInDate()))	
+				&& this.checkOut.isAfter(other.getCheckInDate()))	
 				return true;
 				
 		return false;

@@ -3,14 +3,13 @@ package group5.hotel.data;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import dw317.hotel.business.RoomType;
 import dw317.hotel.business.interfaces.Customer;
 import dw317.hotel.business.interfaces.Reservation;
 import dw317.hotel.business.interfaces.Room;
-import dw317.hotel.data.DuplicateCustomerException;
 import dw317.hotel.data.DuplicateReservationException;
-import dw317.hotel.data.NonExistingCustomerException;
 import dw317.hotel.data.NonExistingReservationException;
 import group5.hotel.business.DawsonCustomer;
 import group5.hotel.business.DawsonReservation;
@@ -44,25 +43,25 @@ public class ReservationListDBTest {
 		rooms[7] = "801*penthouse";
 
 		String[] custs = new String[8];
-		custs[0] = "bob.b.y_lee@hotmail.ca*Bobby*Lee*mastercard*5458325441641567";
-		custs[1] = "madoriHu@host.com*Humico*Madori*mastercard*5233382411178726";
-		custs[2] = "Jean_Gero@gg.fr*Jean*Gerophar*visa*4929596474756407";
-		custs[3] = "MyNameIsSheila@localhost*Sheila*Kaif*AMEX*374425782767815";
-		custs[4] = "cuty.kathy.2008@yahoo.ca*Kathy*Perry**";
-		custs[5] = "robert.is-awesome@mail.me*Robert*Siri*Visa*4485011762777210";
-		custs[6] = "john.bussiness@gmail.ca*Johny-Laurence*Smith**";
-		custs[7] = "Umila-Gangee@local.ca*Umila*Gangee**";
+		custs[0] = "bbbb@aaaa*Bobby*Lee*mastercard*5458325441641567";
+		custs[1] = "bbbb@bbbb*Humico*Madori*mastercard*5233382411178726";
+		custs[2] = "ccccc@CCCc*Jean*Gerophar*visa*4929596474756407";
+		custs[3] = "eeeeee.ee@eee.com*Sheila*Kaif*AMEX*374425782767815";
+		custs[4] = "gggg@gggg.com*Kathy*Perry**";
+		custs[5] = "iiiiii@iiii*Robert*Siri*Visa*4485011762777210";
+		custs[6] = "bbbb@jjjjj*Johny-Laurence*Smith**";
+		custs[7] = "yyyy@yyyy*Umila*Gangee**";
 
 		String[] reservs = new String[8];
-		reservs[0] = "bob.b.y_lee@hotmail.ca*2016*8*30*2016*12*25*206";
-		reservs[1] = "madoriHu@host.com*2016*10*26*2016*12*30*401";
-		reservs[2] = "Jean_Gero@gg.fr*2016*11*28*2017*2*25*406";
-		reservs[3] = "MyNameIsSheila@localhost*2017*5*9*2017*6*1*503";
-		reservs[4] = "cuty.kathy.2008@yahoo.ca*2016*12*25*2017*1*1*601";
-		reservs[5] = "robert.is-awesome@mail.me*2017*1*1*2018*1*1*704";
-		reservs[6] = "john.bussiness@gmail.ca*2016*9*20*2016*9*26*801";
-		reservs[7] = "Umila-Gangee@local.ca*2017*5*5*2017*7*8*801";
-
+		reservs[0] = "bbbb@aaaa*2016*8*30*2016*12*25*206";
+		reservs[1] = "bbbb@bbbb*2016*10*26*2016*12*30*401";
+		reservs[2] = "ccccc@CCCc*2016*11*28*2017*2*25*406";
+		reservs[3] = "eeeeee.ee@eee.com*2017*5*9*2017*6*1*503";
+		reservs[4] = "gggg@gggg.com*2016*12*25*2017*1*1*601";
+		reservs[5] = "iiiiii@iiii*2017*1*1*2018*1*1*704";
+		reservs[6] = "bbbb@jjjjj*2016*9*20*2016*9*26*801";
+		reservs[7] = "yyyy@yyyy*2017*5*5*2017*7*8*801";
+		
 		File dir = new File("testfiles");
 		try {
 			if (!dir.exists()) {
@@ -100,17 +99,25 @@ public class ReservationListDBTest {
 		System.out.println(db.toString());
 		System.out.println("________________________ TESTING add() _______________________\n");
 
-		String[] testcase = new String[6];
+		String[] testcase = new String[4];
 
-		Reservation[] resToAdd = new DawsonReservation[6];
+		Reservation[] resToAdd = new DawsonReservation[4];
 
 		testcase[0] = " Case 1: Valid Data";
 		resToAdd[0] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
 				new DawsonRoom(105, RoomType.NORMAL), 2008, 10, 5, 2010, 10, 5);
 
-		testcase[1] = " Case 2: Invalid Data: Reservation already in list";
-		resToAdd[1] = new DawsonReservation(new DawsonCustomer("Humico", "Madori", "madoriHu@host.com"),
+		testcase[1] = " Case 2: Invalid Data: Overlap";
+		resToAdd[1] = new DawsonReservation(new DawsonCustomer("Humico", "Madori", "yyyy@yyyy"),
 				new DawsonRoom(401, RoomType.NORMAL), 2016, 10, 26, 2016, 12, 30);
+		
+		testcase[2] = " Case 3: Valid Data: Room is available";
+		resToAdd[2] = new DawsonReservation(new DawsonCustomer("Humico", "Madori", "zzz@zzz"),
+				new DawsonRoom(402, RoomType.NORMAL), 2017, 11, 5, 2018, 1, 5);
+		
+		testcase[3] = " Case 4: Valid Data: Room exist, but different checkIn";
+		resToAdd[3] = new DawsonReservation(new DawsonCustomer("Humico", "Madori", "zzz@zzz"),
+				new DawsonRoom(105, RoomType.NORMAL), 2017, 11, 5, 2018, 1, 5);
 
 		for (int i = 0; i < resToAdd.length; i++) {
 			System.out.println(testcase[i]);
@@ -119,6 +126,9 @@ public class ReservationListDBTest {
 				db.add(resToAdd[i]);
 			} catch (DuplicateReservationException dce) {
 				System.out.println("DuplicateReservation: " + dce.getMessage());
+				continue;
+			} catch (IllegalArgumentException iae){
+				System.out.println("IllegalArgumentException: " + iae.getMessage());
 				continue;
 			} catch (Exception e) {
 				System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> ");
@@ -185,15 +195,19 @@ public class ReservationListDBTest {
 
 		System.out.println(db.toString());
 
-		String[] testcase = new String[6];
-		Reservation[] resToAdd = new DawsonReservation[6];
-
+		String[] testcase = new String[3];
+		Reservation[] resToAdd = new DawsonReservation[3];
+	
 		testcase[0] = "\n Case 1: Valid Data";
-		resToAdd[0] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
-				new DawsonRoom(105, RoomType.NORMAL), 2008, 10, 5, 2010, 10, 5);
-
-		testcase[1] = "\n Case 2: Invalid Data: Reservation not in list";
-		resToAdd[1] = new DawsonReservation(new DawsonCustomer("Dominica", "Esperente", "piquanteChiquita@hotmail.com"),
+		resToAdd[0] = new DawsonReservation(new DawsonCustomer("Bobby", "Lee", "bbbb@aaaa"),
+				new DawsonRoom(206, RoomType.NORMAL), 2016, 8, 30, 2016, 12, 25);
+		
+		testcase[1] = "\n Case 2: Invalid Data: Only the room is invalid";
+		resToAdd[1] = new DawsonReservation(new DawsonCustomer("Humico", "Madori", "bbbb@bbbb"),
+				new DawsonRoom(206, RoomType.NORMAL), 2016, 10, 26, 2016, 12, 25);
+		
+		testcase[2] = "\n Case 3: Invalid Data: Reservation not in list";
+		resToAdd[2] = new DawsonReservation(new DawsonCustomer("Dominica", "Esperente", "piquanteChiquita@hotmail.com"),
 				new DawsonRoom(605, RoomType.NORMAL), 2016, 10, 26, 2016, 12, 30);
 
 		for (int i = 0; i < resToAdd.length; i++) {
@@ -201,6 +215,8 @@ public class ReservationListDBTest {
 
 			try {
 				db.cancel(resToAdd[i]);
+				System.out.println(db.toString());
+				
 			} catch (NonExistingReservationException dce) {
 				System.out.println("NonExistingReservation: " + dce.getMessage());
 				continue;
@@ -208,8 +224,9 @@ public class ReservationListDBTest {
 				System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> ");
 				continue;
 			}
-
 		}
+		
+		System.out.println(db.toString());
 
 		teardown();
 	}
@@ -260,9 +277,10 @@ public class ReservationListDBTest {
 		System.out.println("\nLIST USED:");
 
 		System.out.println(db.toString());
-
-		String[] testcase = new String[6];
-		Reservation[] resToSearch = new DawsonReservation[6];
+		
+		List<Room> output = new ArrayList<Room>();
+		String[] testcase = new String[3];
+		Reservation[] resToSearch = new DawsonReservation[3];
 
 		testcase[0] = "\n Case 1: Valid Data";
 		resToSearch[0] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
@@ -270,13 +288,23 @@ public class ReservationListDBTest {
 
 		testcase[1] = "\n Case 2: Invalid Data: Invalid dates in list";
 		resToSearch[1] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
-				new DawsonRoom(105, RoomType.NORMAL), 1995, 10, 26, 1996, 12, 30);
+				new DawsonRoom(206, RoomType.NORMAL), 2016, 9, 26, 2017, 12, 30);
+		
+		testcase[2] = "\n Case 3: Invalid Data: Invalid dates in list, but more specific date";
+		resToSearch[2] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
+				new DawsonRoom(206, RoomType.NORMAL), 2017, 5, 5, 2017, 7, 8);
 
 		for (int i = 0; i < resToSearch.length; i++) {
 			System.out.println(testcase[i]);
 
 			try {
-				db.getReservedRooms(resToSearch[i].getCheckInDate(), resToSearch[i].getCheckOutDate());
+				output = db.getReservedRooms(resToSearch[i].getCheckInDate(), resToSearch[i].getCheckOutDate());
+				
+				if(output.size() == 0)
+					System.out.println("All the rooms are available for the given date: " + output);
+				else
+					System.out.println("Rooms occupied for the given date: " + output);
+				
 			} catch (Exception e) {
 				System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> ");
 				continue;
@@ -298,23 +326,35 @@ public class ReservationListDBTest {
 		System.out.println("\nLIST USED:");
 
 		System.out.println(db.toString());
-
-		String[] testcase = new String[6];
-		Reservation[] resToSearch = new DawsonReservation[6];
+		
+		List<Room> output = new ArrayList<Room>();
+		String[] testcase = new String[3];
+		Reservation[] resToSearch = new DawsonReservation[3];
 
 		testcase[0] = "\n Case 1: Valid Data";
 		resToSearch[0] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
 				new DawsonRoom(105, RoomType.NORMAL), 1995, 10, 26, 1996, 12, 30);
 
-		testcase[1] = "\n Case 2: Invalid Data: Date used already";
+		testcase[1] = "\n Case 2: Invalid Data: Invalid dates in list";
 		resToSearch[1] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
-				new DawsonRoom(105, RoomType.NORMAL), 2008, 10, 5, 2010, 10, 5);
+				new DawsonRoom(206, RoomType.NORMAL), 2016, 9, 26, 2017, 12, 30);
+		
+		testcase[2] = "\n Case 3: Invalid Data: Invalid dates in list, but more specific date";
+		resToSearch[2] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
+				new DawsonRoom(206, RoomType.NORMAL), 2017, 5, 5, 2017, 7, 8);
 
 		for (int i = 0; i < resToSearch.length; i++) {
 			System.out.println(testcase[i]);
 
 			try {
-				db.getFreeRooms(resToSearch[i].getCheckInDate(), resToSearch[i].getCheckOutDate());
+				
+				output = db.getFreeRooms(resToSearch[i].getCheckInDate(), resToSearch[i].getCheckOutDate());
+				
+				if(output.size() == 0)
+					System.out.println("No Free Room for the given date: " + output);
+				else
+					System.out.println("Free Rooms for the given date: " + output);
+								
 			} catch (Exception e) {
 				System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> ");
 				continue;
@@ -336,28 +376,36 @@ public class ReservationListDBTest {
 		System.out.println("\nLIST USED:");
 
 		System.out.println(db.toString());
-
-		String[] testcase = new String[6];
-		Reservation[] resToSearch = new DawsonReservation[6];
+		
+		List<Room> output = new ArrayList<Room>();
+		String[] testcase = new String[3];
+		Reservation[] resToSearch = new DawsonReservation[3];
 
 		testcase[0] = "\n Case 1: Valid Data";
 		resToSearch[0] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
-				new DawsonRoom(105, RoomType.NORMAL), 1995, 10, 26, 1996, 12, 30);
+				new DawsonRoom(105, RoomType.PENTHOUSE), 1995, 10, 26, 1996, 12, 30);
 
-		testcase[1] = "\n Case 2: Invalid Data: Date used already";
+		testcase[1] = "\n Case 2: Invalid Data: Invalid dates in list";
 		resToSearch[1] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
-				new DawsonRoom(105, RoomType.NORMAL), 2008, 10, 5, 2010, 10, 5);
-
-		testcase[2] = "\n Case 3: Invalid Data: Wrong Room Type";
+				new DawsonRoom(206, RoomType.NORMAL), 2016, 9, 26, 2017, 12, 30);
+		
+		testcase[2] = "\n Case 3: Invalid Data: Invalid dates in list, but more specific date";
 		resToSearch[2] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
-				new DawsonRoom(105, RoomType.PENTHOUSE), 2008, 10, 5, 2010, 10, 5);
+				new DawsonRoom(206, RoomType.NORMAL), 2017, 5, 5, 2017, 7, 8);
+
 
 		for (int i = 0; i < resToSearch.length; i++) {
 			System.out.println(testcase[i]);
 
 			try {
-				db.getFreeRooms(resToSearch[i].getCheckInDate(), resToSearch[i].getCheckOutDate(),
+				output = db.getFreeRooms(resToSearch[i].getCheckInDate(), resToSearch[i].getCheckOutDate(),
 						resToSearch[i].getRoom().getRoomType());
+				
+				if(output.size() == 0)
+					System.out.println("No Free Room for the given type: " + output);
+				else
+					System.out.println("Free Rooms for the given type: " + output);
+				
 			} catch (Exception e) {
 				System.out.println("<----HANDLE ME---> " + e.getMessage() + " <----HANDLE ME---> ");
 				continue;

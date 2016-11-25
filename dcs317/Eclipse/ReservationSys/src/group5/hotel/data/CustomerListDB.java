@@ -88,13 +88,13 @@ public class CustomerListDB implements CustomerDAO{
 			throws DuplicateCustomerException{
 		int index =(binarySearch(database, cust.getEmail()));
 		if(index > 0)
-			throw new DuplicateCustomerException();
+			throw new DuplicateCustomerException("Customer already exits. It impossible to add it!");
 		
 		/*
 		 * the binary research return a neg number if you follow
 		 *the conventional way to so. 
 		 */
-		index = -(index);
+		index = -(index) -1;
 				
 		database.add(index, factory.getCustomerInstance(cust.getName().getFirstName(), 
 						cust.getName().getLastName(), cust.getEmail().getAddress()));
@@ -119,14 +119,8 @@ public class CustomerListDB implements CustomerDAO{
 	public void disconnect()
 			throws IOException{
 		
-
-		try {
 			this.listPersistenceObject.saveCustomerDatabase(this.database);
-			} catch ( IOException ie ) {
-			throw new IOException("Error saving to file!");
-		}
-		this.database = null;
-
+			this.database = null;
 	}
 	
 	/**
@@ -201,17 +195,16 @@ public class CustomerListDB implements CustomerDAO{
 		
 		while( first <= last){
 			middle = (first + last)/2;
-			if(list.get(middle).getEmail().compareTo(cust) < 0){
-				first = middle+1;
-				middle = (first + last)/2;
-			}else if(list.get(middle).getEmail().equals(cust)){
+			if(list.get(middle).getEmail().equals(cust)){
 				//I found so i return the middle
 				return middle;
+			}else if(list.get(middle).getEmail().compareTo(cust) < 0){
+				first = middle+1;
 			}else{
-				last = middle-1;
+				last = middle-1;			
 			}
 
 		}
-		return -(last +1); 
+		return -(first +1); 
 	}
 }
