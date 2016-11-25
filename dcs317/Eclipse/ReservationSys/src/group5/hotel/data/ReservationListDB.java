@@ -15,7 +15,7 @@ import dw317.hotel.data.NonExistingReservationException;
 import dw317.hotel.data.interfaces.ListPersistenceObject;
 import dw317.hotel.data.interfaces.ReservationDAO;
 import group5.hotel.business.DawsonHotelFactory;
-import group5.hotel.business.DawsonReservation;
+
 
 /**
  * 
@@ -237,6 +237,7 @@ public class ReservationListDB implements ReservationDAO {
 	 * Returns an ArrayList with all unreserved Rooms with the given room type
 	 * overlapping during the time period
 	 * 
+	 * Updated by Denis Lebedev
 	 * @author Zahraa Horeibi
 	 * @param checkin
 	 * @param checkout
@@ -246,15 +247,16 @@ public class ReservationListDB implements ReservationDAO {
 	@Override
 	public ArrayList<Room> getFreeRooms(LocalDate checkin, LocalDate checkout, RoomType roomType) {
 		ArrayList<Room> emptyRooms = new ArrayList<Room>();
-		List<Room> occupiedRoom = getReservedRooms(checkin, checkout);
-		
-		for (int i = 0; i < database.size(); i++) {
-			for (Reservation r : this.database) {
-				if (r.getRoom().equals(roomType) && !checkin.isBefore(checkout) && !checkout.isAfter(checkin)) {
-					emptyRooms.set(i, r.getRoom());
-				}
-			}
-		}
+		ArrayList<Room> freeRoom = getFreeRooms(checkin, checkout);
+				
+		//NOT A DEEP COPY CHANGE AFTER
+		if(freeRoom.size() == 0)
+			return freeRoom;
+								
+		for(int i  =0; i < freeRoom.size(); i++){			
+			if(freeRoom.get(i).getRoomType().equals(roomType))
+				emptyRooms.add(freeRoom.get(i));
+		}			
 		return emptyRooms;
 	}
 
