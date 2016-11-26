@@ -23,6 +23,7 @@ public class RoomListDB implements RoomDAO {
 	public RoomListDB (ListPersistenceObject listPersistenceObject) {
 		this.listPersistenceObject = listPersistenceObject;
 		this.database = this.listPersistenceObject.getRoomDatabase();
+		System.out.println(database);
 	}
 
 	@Override

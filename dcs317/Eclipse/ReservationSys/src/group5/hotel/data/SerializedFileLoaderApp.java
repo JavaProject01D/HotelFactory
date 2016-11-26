@@ -4,7 +4,16 @@ import java.io.IOException;
 
 
 import group5.util.Utilities;
-
+/**
+ * The class will have three methods
+ * to save from text file to a 
+ * serialized file with the extension .ser
+ * The applacation will use the class
+ * sequentialTextFileList to fetch all text file
+ * 
+ * @author Denis Lebedev
+ *
+ */
 public class SerializedFileLoaderApp {
 	
 	public static void main (String[] args) throws IOException {
