@@ -10,6 +10,7 @@ import dw317.hotel.data.NonExistingCustomerException;
 import group5.hotel.business.DawsonCustomer;
 import group5.hotel.business.DawsonHotelFactory;
 import group5.util.ListUtilities;
+import group5.util.Utilities;
 
 public class CustomerListDBTest {
 	
@@ -26,7 +27,7 @@ public class CustomerListDBTest {
 	}
 
 	public static void setup(){
-	
+		
 		String[] rooms = new String[4];
 		rooms[0] = "101*normal";
 		rooms[1] = "102*normal";
@@ -52,24 +53,36 @@ public class CustomerListDBTest {
 		//...
 		reservs [7] = "d@zzz.com*2016*10*12*2016*10*15*102";
 		
-		
+		SequentialTextFileList file = new SequentialTextFileList
+				("testfiles/testRooms.txt", "testfiles/testCustomers.txt",
+				"testfiles/testReservations.txt");
 		File dir = new File("testfiles");
 		try{
 			if (!dir.exists()){  
 				dir.mkdirs();
 			}
+			
 			ListUtilities.saveListToTextFile(rooms, 
 					"testfiles/testRooms.txt");
+			
+			Utilities.serializeObject(file.getRoomDatabase(), "testFiles\\testRooms.ser");
+			
 			ListUtilities.saveListToTextFile(custs, 
 					"testfiles/testCustomers.txt");
+			
+			Utilities.serializeObject(file.getCustomerDatabase(), "testFiles\\testCustomers.ser");
+			
 			ListUtilities.saveListToTextFile(reservs, 
 					"testfiles/testReservations.txt");
+			
+			Utilities.serializeObject(file.getReservationDatabase(), "testFiles\\testReservations.ser");
 		}
 		catch(IOException io){
 			System.out.println
 			("Error creating file in setUp()");
 		}
 		
+		teardown();
 	}
 	
 	private static void teardown() {
@@ -87,12 +100,26 @@ public class CustomerListDBTest {
 		}
 	}
 	
+	private static void teardownSerialization() {
+		File theFile = new File("testfiles/testRooms.ser");
+		if (theFile.exists()) {
+			theFile.delete();
+		}
+		theFile = new File("testfiles/testCustomers.ser");
+		if (theFile.exists()) {
+			theFile.delete();
+		}
+		theFile = new File("testfiles/testReservations.ser");
+		if (theFile.exists()) {
+			theFile.delete();
+		}
+	}
 	
 	private static void testAddCustomer() {
 		setup();
-		SequentialTextFileList file = new SequentialTextFileList
-				("testfiles/testRooms.txt", "testfiles/testCustomers.txt",
-						"testfiles/testReservations.txt");
+		ObjectSerializedList file = new ObjectSerializedList
+				("testfiles/testCustomers.ser", "testfiles/testReservations.ser",
+						"testfiles/testRooms.ser");
 		CustomerListDB db = new CustomerListDB(file);
 		
 		System.out.println("_______________________________________________\n");
@@ -146,14 +173,14 @@ public class CustomerListDBTest {
 			System.out.println("\n<---> Added Item <--->");
 			System.out.println(db.toString());
 			
-		teardown();
+		teardownSerialization();
 	}
 	
 	private static void testGetCustomer(){
 		setup();
-		SequentialTextFileList file = new SequentialTextFileList
-				("testfiles/testRooms.txt", "testfiles/testCustomers.txt",
-						"testfiles/testReservations.txt");
+		ObjectSerializedList file = new ObjectSerializedList
+				("testfiles/testCustomers.ser", "testfiles/testReservations.ser",
+						"testfiles/testRooms.ser");
 		CustomerListDB db = new CustomerListDB(file);
 		
 		System.out.println("_______________________________________________\n");
@@ -189,14 +216,14 @@ public class CustomerListDBTest {
 			}
 		
 		
-		teardown();		
+		teardownSerialization();	
 	}
 	
 	private static void testUpdate(){
 		setup();
-		SequentialTextFileList file = new SequentialTextFileList
-				("testfiles/testRooms.txt", "testfiles/testCustomers.txt",
-						"testfiles/testReservations.txt");
+		ObjectSerializedList file = new ObjectSerializedList
+				("testfiles/testCustomers.ser", "testfiles/testReservations.ser",
+						"testfiles/testRooms.ser");
 		CustomerListDB db = new CustomerListDB(file);
 		
 		System.out.println("_______________________________________________\n");
@@ -239,14 +266,14 @@ public class CustomerListDBTest {
 				continue;
 		}
 		
-		teardown();	
+		teardownSerialization();	
 	}
 	
 	private static void testDisconect(){
 		setup();
-		SequentialTextFileList file = new SequentialTextFileList
-				("testfiles/testRooms.txt", "testfiles/testCustomers.txt",
-						"testfiles/testReservations.txt");
+		ObjectSerializedList file = new ObjectSerializedList
+				("testfiles/testCustomers.ser", "testfiles/testReservations.ser",
+						"testfiles/testRooms.ser");
 		CustomerListDB db = new CustomerListDB(file);
 		
 		System.out.println("_______________________________________________\n");
@@ -278,7 +305,7 @@ public class CustomerListDBTest {
 		
 		System.out.println(dbTwo.toString());
 		
-		teardown();	
+		teardownSerialization();
 	}
 }
 
