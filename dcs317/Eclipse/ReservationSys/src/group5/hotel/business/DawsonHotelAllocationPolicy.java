@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import dw317.hotel.business.RoomType;
 import dw317.hotel.business.interfaces.AllocationPolicy;
@@ -25,87 +26,55 @@ public class DawsonHotelAllocationPolicy implements AllocationPolicy {
 	@Override
 	public Optional<Room> getAvailableRoom(LocalDate checkin, LocalDate checkout, RoomType roomType) {
 
-		//why cast?
-		ArrayList<Room> freeRooms = (ArrayList<Room>) reservationDAO.getFreeRooms(checkin, checkout, roomType);
 		
-		int floorNum = search(freeRooms);
-		// random
-			for ( Room r : freeRooms ) {
-				if (r.getFloor() == floorNum) {
-					return Optional.ofNullable(r);
-				}
-			}
-			//not sure
-			return Optional.empty();
-	}
+		List<Room> freeRooms = this.reservationDAO.getFreeRooms(checkin, checkout, roomType);	
+		List<Room> freeRoomsOnFloor = new ArrayList<Room>();
+		int floorNum = searchFloor(freeRooms);
+		Random randomRoom = new Random();
 		
-	// helper method returns the floor with the biggest number of free rooms.
-	private static int search(List<Room> list) {
+		for (int k = 0; k < freeRooms.size() ; k++ ) {
+			if (freeRooms.get(k).getFloor() == floorNum)
+				freeRoomsOnFloor.add(freeRooms.get(k));
+		}
 		
-		int counter = 0;
-		int floorNum = 1;
-		int biggestNumSoFar = 0;
+		int rand = randomRoom.nextInt(((freeRoomsOnFloor.get(freeRoomsOnFloor.size() - 1).getRoomNumber() - freeRoomsOnFloor.get(0).getRoomNumber()) + 1) + freeRoomsOnFloor.get(0).getRoomNumber());
 
-		for ( Room r : list ) {
-			if(floorNum == r.getFloor())
-				counter++;
-			else{
-					if(counter > biggestNumSoFar) {
-						biggestNumSoFar = counter;
-						counter = 0;
-					} else if (counter == biggestNumSoFar) {
-						return floorNum - 1;
-					} else 
-						return floorNum;
-					
-				floorNum++;
-			}			
-		} //end of for loop 
-		return 0; // ??
-	}
+		
+		
+		
+		
+		return Optional.ofNullable(freeRoomsOnFloor.get(0));
 	
-/*	public static Room[] freeRooms(List<Room> list) {
+	}
 
-		int count = 0, tempCount;
-		int room = list.get(0).getRoomNumber();
-		int temp = 0;
+	public static int searchFloor(List<Room> list) {
+
+
+		int count = 0;
+		int tempCount;
+		Room room = list.get(0);
+		Room temp;
 
 		for (int i = 0; i < list.size() - 1; i++) {
 			tempCount = 0;
-			temp = list.get(i).getRoomNumber();
+			temp = list.get(i);
 
 			for (int j = 0; j < list.size(); j++) {
 
 				if ((list.get(i).getFloor()) == (list.get(j).getFloor())) {
-					tempCount++;
-					// System.out.println("TempCount++: " + tempCount);
+				tempCount++;
+	
 				}
 			} // end of j
 
-			// System.out.println(temp);
 			if (tempCount > count) {
-				System.out.println("tempCount " + tempCount + " count " + count);
 				room = temp;
-				// System.out.println(room + " a " + temp);
 				count = tempCount;
+				
 			} // end of if
-		}
+		} // end of i 
 
-		return room;
+		return room.getFloor();
 
 	}
-
-}
-
-
-
-*/
-
-
-
-
-
-
-
-
 }

@@ -2,6 +2,7 @@ package group5.hotel.business;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -15,7 +16,7 @@ import group5.util.ListUtilities;
 public class DawsonHotelAllocationPolicyTest {
 
 	public static void main(String[] args) {
-		
+		getAvailableRoomsTest();
 	}
 	
 	private static void setup() {
@@ -28,7 +29,7 @@ public class DawsonHotelAllocationPolicyTest {
 		rooms[4] = "601*normal";
 		rooms[5] = "704*suite";
 		rooms[6] = "801*penthouse";
-		rooms[7] = "801*penthouse";
+		rooms[7] = "101*normal";
 
 		String[] custs = new String[8];
 		custs[0] = "bob.b.y_lee@hotmail.ca*Bobby*Lee*mastercard*5458325441641567";
@@ -48,7 +49,7 @@ public class DawsonHotelAllocationPolicyTest {
 		reservs[4] = "cuty.kathy.2008@yahoo.ca*2016*12*25*2017*1*1*601";
 		reservs[5] = "robert.is-awesome@mail.me*2017*1*1*2018*1*1*704";
 		reservs[6] = "john.bussiness@gmail.ca*2016*9*20*2016*9*26*801";
-		reservs[7] = "Umila-Gangee@local.ca*2017*5*5*2017*7*8*801";
+		reservs[7] = "Umila-Gangee@local.ca*2017*5*5*2017*7*8*101";
 
 		File dir = new File("testfiles");
 		try {
@@ -86,31 +87,33 @@ public class DawsonHotelAllocationPolicyTest {
 
 		ReservationListDB db = new ReservationListDB(file);
 		DawsonHotelAllocationPolicy dhap = new DawsonHotelAllocationPolicy(db);
+		System.out.println(db.toString());
 		
 		String[] testcase = new String[6];
 		testcase[0] = "Case 1: Valid data";
-		Room[] rooms = new Room[10];
-		Reservation[] resToSearch = new DawsonReservation[6];
+
 		
-		resToSearch[1] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
-				new DawsonRoom(105, RoomType.NORMAL), 2008, 10, 5, 2010, 10, 5);
+	//	resToSearch[1] = new DawsonReservation(new DawsonCustomer("Habiba", "Awada", "habiba_awad@hotmail.com"),
+	//			new DawsonRoom(105, RoomType.NORMAL), 2008, 10, 5, 2010, 10, 5);
 		
-		// LocalDate checkin = LocalDate.of();
-		
+		LocalDate checkin = LocalDate.of(2016, 12, 25);
+		LocalDate checkout = LocalDate.of(2017, 1, 1);
 		//heh
-		//dhap.getAvailableRoom(resToSearch[1].getCheckInDate(), resToSearch[1].getCheckOutDate(), resToSearch[1].getRoom().getRoomType());
-		Optional<Room> r;
-		for (int i = 0; i < resToSearch.length; i++) {
+	
+		Optional<Room> r = dhap.getAvailableRoom(checkin, checkout, RoomType.PENTHOUSE);
+		System.out.println(r);
+		
+	/*	for (int i = 0; i < resToSearch.length; i++) {
 			System.out.println(testcase[i]);
 			try {
 			 r =  dhap.getAvailableRoom(resToSearch[i].getCheckInDate(), resToSearch[i].getCheckOutDate(), resToSearch[i].getRoom().getRoomType());
-				System.out.println(r.toString());
+				System.out.println(r);
 			} catch (Exception e) {
 				System.out.println("Fix me: " + e.getMessage());
 				continue;
 			}
 			System.out.println(r.toString());
-		}
+		} */
 		teardown();
 		
 		
