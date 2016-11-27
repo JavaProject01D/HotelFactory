@@ -1,5 +1,14 @@
 package group5.hotel.data;
 
+/**
+ * The class will test the getter that
+ * have been override in the 
+ * ObjectSerialiedList. Saving methods are not
+ * tested because they are used often.
+ * 
+ * @author Denis Lebedev
+ *
+ */
 public class ObjectSerializedListTest {
 
 	public static void main(String[] args) {
