@@ -87,7 +87,7 @@ public class CustomerListDB implements CustomerDAO{
 	public void add (Customer cust)
 			throws DuplicateCustomerException{
 		int index =(binarySearch(database, cust.getEmail()));
-		if(index > 0)
+		if(index >= 0)
 			throw new DuplicateCustomerException("Customer already exits. It impossible to add it!");
 		
 		/*

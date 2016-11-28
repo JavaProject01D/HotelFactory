@@ -104,14 +104,15 @@ public class Hotel extends Observable implements HotelManager {
 	public Customer updateCreditCard(String email, String cardType, String cardNumber)
 			throws NonExistingCustomerException {
 
+		CreditCard card = factory.getCard(cardType, cardNumber);
+		Email custEmail = new Email(email);
+		Customer custToUpdate = findCustomer(email);
+		
 		try {
-			CreditCard card = factory.getCard(cardType, cardNumber);
-			customers.update(new Email(email), card);
+			customers.update(custEmail, card);
 		} catch (NonExistingCustomerException nec) {
 			System.out.println(nec.getMessage());
 		}
-		
-		Customer custToUpdate = findCustomer(email);
 
 		return custToUpdate;
 	}

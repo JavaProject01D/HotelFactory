@@ -107,7 +107,7 @@ public class ReservationListDB implements ReservationDAO {
 		
 		int index = binarySearch(this.database, reserv);
 		
-		if (index > 0)
+		if (index >= 0)
 			throw new DuplicateReservationException();
 		
 		index = -(index) -1;
