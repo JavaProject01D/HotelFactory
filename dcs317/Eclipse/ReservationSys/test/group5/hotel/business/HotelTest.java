@@ -24,7 +24,11 @@ import group5.util.ListUtilities;
 
 /**
  * @author Sevan Topalian
- *
+ * 
+ *         This Class will test the Hotel Class. It will test the methods that
+ *         create and cancel Reservations, register Customers, find Customers
+ *         and Reservations, update a Customer's Credit Card, and finally will
+ *         test wether the Hotel closes properly or not.
  */
 public class HotelTest {
 
@@ -76,7 +80,8 @@ public class HotelTest {
 		LocalDate checkinTwo = LocalDate.of(2016, 9, 18);
 		LocalDate checkoutTwo = LocalDate.of(2016, 9, 19);
 		Room roomTwo = factory.getRoomInstance(801, "penthouse");
-		Optional<Reservation> newReservTwo = hotelTest.createReservation(custTwo, checkinTwo, checkoutTwo, roomTwo.getRoomType());
+		Optional<Reservation> newReservTwo = hotelTest.createReservation(custTwo, checkinTwo, checkoutTwo,
+				roomTwo.getRoomType());
 		System.out.println("Created: " + newReservTwo);
 	}
 
@@ -116,7 +121,8 @@ public class HotelTest {
 		try {
 			System.out.println("\nCancelling reservation...");
 			if (resTwo.isEmpty())
-				// Reusing the first reservation because it should be cancelled and therefore is non-existent
+				// Reusing the first reservation because it should be cancelled
+				// and therefore is non-existent
 				hotelTest.cancelReservation(factory.getReservationInstance(res.get(0)));
 		} catch (NonExistingReservationException e) {
 			System.out.println(e.getMessage());

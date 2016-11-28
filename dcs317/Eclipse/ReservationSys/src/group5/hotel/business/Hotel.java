@@ -20,6 +20,13 @@ import dw317.hotel.data.interfaces.ReservationDAO;
 import dw317.lib.Email;
 import dw317.lib.creditcard.CreditCard;
 
+/**
+ * This class represents the front desk of the Hotel and allows operations to be
+ * performed on the Customers and Reservations.
+ * 
+ * @author Sevan Topalian
+ * @version 11/28/2016
+ */
 public class Hotel extends Observable implements HotelManager {
 
 	private final HotelFactory factory;
@@ -27,12 +34,28 @@ public class Hotel extends Observable implements HotelManager {
 	private final ReservationDAO reservations;
 	private static final long serialVersionUID = 42031768871L;
 
+	/**
+	 * This constructor instantiates the HotelFactory, CustomerDAO, and
+	 * ReservationDAO.
+	 * 
+	 * @param factory
+	 * @param customers
+	 * @param reservations
+	 */
 	public Hotel(HotelFactory factory, CustomerDAO customers, ReservationDAO reservations) {
 		this.factory = factory;
 		this.customers = customers;
 		this.reservations = reservations;
 	}
 
+	/**
+	 * This method cancels the given Reservation if it exists. If not, it throws
+	 * a NonExistingReservationException.
+	 * 
+	 * @param reservation
+	 * @throws NonExistingReservationException
+	 *             If the Reservation given does not exist.
+	 */
 	@Override
 	public void cancelReservation(Reservation reservation) throws NonExistingReservationException {
 		try {
@@ -42,6 +65,13 @@ public class Hotel extends Observable implements HotelManager {
 		}
 	}
 
+	/**
+	 * This method closes the Hotel and disconnects from the customers and
+	 * reservations databases.
+	 * 
+	 * @throws IOException
+	 *             If there is a problem disconnecting.
+	 */
 	@Override
 	public void closeHotel() throws IOException {
 		try {
@@ -52,6 +82,15 @@ public class Hotel extends Observable implements HotelManager {
 		}
 	}
 
+	/**
+	 * This method creates a Reservation if there is an available Room of the
+	 * given type on the given days.
+	 * 
+	 * @param customer
+	 * @param checkIn
+	 * @param checkOut
+	 * @param roomType
+	 */
 	@Override
 	public Optional<Reservation> createReservation(Customer customer, LocalDate checkin, LocalDate checkout,
 			RoomType roomType) {
@@ -68,6 +107,16 @@ public class Hotel extends Observable implements HotelManager {
 			return Optional.ofNullable(null);
 	}
 
+	/**
+	 * This method looks for a Customer in the Customer database with the given
+	 * email address. The method throws a NonExistingCustomerException if the
+	 * Customer does not exist.
+	 * 
+	 * @param email
+	 * @return Customer
+	 * @throws NonExistingCustomerException
+	 *             If the Customer does not exist.
+	 */
 	@Override
 	public Customer findCustomer(String email) throws NonExistingCustomerException {
 		Customer customerFound = null;
@@ -81,11 +130,28 @@ public class Hotel extends Observable implements HotelManager {
 		return customerFound;
 	}
 
+	/**
+	 * This method looks for Reservations made by the given Customer.
+	 * 
+	 * @param customer
+	 * @return List<Reservation>
+	 */
 	@Override
 	public List<Reservation> findReservations(Customer customer) {
 		return reservations.getReservations(customer);
 	}
 
+	/**
+	 * This method registers a Customer into the Customer database. It throws a
+	 * DuplicateCustomerException if the Customer already exists.
+	 * 
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @return Customer
+	 * @throws DuplicateCustomerException
+	 *             If the Customer already exists in the database.
+	 */
 	@Override
 	public Customer registerCustomer(String firstName, String lastName, String email)
 			throws DuplicateCustomerException {
@@ -100,6 +166,17 @@ public class Hotel extends Observable implements HotelManager {
 		return custToRegister;
 	}
 
+	/**
+	 * This method updates a Customer's Credit Card information. It throws a
+	 * NonExistingCustomerException if the Customer does not exist.
+	 * 
+	 * @param email
+	 * @param cardType
+	 * @param cardNumber
+	 * @return Customer
+	 * @throws NonExistingCustomerException
+	 *             If the Customer does not exist in the database.
+	 */
 	@Override
 	public Customer updateCreditCard(String email, String cardType, String cardNumber)
 			throws NonExistingCustomerException {
@@ -107,7 +184,7 @@ public class Hotel extends Observable implements HotelManager {
 		CreditCard card = factory.getCard(cardType, cardNumber);
 		Email custEmail = new Email(email);
 		Customer custToUpdate = findCustomer(email);
-		
+
 		try {
 			customers.update(custEmail, card);
 		} catch (NonExistingCustomerException nec) {
