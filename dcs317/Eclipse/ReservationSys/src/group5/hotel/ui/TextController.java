@@ -117,7 +117,7 @@ public class TextController {
         		this.model.createReservation(cus, checkin, checkout, roomType);
         		
     		} catch (DuplicateCustomerException e) {
-			System.out.println("Invalid! Customer already in system. " + e.getMessage());
+			System.out.println(e.getMessage());
 			System.out.println("Please try again!");
 			
 			invalid = true;
@@ -136,7 +136,7 @@ public class TextController {
         	try {
         		this.model.findCustomer(email);
         		} catch (NonExistingCustomerException e) {
-        		System.out.println("Sorry, your email does not exist in our system." + e.getMessage() + "Please try again.");
+        		System.out.println(e.getMessage() + " Please try again.");
         		invalid = true;
         		}
         } while(invalid);
@@ -166,13 +166,14 @@ public class TextController {
     	do{
     		invalid = false; 
     		String email = getEmail(keyboard);
-    		String cardType = getCardType(keyboard).toString();
     		String cardnumber = getInput(keyboard, "\nEnter your creditcard number: ");
-    	
+    		String cardType = getCardType(keyboard).toString();
+    
     		try {
     			this.model.updateCreditCard(email, cardType, cardnumber);
     		} catch (NonExistingCustomerException e) {
     			System.out.println("Sorry, your email does not exist in our system." + e.getMessage() + "Please try again.");
+    			invalid = true;
     		}
     	} while (invalid);
     	

@@ -115,7 +115,7 @@ public class Hotel extends Observable implements HotelManager {
 		}
 		setChanged();
 		notifyObservers(reservToCreate);
-		return Optional.of(reservToCreate);
+		return Optional.ofNullable(reservToCreate);
 			
 	}
 
