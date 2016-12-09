@@ -131,7 +131,7 @@ public class Hotel extends Observable implements HotelManager {
 	 */
 	@Override
 	public Customer findCustomer(String email) throws NonExistingCustomerException {
-		Customer customerFound = null;
+		Customer customerFound;
 
 		customerFound = customers.getCustomer(new Email(email));
 		

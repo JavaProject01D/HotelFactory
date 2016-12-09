@@ -129,7 +129,7 @@ public class TextController {
     private void customerInfo(Scanner keyboard) {
         keyboard.nextLine (); //consume any previous value   
         boolean invalid; 
-        System.out.println("hi");
+
         do {
         	invalid = false;
             String email = getEmail(keyboard);
@@ -168,7 +168,7 @@ public class TextController {
     		String email = getEmail(keyboard);
     		String cardnumber = getInput(keyboard, "\nEnter your creditcard number: ");
     		String cardType = getCardType(keyboard).toString();
-    
+      	    
     		try {
     			this.model.updateCreditCard(email, cardType, cardnumber);
     		} catch (NonExistingCustomerException e) {

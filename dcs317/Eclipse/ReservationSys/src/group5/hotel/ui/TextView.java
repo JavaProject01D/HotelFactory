@@ -17,6 +17,7 @@ public class TextView implements Observer {
 		
 		if (arg instanceof Customer) {
 			Customer cust = (Customer) arg;
+		
 			System.out.println("\nCustomer Information: ");
 			System.out.println("Name: " + cust.getName().getFullName() + "\nEmail: " + cust.getEmail());
 		
@@ -26,7 +27,7 @@ public class TextView implements Observer {
 			 		System.out.println("Card Type: " + cust.getCreditCard().get().getType() 
 			 							+ "\nCard number: " + cust.getCreditCard().get().getNumber());
 			 	}
-		//	o.notifyObservers(cust);
+			
 			o.notifyObservers();
 		}
 	
