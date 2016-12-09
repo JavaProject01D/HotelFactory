@@ -71,25 +71,22 @@ public class DawsonHotelAllocationPolicy implements AllocationPolicy {
 		int tempCount = 0;
 		Room room = null;
 		Room temp = null;
-		try {
-		room = list.get(0);
-		//checks if the list is empty it throws an IndexOutOfBoundsException to inform the user
-		} catch (IndexOutOfBoundsException e) {
-			System.out.println("No rooms are available with given information.");
-		}
+		
+		if (list.size() > 0) {
 			for (int i = 0; i < list.size() - 1; i++) {
 				tempCount = 0;
 				temp = list.get(i);
-
-			for (int j = 0; j < list.size(); j++) {
-				if ((list.get(i).getFloor()) == (list.get(j).getFloor())) 
-					tempCount++;
-			} // end of j for loop
-			if (tempCount > count) {
-				count = tempCount;
-				room = temp;		
-			} // end of if statement
-		} // end of i for loop 
+				for (int j = 0; j < list.size(); j++) {
+					if ((list.get(i).getFloor()) == (list.get(j).getFloor())) 
+						tempCount++;
+				} // end of j for loop
+				if (tempCount > count) {
+					count = tempCount;
+					room = temp;		
+					} // end of if statement
+			} // end of i for loop 
+		}	
 		return room;
+		
 	}
 }

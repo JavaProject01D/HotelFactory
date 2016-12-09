@@ -11,11 +11,7 @@ public class TextView implements Observer {
 	public TextView(Hotel model) {
 		model.addObserver(this);
 	}
-	
-	
-	
-	
-	
+
 	@Override
 	public void update(Observable o, Object arg) {
 		

@@ -129,7 +129,7 @@ public class TextController {
     private void customerInfo(Scanner keyboard) {
         keyboard.nextLine (); //consume any previous value   
         boolean invalid; 
-
+        System.out.println("hi");
         do {
         	invalid = false;
             String email = getEmail(keyboard);
