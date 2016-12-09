@@ -63,7 +63,7 @@ public class Hotel extends Observable implements HotelManager {
 		try {
 			reservations.cancel(reservation);
 		} catch (NonExistingReservationException ner) {
-			System.out.println(ner.getMessage());
+			throw new NonExistingReservationException("We cannot cancel the reservation given. Reservation Not Found.");
 		}
 	}
 
@@ -76,12 +76,9 @@ public class Hotel extends Observable implements HotelManager {
 	 */
 	@Override
 	public void closeHotel() throws IOException {
-		try {
-			customers.disconnect();
+			reservations.clearAllPast();		
 			reservations.disconnect();
-		} catch (IOException ioe) {
-			System.out.println(ioe.getMessage());
-		}
+
 	}
 
 	/**
@@ -99,6 +96,7 @@ public class Hotel extends Observable implements HotelManager {
 
 		Optional<Room> availableRoom = factory.getAllocationPolicy(reservations).getAvailableRoom(checkin, checkout,
 				roomType);
+		
 		Reservation reservToCreate = null;
 
 		if (availableRoom.isPresent()) {
@@ -135,11 +133,7 @@ public class Hotel extends Observable implements HotelManager {
 	public Customer findCustomer(String email) throws NonExistingCustomerException {
 		Customer customerFound = null;
 
-		try {
-			customerFound = customers.getCustomer(new Email(email));
-		} catch (NonExistingCustomerException nec) {
-			System.out.println(nec.getMessage());
-		}
+		customerFound = customers.getCustomer(new Email(email));
 		
 		setChanged();
 		notifyObservers(customerFound);
@@ -176,12 +170,8 @@ public class Hotel extends Observable implements HotelManager {
 			throws DuplicateCustomerException {
 		Customer custToRegister = factory.getCustomerInstance(firstName, lastName, email);
 
-		try {
-			customers.add(custToRegister);
-		} catch (DuplicateCustomerException dce) {
-			System.out.println(dce.getMessage());
-		}
-		
+		customers.add(custToRegister);
+
 		setChanged();
 		notifyObservers(custToRegister);
 		return custToRegister;
@@ -206,11 +196,7 @@ public class Hotel extends Observable implements HotelManager {
 		Email custEmail = new Email(email);
 		Customer custToUpdate = findCustomer(email);
 
-		try {
-			customers.update(custEmail, card);
-		} catch (NonExistingCustomerException nec) {
-			System.out.println(nec.getMessage());
-		}
+		customers.update(custEmail, card);
 		
 		setChanged();
 		notifyObservers(custToUpdate);
