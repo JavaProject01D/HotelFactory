@@ -15,20 +15,22 @@ import java.io.IOException;
 import java.util.*;
 
 
-public class GUIViewController extends JFrame {
+public class GUIViewController extends JFrame implements Observer{
 
 	private JPanel contentPane;
 	private JPanel resultPanel;
 	private JTextArea resultText;
 	private JPanel getEmailPanel;
 	private JTextField email;
+	private Hotel model;
 
-
-	public GUIViewController() {
+	public GUIViewController(Hotel model) {
+		
+		this.model = model;
+		this.model.addObserver(this);
+		
 		setResizable(false);
 		setTitle("Dawson Hotel");
-
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 400);
 		contentPane = new JPanel();
@@ -40,6 +42,7 @@ public class GUIViewController extends JFrame {
 		contentPane.add(getCenterPanel(), BorderLayout.CENTER);
 		contentPane.add(getBottomPanel(), BorderLayout.SOUTH);
 
+		this.resultPanel.setVisible(true);
 		this.setVisible(true);
 	}
 
@@ -52,7 +55,53 @@ public class GUIViewController extends JFrame {
 		return titlePanel;
 	}
 
-
+	
+	private class CustomerInfoButton implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			try {
+				String inputedEmail = email.getText();
+				model.findCustomer(inputedEmail);	
+			} catch (IllegalArgumentException iae) {
+				JOptionPane.showMessageDialog
+				(GUIViewController.this, "Invalid email!",
+						"Alert", JOptionPane.ERROR_MESSAGE);
+			} catch (NonExistingCustomerException nec) {			
+				JOptionPane.showMessageDialog
+				(GUIViewController.this, nec.getMessage(),
+						"Alert", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+	
+	private class ReservationInfoButton implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			try {
+				String inputedEmail = email.getText();
+				Customer cust = model.findCustomer(inputedEmail);	
+				model.findReservations(cust);
+			} catch (IllegalArgumentException iae) {
+				JOptionPane.showMessageDialog
+				(GUIViewController.this, "Invalid email!",
+						"Alert", JOptionPane.ERROR_MESSAGE);
+			} catch (NonExistingCustomerException nec) {			
+				JOptionPane.showMessageDialog
+				(GUIViewController.this, nec.getMessage(),
+						"Alert", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+	
+	private class ExitButton implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
+		
+	}
+	
+	
 	private JPanel getCenterPanel() {
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new GridLayout(2, 0, 0, 0));
@@ -90,9 +139,11 @@ public class GUIViewController extends JFrame {
 
 		JButton custInfo = new JButton("Customer Info");
 		buttonPanel.add(custInfo);
-
+		custInfo.addActionListener(new CustomerInfoButton());
+		
 		JButton resInfo = new JButton("Reservation Info");
 		buttonPanel.add(resInfo);
+		resInfo.addActionListener(new ReservationInfoButton());
 
 		return buttonPanel;
 	}
@@ -106,8 +157,35 @@ public class GUIViewController extends JFrame {
 
 		JButton exit = new JButton("Exit");
 		panel.add(exit);
-
+		exit.addActionListener(new ExitButton());
 		return bottomPanel;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+	
+		String displayCard;
+		
+		if (arg instanceof Customer) {
+			Customer cust = (Customer) arg;
+			if (!cust.getCreditCard().isPresent()) 
+				displayCard = "\nNo credit card on file.";
+			 	else {
+			 		displayCard = "\nCard Type: " + cust.getCreditCard().get().getType() 
+			 							+ "\nCard number: " + cust.getCreditCard().get().getNumber();
+			 	}
+			
+			resultText.setText("Customer Information: \nName: " + cust.getName().getFullName() + "\nEmail: " + cust.getEmail() + displayCard);
+			
+			
+			o.notifyObservers();
+		}
+	
+		if (arg instanceof Optional<?>) {
+			System.out.println("Reso here!");
+		}
+		
+		
 	}
 
 }

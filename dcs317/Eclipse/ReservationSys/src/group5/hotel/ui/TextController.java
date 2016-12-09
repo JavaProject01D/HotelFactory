@@ -84,7 +84,7 @@ public class TextController {
     			this.model.registerCustomer(firstName, lastName, email);
     		} catch (DuplicateCustomerException e) {
 			System.out.println("Invalid! Customer already in system. " + e.getMessage());
-			System.out.println("Please try again!");
+			System.out.println("\nPlease try again!");
 			
 			invalid = true;
     		}
@@ -106,7 +106,7 @@ public class TextController {
     	do {
     		invalid = false;
     		String firstName = getInput(keyboard, "\nPlease enter the first name: ");
-    		String lastName = getInput(keyboard, "\nPlease enter the last name: ");
+    		String lastName = getInput(keyboard, "Please enter the last name: ");
         	String email = getEmail(keyboard);
         	LocalDate checkin = getDate(keyboard, "\nPlease enter your checkin date");
         	LocalDate checkout = getDate(keyboard, "\nPlease enter your checkout date");
@@ -118,7 +118,7 @@ public class TextController {
         		
     		} catch (DuplicateCustomerException e) {
 			System.out.println(e.getMessage());
-			System.out.println("Please try again!");
+			System.out.println("\nPlease try again!");
 			
 			invalid = true;
     		}
@@ -145,6 +145,7 @@ public class TextController {
     
     private void reservationInfo(Scanner keyboard) {
         keyboard.nextLine (); //consume any previous value   
+        System.out.println("hello");
         boolean invalid; 
         do {
         	invalid = false;
@@ -152,7 +153,7 @@ public class TextController {
         	try {
         		this.model.findReservations(this.model.findCustomer(email));
         		} catch (NonExistingCustomerException e) {
-        		System.out.println("Sorry, your email does not exist in our system." + e.getMessage() + "Please try again.");
+        		System.out.println("Sorry, your email does not exist in our system. " + e.getMessage() + "Please try again.\n");
         		invalid = true;
         		}     	
         }while(invalid);  
@@ -172,7 +173,7 @@ public class TextController {
     		try {
     			this.model.updateCreditCard(email, cardType, cardnumber);
     		} catch (NonExistingCustomerException e) {
-    			System.out.println("Sorry, your email does not exist in our system." + e.getMessage() + "Please try again.");
+    			System.out.println("Sorry, your email does not exist in our system. " + e.getMessage() + "Please try again. ");
     			invalid = true;
     		}
     	} while (invalid);
@@ -272,8 +273,8 @@ public class TextController {
 					Email emailObj = new Email(email);
                 }
                 catch (IllegalArgumentException e){
-                    System.out.println ("Invalid email!" + e.getMessage());
-                    System.out.print("Please try again: ");
+                    System.out.println ("Invalid email! " + e.getMessage());
+                    System.out.print("Please try again.\n");
                     
                     invalid = true;
                 }

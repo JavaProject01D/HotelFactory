@@ -24,5 +24,6 @@ public class TextApp {
 		TextView view = new TextView(model);
 		TextController controller = new TextController(model);
 		controller.run();
+		
 	}
 }

@@ -45,8 +45,10 @@ public class MasterCard extends AbstractCreditCard {
 					|| Integer.parseInt(number.substring(0, 2)) < 51
 					|| Integer.parseInt(number.substring(0, 2)) > 55)
 			throw new IllegalArgumentException("The Master card given does not respect the validation.");
-		}catch(NumberFormatException npe){
-			throw new IllegalArgumentException("The Master card given does not respect the validation.");
+	//	}catch(NumberFormatException npe){
+	//		throw new IllegalArgumentException("The Master card given does not respect the validation.");
+		} catch (IllegalArgumentException iae) {
+			System.out.println(iae.getMessage());
 		}
 		return number;
 	}
