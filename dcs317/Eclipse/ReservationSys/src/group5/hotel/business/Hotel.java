@@ -102,9 +102,15 @@ public class Hotel extends Observable implements HotelManager {
 			Reservation reservToCreate = factory.getReservationInstance(customer, availableRoom.get(),
 					checkin.getYear(), checkin.getMonthValue(), checkin.getDayOfMonth(), checkout.getYear(),
 					checkout.getMonthValue(), checkout.getDayOfMonth());
+			
+			setChanged();
+			notifyObservers(reservToCreate);
 			return Optional.of(reservToCreate);
-		} else
+		} else {
+			setChanged();
+			notifyObservers(null);
 			return Optional.ofNullable(null);
+		}
 	}
 
 	/**
@@ -126,7 +132,9 @@ public class Hotel extends Observable implements HotelManager {
 		} catch (NonExistingCustomerException nec) {
 			System.out.println(nec.getMessage());
 		}
-
+		
+		setChanged();
+		notifyObservers(customerFound);
 		return customerFound;
 	}
 
@@ -138,7 +146,10 @@ public class Hotel extends Observable implements HotelManager {
 	 */
 	@Override
 	public List<Reservation> findReservations(Customer customer) {
-		return reservations.getReservations(customer);
+		List<Reservation> reservationList = reservations.getReservations(customer);
+		setChanged();
+		notifyObservers(reservationList);
+		return reservationList;
 	}
 
 	/**
@@ -162,7 +173,9 @@ public class Hotel extends Observable implements HotelManager {
 		} catch (DuplicateCustomerException dce) {
 			System.out.println(dce.getMessage());
 		}
-
+		
+		setChanged();
+		notifyObservers(custToRegister);
 		return custToRegister;
 	}
 
@@ -190,7 +203,9 @@ public class Hotel extends Observable implements HotelManager {
 		} catch (NonExistingCustomerException nec) {
 			System.out.println(nec.getMessage());
 		}
-
+		
+		setChanged();
+		notifyObservers(custToUpdate);
 		return custToUpdate;
 	}
 }
