@@ -94,13 +94,11 @@ public class ObjectSerializedList implements ListPersistenceObject {
 	@SuppressWarnings({ "unused", "unchecked" })
 	@Override
 	public List<Reservation> getReservationDatabase() {
-		List<Room> rooms = null;
-		List<Customer> customer = null;
+
 		List<Reservation> reserve = null;
 
 		try{
-			rooms = (List<Room>) Utilities.deserializeObject(roomFile);
-			customer = (List<Customer>) Utilities.deserializeObject(customerFile);
+
 			reserve = (List<Reservation>) Utilities.deserializeObject(reservationFile);					
 		}
 		catch (IOException e) {
