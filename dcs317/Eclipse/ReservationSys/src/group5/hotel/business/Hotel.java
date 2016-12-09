@@ -13,12 +13,14 @@ import dw317.hotel.business.interfaces.HotelManager;
 import dw317.hotel.business.interfaces.Reservation;
 import dw317.hotel.business.interfaces.Room;
 import dw317.hotel.data.DuplicateCustomerException;
+import dw317.hotel.data.DuplicateReservationException;
 import dw317.hotel.data.NonExistingCustomerException;
 import dw317.hotel.data.NonExistingReservationException;
 import dw317.hotel.data.interfaces.CustomerDAO;
 import dw317.hotel.data.interfaces.ReservationDAO;
 import dw317.lib.Email;
 import dw317.lib.creditcard.CreditCard;
+import group5.hotel.ui.TextView;
 
 /**
  * This class represents the front desk of the Hotel and allows operations to be
@@ -97,20 +99,26 @@ public class Hotel extends Observable implements HotelManager {
 
 		Optional<Room> availableRoom = factory.getAllocationPolicy(reservations).getAvailableRoom(checkin, checkout,
 				roomType);
+		Reservation reservToCreate = null;
 
 		if (availableRoom.isPresent()) {
-			Reservation reservToCreate = factory.getReservationInstance(customer, availableRoom.get(),
-					checkin.getYear(), checkin.getMonthValue(), checkin.getDayOfMonth(), checkout.getYear(),
-					checkout.getMonthValue(), checkout.getDayOfMonth());
 			
-			setChanged();
-			notifyObservers(reservToCreate);
-			return Optional.of(reservToCreate);
-		} else {
-			setChanged();
-			notifyObservers(null);
-			return Optional.ofNullable(null);
+			try { 
+					reservToCreate = factory.getReservationInstance(customer, availableRoom.get(),
+					checkin.getYear(), checkin.getMonthValue(), checkin.getDayOfMonth(), checkout.getYear(),
+					checkout.getMonthValue(), checkout.getDayOfMonth());	
+					reservations.add(reservToCreate);
+			
+				} catch ( DuplicateReservationException dre) {
+					setChanged();
+					notifyObservers(Optional.empty());
+					return Optional.empty();
+				}
 		}
+		setChanged();
+		notifyObservers(reservToCreate);
+		return Optional.of(reservToCreate);
+			
 	}
 
 	/**
@@ -208,4 +216,5 @@ public class Hotel extends Observable implements HotelManager {
 		notifyObservers(custToUpdate);
 		return custToUpdate;
 	}
+
 }
