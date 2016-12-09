@@ -175,6 +175,8 @@ public class TextController {
     		} catch (NonExistingCustomerException e) {
     			System.out.println("Sorry, your email does not exist in our system. " + e.getMessage() + "Please try again. ");
     			invalid = true;
+    		} catch (IllegalArgumentException iae) {
+    			System.out.println(iae.getMessage());
     		}
     	} while (invalid);
     	

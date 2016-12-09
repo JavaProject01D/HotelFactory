@@ -7,7 +7,10 @@ import javax.swing.border.EmptyBorder;
 
 import dw317.hotel.business.interfaces.*;
 import dw317.hotel.data.*;
+import dw317.hotel.data.interfaces.ReservationDAO;
 import group5.hotel.business.*;
+import group5.hotel.data.ObjectSerializedList;
+import group5.hotel.data.ReservationListDB;
 
 import java.awt.event.*;
 
@@ -23,6 +26,7 @@ public class GUIViewController extends JFrame implements Observer{
 	private JPanel getEmailPanel;
 	private JTextField email;
 	private Hotel model;
+	ReservationDAO reservations;
 
 	public GUIViewController(Hotel model) {
 		
@@ -44,6 +48,10 @@ public class GUIViewController extends JFrame implements Observer{
 
 		this.resultPanel.setVisible(true);
 		this.setVisible(true);
+		
+		reservations  = new ReservationListDB(new ObjectSerializedList	("dcs317\\Eclipse\\ReservationSys\\datafiles\\database\\customers.ser",
+				 "dcs317\\Eclipse\\ReservationSys\\datafiles\\database\\reservations.ser", 
+				 "dcs317\\Eclipse\\ReservationSys\\datafiles\\database\\rooms.ser"));
 	}
 
 	private JPanel getTitlePanel() {
