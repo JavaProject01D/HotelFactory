@@ -169,6 +169,7 @@ public class GUIViewController extends JFrame implements Observer{
 		return bottomPanel;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void update(Observable o, Object arg) {
 	
@@ -189,8 +190,19 @@ public class GUIViewController extends JFrame implements Observer{
 			o.notifyObservers();
 		}
 	
-		if (arg instanceof Optional<?>) {
-			System.out.println("Reso here!");
+		if(arg instanceof ArrayList<?>){
+			ArrayList<Reservation> list = (ArrayList<Reservation>) arg;
+			
+			if(list.size() != 0){
+								
+				System.out.println("\nReservations: ");
+				
+				for(Reservation item : list)
+					System.out.println("Room: " + item.getRoom().getRoomNumber() 
+									+ "\nCheck in date: " + item.getCheckInDate() 
+										+ "\nCheck out date: " + item.getCheckOutDate());
+			}
+			o.notifyObservers();
 		}
 		
 		

@@ -1,5 +1,6 @@
 package group5.hotel.ui;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Optional;
@@ -17,11 +18,10 @@ public class TextView implements Observer {
 	
 	public TextView(Hotel model) {
 		model.addObserver(this);
-		reservations  = new ReservationListDB(new ObjectSerializedList	("dcs317\\Eclipse\\ReservationSys\\datafiles\\database\\customers.ser",
-																		 "dcs317\\Eclipse\\ReservationSys\\datafiles\\database\\reservations.ser", 
-																		 "dcs317\\Eclipse\\ReservationSys\\datafiles\\database\\rooms.ser"));
+		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void update(Observable o, Object arg) {
 
@@ -39,6 +39,19 @@ public class TextView implements Observer {
 			o.notifyObservers();
 		}
 		
+		if(arg instanceof ArrayList<?>){
+			ArrayList<Reservation> list = (ArrayList<Reservation>) arg;
+			
+			if(list.size() != 0){
+								
+				System.out.println("\nReservations: ");
+				
+				for(Reservation item : list)
+					System.out.println("Room: " + item.getRoom().getRoomNumber() 
+									+ "\nCheck in date: " + item.getCheckInDate() 
+										+ "\nCheck out date: " + item.getCheckOutDate());
+			}
+			o.notifyObservers();
+		}		
 	}
-
 }
