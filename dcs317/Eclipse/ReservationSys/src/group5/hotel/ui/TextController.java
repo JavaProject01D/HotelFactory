@@ -70,6 +70,13 @@ public class TextController {
 	        }
 	}
 	
+	/**
+	 * The following method creates a new customer. It is called when the user chooses to register himself. It reads 
+	 * the user input.
+	 * @author Zahraa Horeibi
+	 * @param keyboard
+	 */
+	
 
     private void newCustomer(Scanner keyboard) {
         keyboard.nextLine (); //consume any previous value
@@ -88,16 +95,14 @@ public class TextController {
 			
 			invalid = true;
     		}
-		} while (invalid);
-    	
-    	
-    	
-    	
-    	
-//TODO
-		
+		} while (invalid);		
 	}
-    
+	/**
+	 * The following method creates a new reservation. It is called when the user chooses to reserve a room. It reads 
+	 * the user input.
+	 * @author Zahraa Horeibi
+	 * @param keyboard
+	 */
     private void newReservation(Scanner keyboard) {
         keyboard.nextLine (); //consume any previous value   
         boolean invalid;
@@ -123,9 +128,12 @@ public class TextController {
 			invalid = true;
     		}
 		} while (invalid);
-//TODO
-	}
-
+    }
+    /**
+     * The following method displays a customer's information. It is called when the user chooses to display the information 
+     * of an inputed customer. It reads the user input. 
+     * @param keyboard
+     */
     private void customerInfo(Scanner keyboard) {
         keyboard.nextLine (); //consume any previous value   
         boolean invalid; 
@@ -140,9 +148,12 @@ public class TextController {
         		invalid = true;
         		}
         } while(invalid);
-//TODO
     }
-    
+    /**
+     * The following method displays a customer's reservation information. It is called when the user chooses to display the reservation 
+     * of an inputed customer. It reads the user input. 
+     * @param keyboard
+     */
     private void reservationInfo(Scanner keyboard) {
         keyboard.nextLine (); //consume any previous value   
         System.out.println("hello");
@@ -157,9 +168,12 @@ public class TextController {
         		invalid = true;
         		}     	
         }while(invalid);  
-//TODO
     }
-    
+    /**
+     * The following method updates the credit card information of a customer. It it called when the user chooses to update his credit
+     * card information. It reads the user input. 
+     * @param keyboard
+     */
     private void updateCard (Scanner keyboard) {
     	keyboard.nextLine();
     	boolean invalid; 
@@ -179,8 +193,6 @@ public class TextController {
     			System.out.println(iae.getMessage());
     		}
     	} while (invalid);
-    	
-//TODO
     }
     
     

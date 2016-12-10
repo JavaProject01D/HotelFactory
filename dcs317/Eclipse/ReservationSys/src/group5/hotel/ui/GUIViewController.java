@@ -62,8 +62,13 @@ public class GUIViewController extends JFrame implements Observer{
 		titlePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		return titlePanel;
 	}
+	/**
+	 * This private method is the listener to the "Customer Info" button. When it is clicked, it calls the methods 
+	 * which will display the desired information. 
+	 * @author Zahraa
+	 *
+	 */
 
-	
 	private class CustomerInfoButton implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
@@ -81,6 +86,12 @@ public class GUIViewController extends JFrame implements Observer{
 			}
 		}
 	}
+	/**
+	 * This private method is the listener to the "Reservation Info" button. When it is clicked, it calls the methods 
+	 * which will display the desired information. 
+	 * @author Zahraa
+	 *
+	 */
 	
 	private class ReservationInfoButton implements ActionListener {
 		
@@ -100,7 +111,13 @@ public class GUIViewController extends JFrame implements Observer{
 			}
 		}
 	}
-	
+	/**
+	 * 	/**
+	 * This private method is the listener to the "Exit" button. When it is clicked, it closes the application.
+	 * @author Zahraa Horeibi
+	 *
+	 */
+
 	private class ExitButton implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
@@ -168,6 +185,14 @@ public class GUIViewController extends JFrame implements Observer{
 		exit.addActionListener(new ExitButton());
 		return bottomPanel;
 	}
+
+	/**
+	 * This method is an update method which is responsible to display the desired information that the customer asks for. 
+	 * It notifies all observers every time there is a modification.
+	 * @author Zahraa Horeibi
+	 * @param o 
+	 * @param arg
+	 */
 
 	@SuppressWarnings("unchecked")
 	@Override

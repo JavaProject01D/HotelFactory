@@ -12,6 +12,13 @@ import group5.hotel.business.Hotel;
 import group5.hotel.data.ObjectSerializedList;
 import group5.hotel.data.ReservationListDB;
 
+/**
+ * This class displays the desired information for a specific customer.
+ * @author Zahraa Horeibi
+ * @version 12/10/2016
+ */
+
+
 public class TextView implements Observer {
 	
 	ReservationDAO reservations;
@@ -21,6 +28,14 @@ public class TextView implements Observer {
 		
 	}
 
+	/**
+	 * This method is an update method which is responsible to display the desired information that the customer asks for. 
+	 * It notifies all observers every time there is a modification.
+	 * @author Zahraa Horeibi
+	 * @param o 
+	 * @param arg
+	 */
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void update(Observable o, Object arg) {
