@@ -14,7 +14,8 @@ import group5.hotel.data.ReservationListDB;
 
 import java.awt.event.*;
 
-import java.io.IOException;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 
@@ -199,18 +200,19 @@ public class GUIViewController extends JFrame implements Observer{
 	public void update(Observable o, Object arg) {
 	
 		String displayCard;
+		String displayData = null;
 		
 		if (arg instanceof Customer) {
 			Customer cust = (Customer) arg;
 			if (!cust.getCreditCard().isPresent()) 
-				displayCard = "\nNo credit card on file.";
+				displayCard = " None.";
 			 	else {
-			 		displayCard = "\nCard Type: " + cust.getCreditCard().get().getType() 
-			 							+ "\nCard number: " + cust.getCreditCard().get().getNumber();
+			 		displayCard = cust.getCreditCard().get().getType() 
+			 							+ " " + cust.getCreditCard().get().getNumber();
 			 	}
-			
-			resultText.setText("Customer Information: \nName: " + cust.getName().getFullName() + "\nEmail: " + cust.getEmail() + displayCard);
-			
+			displayData = ("Customer Information: \nName: " + cust.getName().getFullName() + " at " + cust.getEmail() + 
+							"\nCredit card on file: " + displayCard);
+			resultText.setText(displayData);
 			
 			o.notifyObservers();
 		}
@@ -219,13 +221,22 @@ public class GUIViewController extends JFrame implements Observer{
 			ArrayList<Reservation> list = (ArrayList<Reservation>) arg;
 			
 			if(list.size() != 0){
-								
-				System.out.println("\nReservations: ");
+				displayData = "Reservation detail: ";
+				displayData += ("\nName: " + list.get(0).getCustomer().getName().getFullName() +
+							" at " + list.get(0).getCustomer().getEmail());
+				displayData += "\nReservation(s): ";
 				
-				for(Reservation item : list)
-					System.out.println("Room: " + item.getRoom().getRoomNumber() 
+				for(Reservation item : list){
+					displayData += ("\nRoom: " + item.getRoom().getRoomNumber() 
 									+ "\nCheck in date: " + item.getCheckInDate() 
-										+ "\nCheck out date: " + item.getCheckOutDate());
+									+ " for " + ChronoUnit.DAYS.between(item.getCheckInDate(), item.getCheckOutDate())
+									+ " days left.");
+										
+				}
+				
+				resultText.setText(displayData);
+				
+				
 			}
 			o.notifyObservers();
 		}
